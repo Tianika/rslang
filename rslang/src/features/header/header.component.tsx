@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { StyledHeader, Wrapper, LeftSideBlock, List, ListItem } from './styles';
 
-// import logo from '../../assets/logo.png';
-// import userIcon from '../../assets/icons/user-icon.png';
-const logo = require('../../assets/icons/logo.png');
-const userIcon = require('../../assets/icons/user-icon.png');
+import logo from '../../assets/icons/logo.png';
+import userIcon from '../../assets/icons/user-icon.png';
 
 const Header: FC = () => {
   return (
