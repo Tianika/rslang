@@ -2,13 +2,16 @@ import React from 'react';
 import GlobalStyle from './styles';
 import { hot } from 'react-hot-loader/root';
 
-import Header from '../../features/header';
+import Header from '../../features/header/header.component';
+import { BrowserRouter } from 'react-router-dom';
 
 const App: React.FC = () => {
   return (
     <>
-      <GlobalStyle />
-      <Header />
+      <BrowserRouter>
+        <GlobalStyle />
+        <Header />
+      </BrowserRouter>
     </>
   );
 };
