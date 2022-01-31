@@ -5,8 +5,14 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    background: ${baseTheme.colors.bg};
-    font-family: Open-Sans, Helvetica, Sans-Serif;
+    background: #fff;
+    // font-family: 'DM Mono', monospace;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
   }
 `;
 
