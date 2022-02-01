@@ -10,7 +10,7 @@ export const Footer: React.FC = () => (
           <StyledLink key={href} target="_blank" href={href} logoLink={logoLink} />
         ))}
       </StyledLinksContainer>
-      <Year>2022</Year>
+      <Year>2022©</Year>
     </Container>
   </Wrapper>
 );
