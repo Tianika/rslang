@@ -9,7 +9,12 @@ import {
   TabEntrance
 } from './styles';
 
-export const Account: React.FC = () => (
+type AccountProps = {
+  onEmailChange: (value: string) => void;
+  onPasswordChange: (value: string) => void;
+};
+
+export const Account: React.FC = (props) => (
   <WindowAuthorizationAccount>
     <TabEntrance type={'button'}>ВХОД</TabEntrance>
     <EmailTitle>ЭЛЕКТРОННАЯ ПОЧТА</EmailTitle>
