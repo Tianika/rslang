@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  WindowAuthorizationAccount,
-  ButtonAuthentication,
   EntryFieldEmail,
   EntryFieldPassword,
   PasswordTitle,
@@ -20,13 +18,13 @@ type RecordProps = {
   onPasswordChange: (value: string) => void;
 };
 
-export const Record: React.FC = (props) => (
+export const Signup: React.FC = (props) => (
   <div>
     <ContainerButton>
       <Link to={'/account/login'}>
         <TabEntrance type={'button'}>ВХОД</TabEntrance>
       </Link>
-      <Link to={'/account/record'}>
+      <Link to={'/account/signup'}>
         <TabRecord type={'button'}>РЕГИСТРАЦИЯ</TabRecord>
       </Link>
     </ContainerButton>

@@ -2,11 +2,11 @@ import React from 'react';
 import GlobalStyle from './styles';
 import { hot } from 'react-hot-loader/root';
 import { Footer } from '../../features/footer';
-import { Account } from '../../components/account/login.component';
+import { Account } from '../../components/account';
 import Header from '../../features/header/header.component';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Statistic } from '../../components/statistic/statistic.component';
-import { Record } from '../../components/account/record.component';
+import { Signup } from '../../components/account/signup.component';
 
 const App: React.FC = () => {
   return (
@@ -16,7 +16,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/statistic" element={<Statistic />} />
         <Route path="/account/login" element={<Account />} />
-        <Route path="/account/record" element={<Record />} />
+        <Route path="/account/signup" element={<Signup />} />
       </Routes>
       <Footer />
     </BrowserRouter>
