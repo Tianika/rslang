@@ -74,7 +74,7 @@ export const TableStatisticBodyTr = styled.tr`
   border-collapse: collapse;
 `;
 export const TableStatisticBodyTrEnd = styled.tr`
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(109, 195, 255, 0.2);
   color: inherit;
   display: table-row;
   outline: 0;
