@@ -6,6 +6,7 @@ import { Account } from '../../components/account/login.component';
 import Header from '../../features/header/header.component';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Statistic } from '../../components/statistic/statistic.component';
+import { Record } from '../../components/account/record.component';
 
 const App: React.FC = () => {
   return (
@@ -14,7 +15,8 @@ const App: React.FC = () => {
       <Header />
       <Routes>
         <Route path="/statistic" element={<Statistic />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/account/login" element={<Account />} />
+        <Route path="/account/record" element={<Record />} />
       </Routes>
       <Footer />
     </BrowserRouter>

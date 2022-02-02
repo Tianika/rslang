@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-
+import { baseTheme } from '../../utils';
 export const StyledHeader = styled.header`
-  max-width: 962px;
+  min-width: 962px;
   margin: 0 auto;
-  min-height: 82px;
+  height: 50px;
   background-color: #fff;
   font-size: 26px;
-  padding: 10px 0;
+  padding: 10px 10px 0 10px;
+  border-bottom: 1px solid ${baseTheme.colors.secondary};
 `;
 
 export const Wrapper = styled.div`
@@ -29,4 +30,9 @@ export const List = styled.ul`
 export const ListItem = styled.li`
   display: inline-block;
   margin-left: 30px;
+  transition: 1s;
+  font-size: 22px;
+  &:hover {
+    color: #5984e2;
+  }
 `;

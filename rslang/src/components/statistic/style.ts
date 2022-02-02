@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { baseTheme } from '../../utils';
 
 export const TableStatistic = styled.table`
   width: 80%;
@@ -74,7 +75,7 @@ export const TableStatisticBodyTr = styled.tr`
   border-collapse: collapse;
 `;
 export const TableStatisticBodyTrEnd = styled.tr`
-  background-color: rgba(109, 195, 255, 0.2);
+  background-color: rgba(109, 195, 255, 0.5);
   color: inherit;
   display: table-row;
   outline: 0;
