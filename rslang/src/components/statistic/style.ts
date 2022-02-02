@@ -33,7 +33,20 @@ export const TableStatisticHeadThStart = styled.th`
   font-size: 0.875rem;
   text-align: left;
   font-family: 'Roboto', sans-serif;
-  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  border-radius: 8px 0 0 8px;
+  letter-spacing: 0.01071em;
+  vertical-align: inherit;
+`;
+export const TableStatisticHeadThEnd = styled.th`
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: 500;
+  line-height: 1.5rem;
+  padding: 6px 24px 6px 16px;
+  display: table-cell;
+  font-size: 0.875rem;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 0 8px 8px 0;
   letter-spacing: 0.01071em;
   vertical-align: inherit;
 `;
@@ -46,7 +59,6 @@ export const TableStatisticHeadTh = styled.th`
   font-size: 0.875rem;
   text-align: center;
   font-family: 'Roboto', sans-serif;
-  border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
 `;
@@ -79,12 +91,12 @@ export const TableStatisticBodyTh = styled.th`
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   line-height: 1.43;
-  border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
   text-align: center;
 `;
 export const TableStatisticBodyThName = styled.th`
+  border-radius: 8px 0 0 8px;
   padding: 6px 24px 6px 16px;
   color: rgba(0, 0, 0, 0.87);
   display: table-cell;
@@ -93,7 +105,6 @@ export const TableStatisticBodyThName = styled.th`
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   line-height: 1.43;
-  border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
 `;

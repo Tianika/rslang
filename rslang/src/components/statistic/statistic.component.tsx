@@ -10,7 +10,8 @@ import {
   TableStatisticBodyThName,
   TableStatisticBodyTr,
   TableStatisticHeadThStart,
-  TableStatisticBodyTrEnd
+  TableStatisticBodyTrEnd,
+  TableStatisticHeadThEnd
 } from './style';
 
 export const Statistic: React.FC = () => (
@@ -23,7 +24,7 @@ export const Statistic: React.FC = () => (
           <TableStatisticHeadThStart>Игра</TableStatisticHeadThStart>
           <TableStatisticHeadTh>Изучено слов</TableStatisticHeadTh>
           <TableStatisticHeadTh>Правильно (%)</TableStatisticHeadTh>
-          <TableStatisticHeadTh>Самая длинная серия</TableStatisticHeadTh>
+          <TableStatisticHeadThEnd>Самая длинная серия</TableStatisticHeadThEnd>
         </TableStatisticHeadTr>
       </TableStatisticHead>
       <TableStatisticBody>
@@ -43,7 +44,7 @@ export const Statistic: React.FC = () => (
           <TableStatisticBodyThName>Всего</TableStatisticBodyThName>
           <TableStatisticBodyTh>0</TableStatisticBodyTh>
           <TableStatisticBodyTh>0%</TableStatisticBodyTh>
-          <TableStatisticBodyTh>0</TableStatisticBodyTh>
+          <TableStatisticHeadThEnd>0</TableStatisticHeadThEnd>
         </TableStatisticBodyTrEnd>
       </TableStatisticBody>
     </TableStatistic>
