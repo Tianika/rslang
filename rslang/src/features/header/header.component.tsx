@@ -27,7 +27,9 @@ const Header: FC = () => {
             </ListItem>
           </List>
         </LeftSideBlock>
-        <img src={userIcon} alt="user-icon" width={60} height={60} />
+        <Link to="/account">
+          <img src={userIcon} alt="user-icon" width={60} height={60} />
+        </Link>
       </Wrapper>
     </StyledHeader>
   );
