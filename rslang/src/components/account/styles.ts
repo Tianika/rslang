@@ -127,3 +127,22 @@ export const WindowRecordAccount = styled.div`
   display: flex;
   flex-direction: column;
 `;
+export const ButtonRecord = styled.button`
+  width: 300px;
+  height: 50px;
+  color: #ffffff;
+  background: ${baseTheme.colors.primary};
+  border-radius: 50px;
+  margin: 30px auto;
+  font-size: 22px;
+  border: none;
+  transition: 1s;
+  cursor: pointer;
+  &:hover {
+    background: ${baseTheme.colors.bg};
+    color: ${baseTheme.colors.primary};
+    border: 1px solid ${baseTheme.colors.primary};
+    transform: scale(1.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+`;

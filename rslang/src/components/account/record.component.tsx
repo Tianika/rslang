@@ -10,7 +10,8 @@ import {
   ContainerButton,
   TabRecord,
   RecordTitle,
-  WindowRecordAccount
+  WindowRecordAccount,
+  ButtonRecord
 } from './styles';
 import { Link } from 'react-router-dom';
 
@@ -36,7 +37,7 @@ export const Record: React.FC = (props) => (
       <EntryFieldEmail type={'email'} autoComplete="on" />
       <PasswordTitle>ПАРОЛЬ</PasswordTitle>
       <EntryFieldPassword type={'password'} autoComplete="on" />
-      <ButtonAuthentication>ВОЙТИ</ButtonAuthentication>
+      <ButtonRecord>ЗАРЕГИСТРИРОВАТЬСЯ</ButtonRecord>
     </WindowRecordAccount>
   </div>
 );
