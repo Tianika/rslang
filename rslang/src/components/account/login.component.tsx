@@ -23,7 +23,7 @@ export const Account: React.FC = (props) => (
       <Link to={'/account/login'}>
         <TabEntrance type={'button'}>ВХОД</TabEntrance>
       </Link>
-      <Link to={'/account/record'}>
+      <Link to={'/account/signup'}>
         <TabRecord type={'button'}>РЕГИСТРАЦИЯ</TabRecord>
       </Link>
     </ContainerButton>
