@@ -1,8 +1,10 @@
 export const baseTheme = {
   colors: {
     primary: '#114C82',
-    secondary: '#5984e2',
-
+    secondary: '#00aaf0',
+    red: '#ff6849',
+    yellow: '#ffdc40',
+    blue: '#6dc3ff',
     bg: '#ffffff',
     font: '#000000'
   },
@@ -18,11 +20,11 @@ export const baseTheme = {
   sizes: {
     header: { height: 82 },
     container: { width: 1014 },
-    footer: { height: 120 }
+    footer: { height: 100 }
   },
 
   fonts: {
     family: 'Roboto',
-    footerSize: 40
+    footerSize: 22
   }
 };
