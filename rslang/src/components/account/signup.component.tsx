@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   EntryFieldEmail,
   EntryFieldPassword,
@@ -13,9 +13,51 @@ import {
 } from './styles';
 import { Link } from 'react-router-dom';
 
-type RecordProps = {
+type SignupProps = {
+  onNameChange: (value: string) => void;
   onEmailChange: (value: string) => void;
   onPasswordChange: (value: string) => void;
+};
+
+type User = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+const state: User = {
+  name: '',
+  email: '',
+  password: ''
+};
+
+const saveName = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const value = event.target.value;
+  state.name = value;
+};
+
+const saveEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const value = event.target.value;
+  state.email = value;
+};
+
+const savePassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const value = event.target.value;
+  state.password = value;
+};
+
+const createNewUser = async (user: User) => {
+  const rawResponse = await fetch('https://learnwords-team17.herokuapp.com/users', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  });
+  const content = await rawResponse.json();
+
+  console.log(content);
 };
 
 export const Signup: React.FC = (props) => (
@@ -30,12 +72,12 @@ export const Signup: React.FC = (props) => (
     </ContainerButton>
     <WindowRecordAccount>
       <RecordTitle>ИМЯ</RecordTitle>
-      <EntryFieldEmail type={'text'} autoComplete="on" />
+      <EntryFieldEmail onChange={saveName} type={'text'} autoComplete="on" />
       <EmailTitle>ЭЛЕКТРОННАЯ ПОЧТА</EmailTitle>
-      <EntryFieldEmail type={'email'} autoComplete="on" />
+      <EntryFieldEmail onChange={saveEmail} type={'email'} autoComplete="on" />
       <PasswordTitle>ПАРОЛЬ</PasswordTitle>
-      <EntryFieldPassword type={'password'} autoComplete="on" />
-      <ButtonRecord>ЗАРЕГИСТРИРОВАТЬСЯ</ButtonRecord>
+      <EntryFieldPassword onChange={savePassword} type={'password'} autoComplete="on" />
+      <ButtonRecord onClick={() => createNewUser(state)}>ЗАРЕГИСТРИРОВАТЬСЯ</ButtonRecord>
     </WindowRecordAccount>
   </div>
 );
