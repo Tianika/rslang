@@ -5,12 +5,8 @@ import {
   EntryFieldEmail,
   EntryFieldPassword,
   PasswordTitle,
-  EmailTitle,
-  TabEntrance,
-  ContainerButton,
-  TabRecord
+  EmailTitle
 } from './styles';
-import { Link } from 'react-router-dom';
 
 type AccountProps = {
   onEmailChange: (value: string) => void;
@@ -51,16 +47,8 @@ const getUserData = async () => {
   console.log(content);
 };
 
-export const Account: React.FC = (props) => (
+export const Login: React.FC = (props) => (
   <div>
-    <ContainerButton>
-      <Link to={'/account/login'}>
-        <TabEntrance type={'button'}>ВХОД</TabEntrance>
-      </Link>
-      <Link to={'/account/signup'}>
-        <TabRecord type={'button'}>РЕГИСТРАЦИЯ</TabRecord>
-      </Link>
-    </ContainerButton>
     <WindowAuthorizationAccount>
       <EmailTitle>ЭЛЕКТРОННАЯ ПОЧТА</EmailTitle>
       <EntryFieldEmail onChange={onEmailChange} type={'email'} autoComplete="on" />
