@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { StyledHeader, Wrapper, LeftSideBlock, List, ListItem } from './styles';
 
-import logo from '../../assets/icons/logo.png';
-import userIcon from '../../assets/icons/user-icon.png';
+import logo from '../../assets/icons/logo.svg';
+import userIcon from '../../assets/icons/user-icon.svg';
 
 const Header: FC = () => {
   return (

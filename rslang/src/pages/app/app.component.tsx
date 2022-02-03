@@ -10,11 +10,11 @@ const App: React.FC = () => {
   return (
     <>
       <GlobalStyle />
-      
+
       <BrowserRouter>
         <Header />
       </BrowserRouter>
-   
+
       <Footer />
     </>
   );
