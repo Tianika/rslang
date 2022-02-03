@@ -19,13 +19,13 @@ type SignupProps = {
   onPasswordChange: (value: string) => void;
 };
 
-type User = {
+type NewUser = {
   name: string;
   email: string;
   password: string;
 };
 
-const state: User = {
+const state: NewUser = {
   name: '',
   email: '',
   password: ''
@@ -46,7 +46,7 @@ const savePassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
   state.password = value;
 };
 
-const createNewUser = async (user: User) => {
+const createNewUser = async (user: NewUser) => {
   const rawResponse = await fetch('https://learnwords-team17.herokuapp.com/users', {
     method: 'POST',
     headers: {
