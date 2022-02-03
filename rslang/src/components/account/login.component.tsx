@@ -7,28 +7,19 @@ import {
   PasswordTitle,
   EmailTitle
 } from './styles';
-
-type AccountProps = {
-  onEmailChange: (value: string) => void;
-  onPasswordChange: (value: string) => void;
-};
-
-type User = {
-  email: string;
-  password: string;
-};
+import { AccountProps, User } from './types';
 
 const state: User = {
   email: '',
   password: ''
 };
 
-const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+const onEmailChange: AccountProps['onEmailChange'] = (event) => {
   const value = event.target.value;
   state.email = value;
 };
 
-const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+const onPasswordChange: AccountProps['onPasswordChange'] = (event) => {
   const value = event.target.value;
   state.password = value;
 };

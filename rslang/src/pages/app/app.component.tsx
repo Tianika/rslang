@@ -2,11 +2,11 @@ import React from 'react';
 import GlobalStyle from './styles';
 import { hot } from 'react-hot-loader/root';
 import { Footer } from '../../features/footer';
-import { Account } from '../account';
 import { Signup } from '../../components/account';
 import { Header } from '../../features/header/';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Statistic } from '../../components/statistic/statistic.component';
+import { Account } from '../account';
 
 const App: React.FC = () => {
   return (

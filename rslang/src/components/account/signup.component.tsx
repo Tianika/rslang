@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   EntryFieldEmail,
   EntryFieldPassword,
@@ -12,18 +12,7 @@ import {
   ButtonRecord
 } from './styles';
 import { Link } from 'react-router-dom';
-
-type SignupProps = {
-  onNameChange: (value: string) => void;
-  onEmailChange: (value: string) => void;
-  onPasswordChange: (value: string) => void;
-};
-
-type NewUser = {
-  name: string;
-  email: string;
-  password: string;
-};
+import { NewUser, AccountProps } from './types';
 
 const state: NewUser = {
   name: '',
@@ -31,17 +20,17 @@ const state: NewUser = {
   password: ''
 };
 
-const saveName = (event: React.ChangeEvent<HTMLInputElement>): void => {
+const onNameChange: AccountProps['onNameChange'] = (event) => {
   const value = event.target.value;
   state.name = value;
 };
 
-const saveEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
+const onEmailChange: AccountProps['onEmailChange'] = (event) => {
   const value = event.target.value;
   state.email = value;
 };
 
-const savePassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
+const onPasswordChange: AccountProps['onPasswordChange'] = (event) => {
   const value = event.target.value;
   state.password = value;
 };
@@ -72,11 +61,11 @@ export const Signup: React.FC = (props) => (
     </ContainerButton>
     <WindowRecordAccount>
       <RecordTitle>ИМЯ</RecordTitle>
-      <EntryFieldEmail onChange={saveName} type={'text'} autoComplete="on" />
+      <EntryFieldEmail onChange={onNameChange} type={'text'} autoComplete="on" />
       <EmailTitle>ЭЛЕКТРОННАЯ ПОЧТА</EmailTitle>
-      <EntryFieldEmail onChange={saveEmail} type={'email'} autoComplete="on" />
+      <EntryFieldEmail onChange={onEmailChange} type={'email'} autoComplete="on" />
       <PasswordTitle>ПАРОЛЬ</PasswordTitle>
-      <EntryFieldPassword onChange={savePassword} type={'password'} autoComplete="on" />
+      <EntryFieldPassword onChange={onPasswordChange} type={'password'} autoComplete="on" />
       <ButtonRecord onClick={() => createNewUser(state)}>ЗАРЕГИСТРИРОВАТЬСЯ</ButtonRecord>
     </WindowRecordAccount>
   </div>

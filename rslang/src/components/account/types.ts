@@ -1,6 +1,20 @@
+export type NewUser = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export type User = {
   email: string;
   password: string;
+};
+
+type ChangeEventHandle = (value: React.ChangeEvent<HTMLInputElement>) => void;
+
+export type AccountProps = {
+  onNameChange: ChangeEventHandle;
+  onEmailChange: ChangeEventHandle;
+  onPasswordChange: ChangeEventHandle;
 };
 
 export type Signin = {
@@ -10,7 +24,3 @@ export type Signin = {
   userId: 'string';
   name: 'string';
 };
-
-export type Email = 'email';
-
-export type Password = 'password';
