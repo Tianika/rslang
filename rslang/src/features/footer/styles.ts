@@ -6,23 +6,24 @@ export const Wrapper = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${baseTheme.sizes.footer.height}px;
   width: 100%;
+  position: fixed;
+  bottom: 0;
 `;
 
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 120px;
-  width: ${baseTheme.sizes.container.width}px;
+  height: 50px;
+  width: 100%;
   border: 1px solid ${baseTheme.colors.secondary};
   padding: 0 40px;
 `;
 
 export const Logo = styled.a`
   height: 50px;
-  width: 140px;
+  width: 60px;
   background-image: url(${logoRsschool});
   background-repeat: no-repeat;
   background-size: contain;
@@ -38,8 +39,8 @@ export const StyledLinksContainer = styled.div`
 `;
 
 export const StyledLink = styled.a<{ logoLink: string }>`
-  height: 80px;
-  width: 80px;
+  height: 40px;
+  width: 40px;
   background-image: url(${(props) => props.logoLink});
   background-repeat: no-repeat;
   background-size: contain;

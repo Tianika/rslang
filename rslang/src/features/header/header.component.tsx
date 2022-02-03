@@ -11,7 +11,7 @@ const Header: FC = () => {
     <StyledHeader>
       <Wrapper>
         <LeftSideBlock>
-          <img src={logo} alt={logo} width={69} height={72} />
+          <img src={logo} alt={logo} width={40} height={40} />
           <List>
             <ListItem>
               <Link to="/">Главная</Link>
@@ -23,11 +23,13 @@ const Header: FC = () => {
               <Link to="/">Мини-игры</Link>
             </ListItem>
             <ListItem>
-              <Link to="/">Статистика</Link>
+              <Link to="/statistic">Статистика</Link>
             </ListItem>
           </List>
         </LeftSideBlock>
-        <img src={userIcon} alt="user-icon" width={60} height={60} />
+        <Link to="/account/login">
+          <img src={userIcon} alt="user-icon" width={40} height={40} />
+        </Link>
       </Wrapper>
     </StyledHeader>
   );
