@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useAppDispatch } from '../../app/hooks';
+import { addEmail, loginReducer } from './loginState';
 import {
   WindowAuthorizationAccount,
   ButtonAuthentication,
@@ -14,6 +16,12 @@ const state: User = {
   password: ''
 };
 
+// const [disable, setDisable] = useState(false);
+
+// const toggleDisable = () => {
+//   setDisable(!disable);
+// };
+
 const onEmailChange: AccountProps['onEmailChange'] = (event) => {
   const value = event.target.value;
   state.email = value;
@@ -25,17 +33,26 @@ const onPasswordChange: AccountProps['onPasswordChange'] = (event) => {
 };
 
 const getUserData = async () => {
-  const rawResponse = await fetch('https://learnwords-team17.herokuapp.com/signin', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(state)
-  });
-  const content = await rawResponse.json();
+  try {
+    const rawResponse = await fetch('https://learnwords-team17.herokuapp.com/signin', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
 
-  console.log(content);
+      body: JSON.stringify(state)
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+    localStorage.rslangUserName = content.name;
+    localStorage.rslangUserId = content.userId;
+    localStorage.rslangUserToken = content.token;
+    localStorage.rslangUserRefreshToken = content.refreshToken;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const Login: React.FC = (props) => (

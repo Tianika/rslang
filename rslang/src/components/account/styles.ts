@@ -25,6 +25,8 @@ export const EntryFieldEmail = styled.input`
   border-radius: 13px;
   border: none;
   margin-left: 30px;
+  font-size: 24px;
+  text-align: center;
 `;
 export const PasswordTitle = styled.p`
   font-family: Roboto, sans-serif;
@@ -40,6 +42,8 @@ export const EntryFieldPassword = styled.input`
   border-radius: 13px;
   border: none;
   margin-left: 30px;
+  font-size: 24px;
+  text-align: center;
 `;
 export const ButtonAuthentication = styled.button`
   width: 150px;
