@@ -5,7 +5,8 @@ import {
   StyledHowToLearn,
   StyledTeam,
   StyledInnerWrap,
-  StyledTeamMember
+  StyledTeamMember,
+  StyledDemo
 } from './styles';
 
 import learnTogetherImg from '../../assets/jpegs/learn-together.jpg';
@@ -21,6 +22,7 @@ import logor from '../../assets/svg/logo-r.svg';
 import logot from '../../assets/svg/logo-t.svg';
 import logoy from '../../assets/svg/logo-y.svg';
 import logod from '../../assets/svg/logo-d.svg';
+import demo from '../../assets/jpegs/demo.jpg';
 
 const Main: FC = () => {
   return (
@@ -100,6 +102,14 @@ const Main: FC = () => {
           </StyledTeamMember>
         </StyledInnerWrap>
       </StyledTeam>
+      <StyledDemo>
+        <h3>Демо</h3>
+        <img src={demo} alt="demo" />
+        <p>
+          Приложение для изучения иностранных слов с техникой интервального повторения, отслеживания
+          индивидуального прогресса и мини-игр.
+        </p>
+      </StyledDemo>
     </main>
   );
 };

@@ -127,3 +127,25 @@ export const StyledTeamMember = styled.div`
     margin: 10px;
   }
 `;
+
+export const StyledDemo = styled.section`
+  max-width: ${baseTheme.sizes.container};
+  color: ${baseTheme.colors.font};
+  width: 100%;
+  margin: 0 auto;
+
+  text-align: center;
+
+  h3 {
+    font-size: ${baseTheme.fonts.mainH3size};
+    font-weight: 400;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 35px;
+    padding-bottom: 80px;
+  }
+`;
