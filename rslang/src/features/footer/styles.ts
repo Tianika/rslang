@@ -9,6 +9,7 @@ export const Wrapper = styled.footer`
   width: 100%;
   position: fixed;
   bottom: 0;
+  background-color: ${baseTheme.colors.bg};
 `;
 
 export const Container = styled.div`

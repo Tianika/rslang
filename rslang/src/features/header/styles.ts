@@ -4,10 +4,14 @@ export const StyledHeader = styled.header`
   min-width: 962px;
   margin: 0 auto;
   min-height: 50px;
-  background-color: #fff;
+  background-color: ${baseTheme.colors.bg};
   font-size: 26px;
   padding: 10px 10px 0 10px;
   border-bottom: 1px solid ${baseTheme.colors.secondary};
+
+  position: fixed;
+  width: 100%;
+  top: 0;
 `;
 
 export const Wrapper = styled.div`

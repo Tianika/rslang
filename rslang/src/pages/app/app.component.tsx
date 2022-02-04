@@ -15,11 +15,11 @@ const App: React.FC = () => {
       <GlobalStyle />
       <Header />
       <Routes>
+        <Route path="/" element={<Main />} />
         <Route path="/statistic" element={<Statistic />} />
         <Route path="/account/login" element={<Account />} />
         <Route path="/account/signup" element={<Signup />} />
       </Routes>
-      <Main />
       <Footer />
     </BrowserRouter>
   );

@@ -6,6 +6,7 @@ export const StyledLearnTogether = styled.section`
   width: 100%;
   margin: 0 auto;
   text-align: center;
+  padding-top: 47px;
   img {
     display: inline-block;
     border-radius: 13px;
