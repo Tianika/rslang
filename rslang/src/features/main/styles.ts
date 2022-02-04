@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../utils';
 
-export const LearnTogetherBlockStyle = styled.section`
+export const StyledLearnTogether = styled.section`
   max-width: ${baseTheme.sizes.container};
   width: 100%;
   margin: 0 auto;
@@ -12,7 +12,7 @@ export const LearnTogetherBlockStyle = styled.section`
   }
 `;
 
-export const HeadingStyle = styled.h1`
+export const StyledHeading = styled.h1`
   font-size: 44px;
   text-align: center;
   font-weight: 400;
@@ -20,7 +20,7 @@ export const HeadingStyle = styled.h1`
   margin-bottom: 15px;
 `;
 
-export const HowToLearnWrapperStyle = styled.section`
+export const StyledHowToLearn = styled.section`
   max-width: ${baseTheme.sizes.container};
   color: ${baseTheme.colors.font};
   width: 100%;

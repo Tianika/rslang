@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { LearnTogetherBlockStyle, HeadingStyle, HowToLearnWrapperStyle } from './styles';
+import { StyledLearnTogether, StyledHeading, StyledHowToLearn } from './styles';
 
 import learnTogetherImg from '../../assets/jpegs/learn-together.jpg';
 import rememberImg from '../../assets/svg/remember.svg';
@@ -10,13 +10,13 @@ import playImg from '../../assets/svg/play.svg';
 const Main: FC = () => {
   return (
     <main>
-      <LearnTogetherBlockStyle>
-        <HeadingStyle>
+      <StyledLearnTogether>
+        <StyledHeading>
           Изучай английский вместе <br /> с RS Lang
-        </HeadingStyle>
+        </StyledHeading>
         <img src={learnTogetherImg} alt="learnTogetherImg" width={611} height={364} />
-      </LearnTogetherBlockStyle>
-      <HowToLearnWrapperStyle>
+      </StyledLearnTogether>
+      <StyledHowToLearn>
         <div>
           <img src={rememberImg} alt="remember" />
           <div>
@@ -51,7 +51,7 @@ const Main: FC = () => {
             <p>Для лучшего запоминания информации играй в игры</p>
           </div>
         </div>
-      </HowToLearnWrapperStyle>
+      </StyledHowToLearn>
     </main>
   );
 };
