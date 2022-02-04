@@ -1,11 +1,26 @@
 import { FC } from 'react';
-import { StyledLearnTogether, StyledHeading, StyledHowToLearn } from './styles';
+import {
+  StyledLearnTogether,
+  StyledHeading,
+  StyledHowToLearn,
+  StyledTeam,
+  StyledInnerWrap,
+  StyledTeamMember
+} from './styles';
 
 import learnTogetherImg from '../../assets/jpegs/learn-together.jpg';
 import rememberImg from '../../assets/svg/remember.svg';
 import learnImg from '../../assets/svg/learning.svg';
 import analyzeImg from '../../assets/svg/analyze.svg';
 import playImg from '../../assets/svg/play.svg';
+import firstTeamMemberImg from '../../assets/png/team-member-1.png';
+import secondTeamMemberImg from '../../assets/png/team-member-2.png';
+import thirdTeamMemberImg from '../../assets/png/team-member-3.png';
+import fourthTeamMemberImg from '../../assets/png/team-member-4.png';
+import logor from '../../assets/svg/logo-r.svg';
+import logot from '../../assets/svg/logo-t.svg';
+import logoy from '../../assets/svg/logo-y.svg';
+import logod from '../../assets/svg/logo-d.svg';
 
 const Main: FC = () => {
   return (
@@ -52,6 +67,39 @@ const Main: FC = () => {
           </div>
         </div>
       </StyledHowToLearn>
+      <StyledTeam>
+        <h3>Команда</h3>
+        <StyledInnerWrap>
+          <StyledTeamMember>
+            <img src={firstTeamMemberImg} alt="first-team-member" />
+            <p>Roman Lickevich</p>
+            <a href="https://github.com/lickevich" target="_blank">
+              <img src={logor} alt="firstmember" />
+            </a>
+          </StyledTeamMember>
+          <StyledTeamMember>
+            <img src={secondTeamMemberImg} alt="first-team-member" />
+            <p>Татьяна Цыбина</p>
+            <a href="https://github.com/tianika" target="_blank">
+              <img src={logot} alt="firstmember" />
+            </a>
+          </StyledTeamMember>
+          <StyledTeamMember>
+            <img src={thirdTeamMemberImg} alt="first-team-member" />
+            <p>Евгений Жуков</p>
+            <a href="https://github.com/nobodynoticed" target="_blank">
+              <img src={logoy} alt="firstmember" />
+            </a>
+          </StyledTeamMember>
+          <StyledTeamMember>
+            <img src={fourthTeamMemberImg} alt="first-team-member" />
+            <p>Дарья Малина</p>
+            <a href="https://github.com/DariaMalina" target="_blank">
+              <img src={logod} alt="firstmember" />
+            </a>
+          </StyledTeamMember>
+        </StyledInnerWrap>
+      </StyledTeam>
     </main>
   );
 };

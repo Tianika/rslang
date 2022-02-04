@@ -72,3 +72,58 @@ export const StyledHowToLearn = styled.section`
     }
   }
 `;
+
+export const StyledTeam = styled.section`
+  max-width: ${baseTheme.sizes.container};
+  color: ${baseTheme.colors.font};
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 0;
+
+  border: 1px solid #5984e2;
+  border-radius: 13px;
+
+  h3 {
+    font-size: ${baseTheme.fonts.mainH3size};
+    font-weight: 400;
+    text-align: center;
+    margin-top: 0;
+  }
+`;
+
+export const StyledInnerWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  font-size: ${baseTheme.fonts.teamSectionSize};
+
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+
+  & > div:not(div:nth-child(2)) {
+    & > img {
+      border-radius: 100px;
+      border: 1px solid #000000;
+    }
+  }
+`;
+
+export const StyledTeamMember = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 300px;
+  width: 100%;
+  min-height: 300px;
+  text-align: center;
+  margin-bottom: 30px;
+
+  p {
+    margin: 10px;
+  }
+`;

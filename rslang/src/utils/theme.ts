@@ -33,6 +33,7 @@ export const baseTheme = {
     family: 'Roboto',
     footerSize: 22,
     mainH3size: '54px',
-    mainParagraphSize: '24px'
+    mainParagraphSize: '24px',
+    teamSectionSize: '34px'
   }
 };

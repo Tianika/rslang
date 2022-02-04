@@ -3,7 +3,7 @@ import { baseTheme } from '../../utils';
 export const StyledHeader = styled.header`
   min-width: 962px;
   margin: 0 auto;
-  height: 50px;
+  min-height: 50px;
   background-color: #fff;
   font-size: 26px;
   padding: 10px 10px 0 10px;
