@@ -64,6 +64,51 @@ export const ButtonAuthentication = styled.button`
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 `;
+
+export const PreloadLine = styled.div`
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #fff;
+  margin: 0 5px;
+
+  &.line1 {
+    animation: loading 1s 0.2s linear infinite;
+  }
+  &.line2 {
+    animation: loading 1s 0.4s linear infinite;
+  }
+  &.line3 {
+    animation: loading 1s 0.6s linear infinite;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: translate(0, -7px);
+    }
+    50% {
+      transform: translate(0, 7px);
+    }
+    100% {
+      transform: translate(0, -7px);
+    }
+  }
+`;
+
+export const ButtonAuthPreload = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 50px;
+  color: #ffffff;
+  background: ${baseTheme.colors.primary};
+  border-radius: 50px;
+  margin: 30px auto;
+  font-size: 22px;
+  border: none;
+`;
 export const ContainerButton = styled.div`
   width: 600px;
   display: flex;
