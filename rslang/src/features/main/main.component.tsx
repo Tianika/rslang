@@ -1,11 +1,17 @@
 import { FC } from 'react';
+import { LearnTogetherBlockStyle, HeadingStyle } from './styles';
+
+import learnTogetherImg from '../../assets/jpegs/learn-together.jpg';
 
 const Main: FC = () => {
   return (
     <main>
-      <section>
-        <h1>test</h1>
-      </section>
+      <LearnTogetherBlockStyle>
+        <HeadingStyle>
+          Изучай английский вместе <br /> с RS Lang
+        </HeadingStyle>
+        <img src={learnTogetherImg} alt="learnTogetherImg" width={611} height={364} />
+      </LearnTogetherBlockStyle>
     </main>
   );
 };

@@ -8,6 +8,8 @@ const GlobalStyle = createGlobalStyle`
     background: #fff;
     // font-family: 'DM Mono', monospace;
     font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    min-height: 100%;
   }
 
   a {

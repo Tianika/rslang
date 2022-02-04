@@ -6,7 +6,13 @@ export const baseTheme = {
     yellow: '#ffdc40',
     blue: '#6dc3ff',
     bg: '#ffffff',
-    font: '#000000'
+    font: '#000000',
+    firstBookColor: '#FF0101',
+    secondBookColor: '#FFA901',
+    thirdBookColor: '#FFE320',
+    fourthBookColor: '#00D715',
+    fifthBookColor: '#5984E2',
+    sixthBookColor: '#BA2DFC'
   },
 
   media: {
