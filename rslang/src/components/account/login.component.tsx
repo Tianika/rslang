@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { addEmail, loginReducer } from './loginState';
 import {
@@ -15,7 +15,6 @@ import { AccountProps, User } from './types';
 
 export const Login: React.FC = (props) => {
   const [disable, setDisable] = useState(false);
-
   const toggleDisable = () => {
     setDisable(!disable);
   };
@@ -37,6 +36,7 @@ export const Login: React.FC = (props) => {
 
   const getUserData = async () => {
     toggleDisable();
+
     try {
       const rawResponse = await fetch('https://learnwords-team17.herokuapp.com/signin', {
         method: 'POST',
@@ -47,13 +47,31 @@ export const Login: React.FC = (props) => {
 
         body: JSON.stringify(state)
       });
-      const content = await rawResponse.json();
 
-      console.log(content);
-      localStorage.rslangUserName = content.name;
-      localStorage.rslangUserId = content.userId;
-      localStorage.rslangUserToken = content.token;
-      localStorage.rslangUserRefreshToken = content.refreshToken;
+      switch (rawResponse.status) {
+        case 200:
+          const content = await rawResponse.json();
+
+          localStorage.rslangUserName = content.name;
+          localStorage.rslangUserId = content.userId;
+          localStorage.rslangUserToken = content.token;
+          localStorage.rslangUserRefreshToken = content.refreshToken;
+
+          location.href = location.origin;
+          break;
+
+        case 403:
+          console.log('неверный пароль');
+          break;
+
+        case 404:
+          console.log('пользователь не найден');
+
+          break;
+
+        default:
+          console.log('попробуйте еще раз');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +89,7 @@ export const Login: React.FC = (props) => {
             ВОЙТИ
           </ButtonAuthentication>
         ) : (
-          <ButtonAuthPreload>
+          <ButtonAuthPreload disabled={disable}>
             <PreloadLine className="line1" />
             <PreloadLine className="line2" />
             <PreloadLine className="line3" />

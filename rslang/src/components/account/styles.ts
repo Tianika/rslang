@@ -96,7 +96,7 @@ export const PreloadLine = styled.div`
   }
 `;
 
-export const ButtonAuthPreload = styled.div`
+export const ButtonAuthPreload = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
