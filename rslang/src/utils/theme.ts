@@ -25,12 +25,14 @@ export const baseTheme = {
   // in px
   sizes: {
     header: { height: 82 },
-    container: { width: 1014 },
+    container: '1130px',
     footer: { height: 100 }
   },
 
   fonts: {
     family: 'Roboto',
-    footerSize: 22
+    footerSize: 22,
+    mainH3size: '54px',
+    mainParagraphSize: '24px'
   }
 };
