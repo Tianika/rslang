@@ -1,5 +1,5 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import { LoginState } from './types';
+import { SignupState } from './types';
 
 export enum LoadingState {
   Initial = 'Initial',
@@ -8,20 +8,25 @@ export enum LoadingState {
   Error = 'Error'
 }
 
-const initialState: LoginState = {
+const initialState: SignupState = {
+  name: '',
   email: '',
   password: '',
   loadingState: LoadingState.Initial
 };
 
-export const addEmail = createAction('EMAIL_LOGIN');
-export const addPassword = createAction('PASSWORD_LOGIN');
-export const loginHandler = createAction('LOGIN');
+export const addName = createAction('NAME_SIGNUP');
+export const addEmail = createAction('EMAIL_SIGNUP');
+export const addPassword = createAction('PASSWORD_SIGNUP');
+export const signupHandler = createAction('SIGNUP');
 
-export const loginSlice = createSlice({
-  name: 'login',
+export const signupSlice = createSlice({
+  name: 'signup',
   initialState,
   reducers: {
+    changeName: (state, action) => {
+      state.name = action.payload;
+    },
     changeEmail: (state, action) => {
       state.email = action.payload;
     },
@@ -34,6 +39,6 @@ export const loginSlice = createSlice({
   }
 });
 
-export const loginReducer = loginSlice.reducer;
+export const signupReducer = signupSlice.reducer;
 
-export const loginActions = loginSlice.actions;
+export const signupActions = signupSlice.actions;

@@ -13,14 +13,17 @@ import {
 } from '../login/styles';
 import { Link } from 'react-router-dom';
 import { AccountProps } from '../login/types';
-import { NewUser } from './types';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { newUserSelector } from './signup.selector';
+import { signupActions } from './signup.slice';
+import { fetchSignupAction } from './signup.saga';
+
+const { changeName, changeEmail, changePassword } = signupActions;
 
 export const Signup: React.FC = (props) => {
-  const state: NewUser = {
-    name: '',
-    email: '',
-    password: ''
-  };
+  const dispatch = useAppDispatch();
+
+  const signup = useAppSelector(newUserSelector);
 
   const [disable, setDisable] = useState(false);
 
@@ -30,54 +33,54 @@ export const Signup: React.FC = (props) => {
 
   const onNameChange: AccountProps['onNameChange'] = (event) => {
     const value = event.target.value;
-    state.name = value;
+    dispatch(changeName(value));
   };
 
   const onEmailChange: AccountProps['onEmailChange'] = (event) => {
     const value = event.target.value;
-    state.email = value;
+    dispatch(changeEmail(value));
   };
 
   const onPasswordChange: AccountProps['onPasswordChange'] = (event) => {
     const value = event.target.value;
-    state.password = value;
+    dispatch(changePassword(value));
   };
 
-  const createNewUser = async () => {
-    toggleDisable();
-    try {
-      const rawResponse = await fetch('https://learnwords-team17.herokuapp.com/users', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(state)
-      });
+  // const createNewUser = async () => {
+  //   toggleDisable();
+  //   try {
+  //     const rawResponse = await fetch('https://learnwords-team17.herokuapp.com/users', {
+  //       method: 'POST',
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(state)
+  //     });
 
-      switch (rawResponse.status) {
-        case 200:
-          const content = await rawResponse.json();
+  //     switch (rawResponse.status) {
+  //       case 200:
+  //         const content = await rawResponse.json();
 
-          location.href = location.origin;
-          break;
+  //         location.href = location.origin;
+  //         break;
 
-        case 417:
-          console.log('пользователь уже есть в базе');
-          break;
+  //       case 417:
+  //         console.log('пользователь уже есть в базе');
+  //         break;
 
-        case 422:
-          console.log('некорректный логин или пароль');
+  //       case 422:
+  //         console.log('некорректный логин или пароль');
 
-          break;
+  //         break;
 
-        default:
-          console.log('попробуйте еще раз');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //       default:
+  //         console.log('попробуйте еще раз');
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <div>
@@ -96,7 +99,9 @@ export const Signup: React.FC = (props) => {
         <EntryFieldEmail onChange={onEmailChange} type={'email'} autoComplete="on" />
         <PasswordTitle>ПАРОЛЬ</PasswordTitle>
         <EntryFieldPassword onChange={onPasswordChange} type={'password'} autoComplete="on" />
-        <ButtonRecord onClick={createNewUser}>ЗАРЕГИСТРИРОВАТЬСЯ</ButtonRecord>
+        <ButtonRecord onClick={() => dispatch(fetchSignupAction(signup))}>
+          ЗАРЕГИСТРИРОВАТЬСЯ
+        </ButtonRecord>
       </WindowRecordAccount>
     </div>
   );
