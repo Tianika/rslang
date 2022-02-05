@@ -80,24 +80,24 @@ const Main: FC = () => {
             </a>
           </StyledTeamMember>
           <StyledTeamMember>
-            <img src={secondTeamMemberImg} alt="first-team-member" />
+            <img src={secondTeamMemberImg} alt="second-team-member" />
             <p>Татьяна Цыбина</p>
             <a href="https://github.com/tianika" target="_blank">
-              <img src={logot} alt="firstmember" />
+              <img src={logot} alt="secondmember" />
             </a>
           </StyledTeamMember>
           <StyledTeamMember>
-            <img src={thirdTeamMemberImg} alt="first-team-member" />
+            <img src={thirdTeamMemberImg} alt="third-team-member" />
             <p>Евгений Жуков</p>
             <a href="https://github.com/nobodynoticed" target="_blank">
-              <img src={logoy} alt="firstmember" />
+              <img src={logoy} alt="thirdmember" />
             </a>
           </StyledTeamMember>
           <StyledTeamMember>
-            <img src={fourthTeamMemberImg} alt="first-team-member" />
+            <img src={fourthTeamMemberImg} alt="fourth-team-member" />
             <p>Дарья Малина</p>
             <a href="https://github.com/DariaMalina" target="_blank">
-              <img src={logod} alt="firstmember" />
+              <img src={logod} alt="fourthmember" />
             </a>
           </StyledTeamMember>
         </StyledInnerWrap>
