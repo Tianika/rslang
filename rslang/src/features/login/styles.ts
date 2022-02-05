@@ -95,7 +95,6 @@ export const PreloadLine = styled.div`
     }
   }
 `;
-
 export const ButtonAuthPreload = styled.button`
   display: flex;
   justify-content: center;
@@ -109,6 +108,7 @@ export const ButtonAuthPreload = styled.button`
   font-size: 22px;
   border: none;
 `;
+
 export const ContainerButton = styled.div`
   width: 600px;
   display: flex;

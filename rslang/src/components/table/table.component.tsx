@@ -14,7 +14,7 @@ import {
   TableStatisticHeadThEnd
 } from './style';
 
-export const Statistic: React.FC = () => (
+export const Table: React.FC = () => (
   <div>
     {' '}
     <TableStatistic>

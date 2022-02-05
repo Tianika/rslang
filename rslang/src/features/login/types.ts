@@ -1,12 +1,12 @@
-export type NewUser = {
-  name: string;
-  email: string;
-  password: string;
-};
+import { LoadingState } from './login.slice';
 
 export type User = {
   email: string;
   password: string;
+};
+
+export type LoginState = User & {
+  loadingState: LoadingState;
 };
 
 type ChangeEventHandle = (value: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,9 +18,9 @@ export type AccountProps = {
 };
 
 export type Signin = {
-  message: 'string';
-  token: 'string';
-  refreshToken: 'string';
-  userId: 'string';
-  name: 'string';
+  message: string;
+  token: string;
+  refreshToken: string;
+  userId: string;
+  name: string;
 };

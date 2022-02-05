@@ -10,9 +10,10 @@ import {
   RecordTitle,
   WindowRecordAccount,
   ButtonRecord
-} from './styles';
+} from '../login/styles';
 import { Link } from 'react-router-dom';
-import { NewUser, AccountProps } from './types';
+import { AccountProps } from '../login/types';
+import { NewUser } from './types';
 
 export const Signup: React.FC = (props) => {
   const state: NewUser = {

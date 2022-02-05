@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Login } from '../../components/account';
-import { ContainerButton, TabEntrance, TabRecord } from '../../components/account/styles';
+import { Login } from '../../features/login';
+import { ContainerButton, TabEntrance, TabRecord } from '../../features/login/styles';
 
 export const Account: React.FC = (props) => (
   <div>
