@@ -19,7 +19,7 @@ type RecordProps = {
 };
 
 export const Signup: React.FC = (props) => (
-  <div>
+  <div style={{ paddingTop: '70px' }}>
     <ContainerButton>
       <Link to={'/account/login'}>
         <TabEntrance type={'button'}>ВХОД</TabEntrance>
