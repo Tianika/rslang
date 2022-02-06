@@ -1,7 +1,6 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { NewUser } from './types';
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
-
 import * as Effects from 'redux-saga/effects';
 import { LoadingState, signupActions } from './signup.slice';
 import { requestSignup } from './signup.api';
@@ -12,8 +11,7 @@ export const fetchSignupAction = createAction<NewUser, string>('signup/fetch');
 const { changeLoadingState } = signupActions;
 
 const saveUserData = (data: NewUser) => {
-  const content = data;
-
+  console.log(data);
   //нужно залогиниться с данными юзера, новый запрос?
 
   location.href = location.origin;
@@ -21,6 +19,7 @@ const saveUserData = (data: NewUser) => {
 
 function* workSignupFetch(action: PayloadAction<NewUser>) {
   yield put(changeLoadingState(LoadingState.Loading));
+
   try {
     const { data } = yield call(requestSignup, action.payload) as Response;
 
@@ -34,8 +33,8 @@ function* workSignupFetch(action: PayloadAction<NewUser>) {
   }
 }
 
-function* loginSaga() {
+function* signupSaga() {
   yield takeLatest(fetchSignupAction, workSignupFetch);
 }
 
-export default loginSaga;
+export default signupSaga;
