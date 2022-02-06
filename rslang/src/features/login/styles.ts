@@ -113,7 +113,7 @@ export const ContainerButton = styled.div`
   width: 600px;
   display: flex;
   justify-content: space-around;
-  margin: 20px auto;
+  margin: 100px auto 20px;
 `;
 export const TabEntrance = styled.button`
   font-size: 22px;
