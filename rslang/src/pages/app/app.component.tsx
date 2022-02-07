@@ -9,7 +9,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Account } from '../account';
 import { Statistics } from '../statistics/statistics.component';
 import { GamesPage } from '../../components/games/startPageGames.component';
-import { GameAudio } from '../../components/games/audio-games/audio-game.component';
+import GameAudio from '../../components/games/audio-games/audio-game.component';
 
 const App: React.FC = () => {
   return (
