@@ -1,12 +1,6 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
+import { LoadingState } from '../../utils';
 import { SignupState } from './types';
-
-export enum LoadingState {
-  Initial = 'Initial',
-  Loading = 'Loading',
-  Success = 'Success',
-  Error = 'Error'
-}
 
 const initialState: SignupState = {
   name: '',

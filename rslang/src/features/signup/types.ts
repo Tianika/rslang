@@ -1,4 +1,4 @@
-import { LoadingState } from './signup.slice';
+import { LoadingState } from '../../utils/constants';
 
 export type NewUser = {
   name: string;

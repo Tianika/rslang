@@ -95,19 +95,20 @@ export const PreloadLine = styled.div`
     }
   }
 `;
-export const ButtonAuthPreload = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-  height: 50px;
-  color: #ffffff;
-  background: ${baseTheme.colors.primary};
-  border-radius: 50px;
-  margin: 30px auto;
-  font-size: 22px;
-  border: none;
-`;
+
+// export const ButtonAuthPreload = styled.button`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 150px;
+//   height: 50px;
+//   color: #ffffff;
+//   background: ${baseTheme.colors.primary};
+//   border-radius: 50px;
+//   margin: 30px auto;
+//   font-size: 22px;
+//   border: none;
+// `;
 
 export const ContainerButton = styled.div`
   width: 600px;

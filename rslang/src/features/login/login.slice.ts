@@ -1,12 +1,6 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
+import { LoadingState } from '../../utils';
 import { LoginState } from './types';
-
-export enum LoadingState {
-  Initial = 'Initial',
-  Loading = 'Loading',
-  Success = 'Success',
-  Error = 'Error'
-}
 
 const initialState: LoginState = {
   email: '',
@@ -14,10 +8,12 @@ const initialState: LoginState = {
   loadingState: LoadingState.Initial
 };
 
+//создаем экшены
 export const addEmail = createAction('EMAIL_LOGIN');
 export const addPassword = createAction('PASSWORD_LOGIN');
 export const loginHandler = createAction('LOGIN');
 
+//создаем редюсеры
 export const loginSlice = createSlice({
   name: 'login',
   initialState,
@@ -35,5 +31,6 @@ export const loginSlice = createSlice({
 });
 
 export const loginReducer = loginSlice.reducer;
+//добавить loginReducer в reducer.ts
 
 export const loginActions = loginSlice.actions;

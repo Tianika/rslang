@@ -3,11 +3,15 @@ import { Signin, User } from './types';
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
 import { requestLogin } from './login.api';
 import * as Effects from 'redux-saga/effects';
-import { LoadingState, loginActions } from './login.slice';
+import { loginActions } from './login.slice';
+import { LoadingState } from '../../utils';
 
 const call: any = Effects.call;
 
+//создаем экшен для запроса
 export const fetchLoginAction = createAction<User, string>('login/fetch');
+
+//получаем функцию из экшенов
 const { changeLoadingState } = loginActions;
 
 const saveUserData = (data: Signin) => {
@@ -23,15 +27,24 @@ const saveUserData = (data: Signin) => {
 
 function* workLoginFetch(action: PayloadAction<User>) {
   yield put(changeLoadingState(LoadingState.Loading));
+
   try {
+    //получаем данные из запроса
     const { data } = yield call(requestLogin, action.payload) as Response;
 
+    //сохраняем данные
     yield call(saveUserData, data);
 
     yield put(changeLoadingState(LoadingState.Success));
   } catch (error: any) {
     console.log(error.response.status);
-    //throw new Error(String(error));
+    //добавить обработку ошибок
+
+    //       case 403:
+    //         console.log('неверный пароль');
+
+    //       case 404:
+    //         console.log('пользователь не найден');
     yield put(changeLoadingState(LoadingState.Error));
   }
 }
@@ -41,3 +54,4 @@ function* loginSaga() {
 }
 
 export default loginSaga;
+//добавить в rootsaga

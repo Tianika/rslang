@@ -12,11 +12,11 @@ import {
   ButtonRecord
 } from '../login/styles';
 import { Link } from 'react-router-dom';
-import { AccountProps } from '../login/types';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { newUserSelector } from './signup.selector';
 import { signupActions } from './signup.slice';
 import { fetchSignupAction } from './signup.saga';
+import { AccountProps } from '../../utils/types';
 
 const { changeName, changeEmail, changePassword } = signupActions;
 
@@ -25,11 +25,11 @@ export const Signup: React.FC = (props) => {
 
   const signup = useAppSelector(newUserSelector);
 
-  const [disable, setDisable] = useState(false);
+  // const [disable, setDisable] = useState(false);
 
-  const toggleDisable = () => {
-    setDisable(!disable);
-  };
+  // const toggleDisable = () => {
+  //   setDisable(!disable);
+  // };
 
   const onNameChange: AccountProps['onNameChange'] = (event) => {
     const value = event.target.value;
@@ -45,42 +45,6 @@ export const Signup: React.FC = (props) => {
     const value = event.target.value;
     dispatch(changePassword(value));
   };
-
-  // const createNewUser = async () => {
-  //   toggleDisable();
-  //   try {
-  //     const rawResponse = await fetch('https://learnwords-team17.herokuapp.com/users', {
-  //       method: 'POST',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(state)
-  //     });
-
-  //     switch (rawResponse.status) {
-  //       case 200:
-  //         const content = await rawResponse.json();
-
-  //         location.href = location.origin;
-  //         break;
-
-  //       case 417:
-  //         console.log('пользователь уже есть в базе');
-  //         break;
-
-  //       case 422:
-  //         console.log('некорректный логин или пароль');
-
-  //         break;
-
-  //       default:
-  //         console.log('попробуйте еще раз');
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   return (
     <div>

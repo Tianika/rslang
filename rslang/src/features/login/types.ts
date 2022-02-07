@@ -1,4 +1,4 @@
-import { LoadingState } from './login.slice';
+import { LoadingState } from '../../utils';
 
 export type User = {
   email: string;
@@ -7,14 +7,6 @@ export type User = {
 
 export type LoginState = User & {
   loadingState: LoadingState;
-};
-
-type ChangeEventHandle = (value: React.ChangeEvent<HTMLInputElement>) => void;
-
-export type AccountProps = {
-  onNameChange: ChangeEventHandle;
-  onEmailChange: ChangeEventHandle;
-  onPasswordChange: ChangeEventHandle;
 };
 
 export type Signin = {
