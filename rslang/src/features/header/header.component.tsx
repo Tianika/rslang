@@ -14,7 +14,7 @@ const Header: FC = () => {
           <img src={logo} alt={logo} width={40} height={40} />
           <List>
             <ListItem>
-              <Link to="/home">Главная</Link>
+              <Link to="/">Главная</Link>
             </ListItem>
             <ListItem>
               <Link to="/">Учебник</Link>

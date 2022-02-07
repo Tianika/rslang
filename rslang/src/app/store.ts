@@ -8,6 +8,9 @@ export type RootState = ReturnType<typeof store.getState>;
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [...getDefaultMiddleware({ thunk: false }), sagaMiddleware];
+//const middleware = [sagaMiddleware];
+//middleware = (getDefaultMiddleware) =>
+//  getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware);
 
 const store = configureStore({
   reducer: rootReducer,
