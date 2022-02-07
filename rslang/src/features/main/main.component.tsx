@@ -26,7 +26,7 @@ import demo from '../../assets/jpegs/demo.jpg';
 
 const Main: FC = () => {
   return (
-    <main>
+    <div>
       <StyledLearnTogether>
         <StyledHeading>
           Изучай английский вместе <br /> с RS Lang
@@ -110,7 +110,7 @@ const Main: FC = () => {
           индивидуального прогресса и мини-игр.
         </p>
       </StyledDemo>
-    </main>
+    </div>
   );
 };
 

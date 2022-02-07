@@ -20,7 +20,7 @@ const Header: FC = () => {
               <Link to="/">Учебник</Link>
             </ListItem>
             <ListItem>
-              <Link to="/">Мини-игры</Link>
+              <Link to="/games">Мини-игры</Link>
             </ListItem>
             <ListItem>
               <Link to="/statistic">Статистика</Link>
