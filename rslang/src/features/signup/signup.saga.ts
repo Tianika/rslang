@@ -8,11 +8,15 @@ import { LoadingState } from '../../utils';
 
 const call: any = Effects.call;
 
+//создаем экшен для запроса
 export const fetchSignupAction = createAction<NewUser, string>('signup/fetch');
+
+//получаем функцию для отслеживания статуса загрузки
 const { changeLoadingState } = signupActions;
 
 const saveUserData = (data: NewUser) => {
   console.log(data);
+  //доделать:
   //нужно залогиниться с данными юзера, добавить запрос
 
   location.href = location.origin;
@@ -22,8 +26,10 @@ function* workSignupFetch(action: PayloadAction<NewUser>) {
   yield put(changeLoadingState(LoadingState.Loading));
 
   try {
+    //запрос на регистрацию
     const { data } = yield call(requestSignup, action.payload) as Response;
 
+    //обработка данных
     yield call(saveUserData, data);
 
     yield put(changeLoadingState(LoadingState.Success));
@@ -46,3 +52,4 @@ function* signupSaga() {
 }
 
 export default signupSaga;
+//добавить в saga.ts

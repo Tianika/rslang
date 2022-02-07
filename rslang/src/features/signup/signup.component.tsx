@@ -18,11 +18,13 @@ import { signupActions } from './signup.slice';
 import { fetchSignupAction } from './signup.saga';
 import { AccountProps } from '../../utils/types';
 
+//получаем экшены
 const { changeName, changeEmail, changePassword } = signupActions;
 
 export const Signup: React.FC = (props) => {
   const dispatch = useAppDispatch();
 
+  //получаем данные для fetchSignupAction
   const signup = useAppSelector(newUserSelector);
 
   // const [disable, setDisable] = useState(false);
@@ -31,6 +33,7 @@ export const Signup: React.FC = (props) => {
   //   setDisable(!disable);
   // };
 
+  //функции для отслеживания изменений
   const onNameChange: AccountProps['onNameChange'] = (event) => {
     const value = event.target.value;
     dispatch(changeName(value));

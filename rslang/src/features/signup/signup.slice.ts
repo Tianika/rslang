@@ -9,11 +9,13 @@ const initialState: SignupState = {
   loadingState: LoadingState.Initial
 };
 
+//создаем экшены
 export const addName = createAction('NAME_SIGNUP');
 export const addEmail = createAction('EMAIL_SIGNUP');
 export const addPassword = createAction('PASSWORD_SIGNUP');
 export const signupHandler = createAction('SIGNUP');
 
+//создаем редюсеры
 export const signupSlice = createSlice({
   name: 'signup',
   initialState,
