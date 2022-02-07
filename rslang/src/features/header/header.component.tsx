@@ -14,13 +14,13 @@ const Header: FC = () => {
           <img src={logo} alt={logo} width={40} height={40} />
           <List>
             <ListItem>
-              <Link to="/">Главная</Link>
+              <Link to="/home">Главная</Link>
             </ListItem>
             <ListItem>
               <Link to="/">Учебник</Link>
             </ListItem>
             <ListItem>
-              <Link to="/">Мини-игры</Link>
+              <Link to="/games">Мини-игры</Link>
             </ListItem>
             <ListItem>
               <Link to="/statistic">Статистика</Link>

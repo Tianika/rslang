@@ -8,18 +8,24 @@ import { Main } from '../../features/main';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Statistic } from '../../components/statistic/statistic.component';
 import { Signup } from '../../components/account/signup.component';
+import { GamesPage } from '../../components/games/startPageGames.component';
+import { GameAudio } from '../../components/games/audio-games/audio-game.component';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <GlobalStyle />
       <Header />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/statistic" element={<Statistic />} />
-        <Route path="/account/login" element={<Account />} />
-        <Route path="/account/signup" element={<Signup />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/home" element={<Main />} />
+          <Route path="/statistic" element={<Statistic />} />
+          <Route path="/account/login" element={<Account />} />
+          <Route path="/account/signup" element={<Signup />} />
+          <Route path="/games" element={<GamesPage />} />
+          <Route path="/games/audio" element={<GameAudio />} />
+        </Routes>
+      </main>
       <Footer />
     </BrowserRouter>
   );
