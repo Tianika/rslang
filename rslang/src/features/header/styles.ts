@@ -8,10 +8,7 @@ export const StyledHeader = styled.header`
   font-size: 26px;
   padding: 10px 10px 0 10px;
   border-bottom: 1px solid ${baseTheme.colors.secondary};
-
-  position: fixed;
   width: 100%;
-  top: 0;
 `;
 
 export const Wrapper = styled.div`
