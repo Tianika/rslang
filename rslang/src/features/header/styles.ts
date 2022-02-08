@@ -37,3 +37,29 @@ export const ListItem = styled.li`
     color: #5984e2;
   }
 `;
+
+export const RigthSideBlock = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const UserName = styled.div`
+  text-align: center;
+  padding: 0 10px;
+`;
+
+export const Logout = styled.button`
+  height: 50px;
+  width: 50px;
+  background-color: ${baseTheme.colors.bg};
+  border: none;
+  cursor: pointer;
+
+  img {
+    transition: 0.5s;
+    &:hover {
+      height: 45px;
+      width: 45px;
+    }
+  }
+`;

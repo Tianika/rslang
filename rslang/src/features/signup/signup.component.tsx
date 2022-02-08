@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   EntryFieldEmail,
   EntryFieldPassword,
@@ -9,11 +9,12 @@ import {
   TabRecord,
   RecordTitle,
   WindowRecordAccount,
-  ButtonRecord
+  ButtonRecord,
+  PreloadLine
 } from '../login/styles';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { newUserSelector } from './signup.selector';
+import { newUserSelector, statusSelector } from './signup.selector';
 import { signupActions } from './signup.slice';
 import { fetchSignupAction } from './signup.saga';
 import { AccountProps } from '../../utils/types';
@@ -27,11 +28,15 @@ export const Signup: React.FC = (props) => {
   //получаем данные для fetchSignupAction
   const signup = useAppSelector(newUserSelector);
 
-  // const [disable, setDisable] = useState(false);
+  //получаем статус соединения с сервером
+  const status = useAppSelector(statusSelector);
 
-  // const toggleDisable = () => {
-  //   setDisable(!disable);
-  // };
+  //вкл-выкл кнопку при отправке запроса
+  const [disable, setDisable] = useState(false);
+
+  const toggleDisable = () => {
+    setDisable(!disable);
+  };
 
   //функции для отслеживания изменений
   const onNameChange: AccountProps['onNameChange'] = (event) => {
@@ -47,6 +52,29 @@ export const Signup: React.FC = (props) => {
   const onPasswordChange: AccountProps['onPasswordChange'] = (event) => {
     const value = event.target.value;
     dispatch(changePassword(value));
+  };
+
+  //включаем кнопку при ошибке регистрации
+  useEffect(() => {
+    if (disable && status.status === 'Error') {
+      toggleDisable();
+    }
+  }, [status]);
+
+  //запрос
+  const fetchSignup = () => {
+    toggleDisable();
+    dispatch(fetchSignupAction(signup));
+  };
+
+  const PreloadDiv: React.FC = () => {
+    return (
+      <>
+        <PreloadLine className="line1" />
+        <PreloadLine className="line2" />
+        <PreloadLine className="line3" />
+      </>
+    );
   };
 
   return (
@@ -66,8 +94,8 @@ export const Signup: React.FC = (props) => {
         <EntryFieldEmail onChange={onEmailChange} type={'email'} autoComplete="on" />
         <PasswordTitle>ПАРОЛЬ</PasswordTitle>
         <EntryFieldPassword onChange={onPasswordChange} type={'password'} autoComplete="on" />
-        <ButtonRecord onClick={() => dispatch(fetchSignupAction(signup))}>
-          ЗАРЕГИСТРИРОВАТЬСЯ
+        <ButtonRecord onClick={fetchSignup}>
+          {!disable ? 'ЗАРЕГИСТРИРОВАТЬСЯ' : <PreloadDiv />}
         </ButtonRecord>
       </WindowRecordAccount>
     </div>
