@@ -17,7 +17,7 @@ const Header: FC = () => {
               <Link to="/">Главная</Link>
             </ListItem>
             <ListItem>
-              <Link to="/">Учебник</Link>
+              <Link to="/textbook">Учебник</Link>
             </ListItem>
             <ListItem>
               <Link to="/games">Мини-игры</Link>

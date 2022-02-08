@@ -10,6 +10,7 @@ import { Account } from '../account';
 import { Statistics } from '../statistics/statistics.component';
 import { GamesPage } from '../../components/games/startPageGames.component';
 import { GameAudio } from '../../components/games/audio-games/audio-game.component';
+import { Textbook } from '../../components/textbook/textbook.component';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
       <main>
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/textbook" element={<Textbook />} />
           <Route path="/statistic" element={<Statistics />} />
           <Route path="/account/login" element={<Account />} />
           <Route path="/account/signup" element={<Signup />} />
