@@ -10,7 +10,7 @@ import {
   MenuDifficultySelectionTitle,
   TitleGame
 } from './styles';
-
+//TODO вынести в константу
 const GameAudio: React.FC = () => {
   const DataDescription = [
     'Используте мышь, чтобы выбрать.',
