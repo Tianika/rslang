@@ -9,3 +9,10 @@ export const newUserSelector = (state: RootState): NewUser => {
     password: state.signup.password
   };
 };
+
+// получаем статус соединения с сервером
+export const statusSelector = (state: RootState) => {
+  return {
+    status: state.signup.loadingState
+  };
+};

@@ -62,6 +62,11 @@ export const ButtonAuthentication = styled.button`
     border: 1px solid ${baseTheme.colors.primary};
     transform: scale(1.1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    .line1,
+    .line2,
+    .line3 {
+      background-color: ${baseTheme.colors.primary};
+    }
   }
 `;
 

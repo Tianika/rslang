@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { userSelector } from './login.selectors';
+import { statusSelector, userSelector } from './login.selectors';
 import { fetchLoginAction } from './login.saga';
 import { loginActions } from './login.slice';
 import {
@@ -20,6 +20,7 @@ export const Login: React.FC = (props) => {
   const dispatch = useAppDispatch();
 
   const login = useAppSelector(userSelector);
+  const status = useAppSelector(statusSelector);
 
   //вкл-выкл кнопку при отправке запроса
   const [disable, setDisable] = useState(false);
@@ -38,12 +39,17 @@ export const Login: React.FC = (props) => {
     dispatch(changePassword(value));
   };
 
+  //включаем кнопку при ошибке логина
+  useEffect(() => {
+    if (disable && status.status === 'Error') {
+      toggleDisable();
+    }
+  }, [status]);
+
   //запрос
   const fetchLogin = () => {
     toggleDisable();
     dispatch(fetchLoginAction(login));
-
-    // доработать включение-отключение кнопки
   };
 
   const PreloadDiv: React.FC = () => {
