@@ -5,6 +5,9 @@ import * as Effects from 'redux-saga/effects';
 import { signupActions } from './signup.slice';
 import { requestSignup } from './signup.api';
 import { LoadingState } from '../../utils';
+import { requestLogin } from '../login/login.api';
+import { saveUserData } from '../login/login.saga';
+import { User } from '../login/types';
 
 const call: any = Effects.call;
 
@@ -14,20 +17,20 @@ export const fetchSignupAction = createAction<NewUser, string>('signup/fetch');
 //получаем функцию для отслеживания статуса загрузки
 const { changeLoadingState } = signupActions;
 
-const saveUserData = (data: NewUser) => {
-  console.log(data);
-  //доделать:
-  //нужно залогиниться с данными юзера, добавить запрос
-
-  location.href = location.origin;
-};
-
 function* workSignupFetch(action: PayloadAction<NewUser>) {
   yield put(changeLoadingState(LoadingState.Loading));
 
   try {
     //запрос на регистрацию
-    const { data } = yield call(requestSignup, action.payload) as Response;
+    yield call(requestSignup, action.payload) as Response;
+
+    const user: User = {
+      email: action.payload.email,
+      password: action.payload.password
+    };
+
+    //автологин нового пользолвателя
+    const { data } = yield call(requestLogin, user) as Response;
 
     //обработка данных
     yield call(saveUserData, data);
