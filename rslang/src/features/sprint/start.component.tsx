@@ -1,4 +1,5 @@
 import React from 'react';
+import { DIFFICULTY, SPRINT_DESCRIPTION } from './constants';
 import {
   BlockInfo,
   BlockSelect,
@@ -12,18 +13,9 @@ import {
 } from './styles';
 
 const SprintStartPage: React.FC = () => {
-  const DataDescription = [
-    'Используте мышь, чтобы выбрать.',
-    'Используте клавиши влево или вправо.'
-  ];
-  const Difficulty = [
-    'сложность 1',
-    'сложность 2',
-    'сложность 3',
-    'сложность 4',
-    'сложность 5',
-    'сложность 6'
-  ];
+  const DataDescription: string[] = SPRINT_DESCRIPTION;
+  const Difficulty: string[] = DIFFICULTY;
+
   return (
     <BlockInfo>
       <TitleGame>СПРИНТ</TitleGame>

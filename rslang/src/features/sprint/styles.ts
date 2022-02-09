@@ -55,7 +55,139 @@ export const ButtonPlay = styled.button`
   height: 48px;
   margin-top: 6px;
   transition: 1s;
+  cursor: pointer;
   &:hover {
     background: #70af46;
   }
+`;
+
+export const SprintGameContainer = styled.div`
+  position: relative;
+`;
+
+export const GameScore = styled.div`
+  text-align: center;
+  font-size: 50px;
+  margin-top: 50px;
+`;
+
+export const BlockGame = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #6dc3ff;
+  margin: 50px auto;
+  border-radius: 13px;
+  padding: 40px 50px;
+  background: #fff;
+`;
+
+export const GameTimer = styled.div`
+  position: absolute;
+  right: Calc(12.5vw - 75px);
+  top: Calc(50vh - 200px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 1px solid #6dc3ff;
+  text-align: center;
+  font-size: 60px;
+  color: #6dc3ff;
+`;
+
+export const GameHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const CheckboxesContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+  margin-bottom: 20px;
+`;
+
+export const EmptyCheckbox = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #d5d5d5;
+`;
+
+export const ScorePerAnswer = styled.div`
+  width: 300px;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 30px;
+`;
+
+export const StyledCheckedCheckbox = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+`;
+
+export const StyledLevelsContainer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 280px;
+  height: 160px;
+  margin-bottom: 30px;
+`;
+
+export const Level = styled.div`
+  position: absolute;
+  text-align: center;
+  width: 70px;
+  height: 70px;
+  &.book1 {
+    left: 0;
+  }
+  &.book2 {
+    left: 50px;
+  }
+  &.book3 {
+    left: 100px;
+  }
+  &.book4 {
+    left: 150px;
+  }
+`;
+
+export const Word = styled.div`
+  font-size: 47px;
+`;
+
+export const Translation = styled.div`
+  font-size: 30px;
+`;
+
+export const AnswersButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+`;
+
+export const AnswerButton = styled.button`
+  width: 200px;
+  height: 70px;
+`;
+
+export const ArrowsContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+`;
+
+export const ArrowLeft = styled.div`
+  width: 110px;
+  height: 20px;
 `;
