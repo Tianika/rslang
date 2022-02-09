@@ -63,12 +63,13 @@ export const ButtonPlay = styled.button`
 
 export const SprintGameContainer = styled.div`
   position: relative;
+  margin-bottom: 80px;
 `;
 
 export const GameScore = styled.div`
   text-align: center;
   font-size: 50px;
-  margin-top: 50px;
+  margin-top: 30px;
 `;
 
 export const BlockGame = styled.div`
@@ -77,9 +78,9 @@ export const BlockGame = styled.div`
   flex-direction: column;
   align-items: center;
   border: 1px solid #6dc3ff;
-  margin: 50px auto;
+  margin: 30px auto;
   border-radius: 13px;
-  padding: 40px 50px;
+  padding: 30px 50px;
   background: #fff;
 `;
 
@@ -117,7 +118,7 @@ export const EmptyCheckbox = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid #d5d5d5;
+  border: 2px solid #c4c4c4;
 `;
 
 export const ScorePerAnswer = styled.div`
@@ -125,6 +126,7 @@ export const ScorePerAnswer = styled.div`
   text-align: center;
   font-size: 24px;
   margin-bottom: 30px;
+  padding-bottom: 20px;
 `;
 
 export const StyledCheckedCheckbox = styled.div`
@@ -164,10 +166,12 @@ export const Level = styled.div`
 
 export const Word = styled.div`
   font-size: 47px;
+  margin-bottom: 45px;
 `;
 
 export const Translation = styled.div`
   font-size: 30px;
+  margin-bottom: 30px;
 `;
 
 export const AnswersButtonsContainer = styled.div`
@@ -178,7 +182,16 @@ export const AnswersButtonsContainer = styled.div`
 
 export const AnswerButton = styled.button`
   width: 200px;
-  height: 70px;
+  height: 60px;
+  font-size: 24px;
+  border-radius: 13px;
+  border: none;
+  &.wrong {
+    background-color: #ff6849;
+  }
+  &.right {
+    background-color: #70af46;
+  }
 `;
 
 export const ArrowsContainer = styled.div`
@@ -187,7 +200,9 @@ export const ArrowsContainer = styled.div`
   width: 100%;
 `;
 
-export const ArrowLeft = styled.div`
+export const Arrow = styled.div`
+  display: flex;
+  justify-content: center;
   width: 110px;
   height: 20px;
 `;

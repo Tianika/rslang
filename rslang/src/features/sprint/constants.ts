@@ -11,3 +11,5 @@ export const DIFFICULTY = [
   'сложность 5',
   'сложность 6'
 ];
+
+export const HEADER_BG_COLOR = ['#ffffff', '#FFE320', '#FFA901', 'FF6849'];
