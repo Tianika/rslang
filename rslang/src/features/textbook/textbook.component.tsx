@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextbookStyled, BooksListStyled, ItemBookStyled } from './styles';
 import './styles';
 
@@ -15,8 +15,17 @@ import thirdBook from '../../assets/svg/thirdBook.svg';
 import fourthBook from '../../assets/svg/fourthBook.svg';
 import fifthBook from '../../assets/svg/fifthBook.svg';
 import sixthBook from '../../assets/svg/sixthBook.svg';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { fetchTextBookAction } from './textbook.saga';
 
 export const Textbook: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const words = useAppSelector((state) => state.textBook.words);
+
+  useEffect(() => {
+    dispatch(fetchTextBookAction());
+  }, []);
+
   return (
     <TextbookStyled>
       <BooksListStyled>

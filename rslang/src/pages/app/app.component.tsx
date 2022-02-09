@@ -10,7 +10,7 @@ import { Account } from '../account';
 import { Statistics } from '../statistics/statistics.component';
 import { GamesPage } from '../../components/games/startPageGames.component';
 import { GameAudio } from '../../components/games/audio-games/audio-game.component';
-import { Textbook } from '../../components/textbook/textbook.component';
+import { Textbook } from '../../features/textbook/textbook.component';
 
 const App: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../utils';
 
-export const WindowAuthorizationAccount = styled.div`
+export const WindowAuthorizationAccount = styled.form`
   width: 600px;
   height: 450px;
   background-color: ${baseTheme.colors.blue};
