@@ -1,5 +1,9 @@
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { ChangeEventHandle } from '../../utils';
 import { DIFFICULTY, SPRINT_DESCRIPTION } from './constants';
+import { selectedGroup } from './sprint.selectors';
+import { sprintActions } from './sprint.slice';
 import {
   BlockInfo,
   BlockSelect,
@@ -15,6 +19,20 @@ import {
 const SprintStartPage: React.FC = () => {
   const DataDescription: string[] = SPRINT_DESCRIPTION;
   const Difficulty: string[] = DIFFICULTY;
+
+  const { changeLevel } = sprintActions;
+
+  const dispatch = useAppDispatch();
+
+  const level = useAppSelector(selectedGroup);
+
+  //получаем номер уровня
+  const onLevelChange: ChangeEventHandle = (event) => {
+    const value = event.target.value;
+    dispatch(changeLevel(value));
+
+    console.log(level);
+  };
 
   return (
     <BlockInfo>

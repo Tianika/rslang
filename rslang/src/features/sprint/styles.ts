@@ -198,6 +198,7 @@ export const ArrowsContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   width: 100%;
+  margin-bottom: 30px;
 `;
 
 export const Arrow = styled.div`
