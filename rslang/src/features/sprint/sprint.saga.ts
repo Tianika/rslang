@@ -10,7 +10,7 @@ import { getRandomNumber } from './utils';
 const call: any = Effects.call;
 
 //создаем экшен для запроса
-export const fetchSprintAction = createAction<Level, string>('sprint/fetch');
+export const fetchSprintAction = createAction<number, string>('sprint/fetch');
 
 //получаем функцию из экшенов
 const { changeLoadingState } = sprintActions;
@@ -19,18 +19,15 @@ export const receviedWordsHandler = (data: Word[]) => {
   console.log(data);
 };
 
-function* sprintGameFetch(action: PayloadAction<Level>) {
+function* sprintGameFetch(action: PayloadAction<number>) {
   yield put(changeLoadingState(LoadingState.Loading));
 
   try {
-    //получаем данные из запроса
+    //рандомный номер страницы
     const pageNumber = getRandomNumber(30);
 
-    const { data } = yield call(
-      requestWordsFromGroup,
-      action.payload.level,
-      pageNumber
-    ) as Response;
+    //получаем данные из запроса
+    const { data } = yield call(requestWordsFromGroup, action.payload, pageNumber) as Response;
 
     //обрабатываем полученный массив слов
     yield call(receviedWordsHandler, data);

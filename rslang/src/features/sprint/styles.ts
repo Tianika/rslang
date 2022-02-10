@@ -186,6 +186,7 @@ export const AnswerButton = styled.button`
   font-size: 24px;
   border-radius: 13px;
   border: none;
+  cursor: pointer;
   &.wrong {
     background-color: #ff6849;
   }

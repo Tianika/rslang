@@ -11,8 +11,16 @@ import { Statistics } from '../statistics/statistics.component';
 import { GamesPage } from '../../components/games/startPageGames.component';
 import { GameAudio } from '../../components/games/audio-games/audio-game.component';
 import { SprintGame, SprintStartPage } from '../../features/sprint';
+import { useAppSelector } from '../../app/hooks';
+import { gameStatus } from '../../features/sprint/sprint.selectors';
 
 const App: React.FC = () => {
+  const isGame = useAppSelector(gameStatus);
+
+  const togglePageForSprintGame = () => {
+    return !isGame ? <SprintStartPage /> : <SprintGame />;
+  };
+
   return (
     <BrowserRouter>
       <GlobalStyle />
@@ -26,7 +34,7 @@ const App: React.FC = () => {
           <Route path="/account/signup" element={<Signup />} />
           <Route path="/games" element={<GamesPage />} />
           <Route path="/games/audio" element={<GameAudio />} />
-          <Route path="/games/sprint" element={<SprintStartPage />} />
+          <Route path="/games/sprint" element={togglePageForSprintGame()} />
         </Routes>
       </main>
 
