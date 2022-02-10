@@ -5,6 +5,7 @@ import { LoadingState } from '../../utils';
 import { sprintActions } from './sprint.slice';
 import { Level, Word } from './types';
 import { requestWordsFromGroup } from './sprint.api';
+import { getRandomNumber } from './utils';
 
 const call: any = Effects.call;
 
@@ -23,7 +24,13 @@ function* sprintGameFetch(action: PayloadAction<Level>) {
 
   try {
     //получаем данные из запроса
-    const { data } = yield call(requestWordsFromGroup, action.payload) as Response;
+    const pageNumber = getRandomNumber(30);
+
+    const { data } = yield call(
+      requestWordsFromGroup,
+      action.payload.level,
+      pageNumber
+    ) as Response;
 
     //обрабатываем полученный массив слов
     yield call(receviedWordsHandler, data);

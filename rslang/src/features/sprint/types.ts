@@ -1,12 +1,17 @@
 import { LoadingState } from '../../utils';
 
 export type Level = {
-  level: string;
+  level: number;
 };
 
-export type SprintFetch = Level & {
-  loadingState: LoadingState;
+export type IsGame = {
+  isGame: boolean;
 };
+
+export type SprintFetch = Level &
+  IsGame & {
+    loadingState: LoadingState;
+  };
 
 export type Word = {
   id: 'string';

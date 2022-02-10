@@ -3,7 +3,8 @@ import { LoadingState } from '../../utils';
 import { SprintFetch } from './types';
 
 const initialState: SprintFetch = {
-  level: '1',
+  level: 0,
+  isGame: false,
   loadingState: LoadingState.Initial
 };
 
@@ -14,6 +15,9 @@ export const sprintSlice = createSlice({
   reducers: {
     changeLevel: (state, action) => {
       state.level = action.payload;
+    },
+    changeGameStatus: (state) => {
+      state.isGame = !state.isGame;
     },
     changeLoadingState: (state, action) => {
       state.loadingState = action.payload;

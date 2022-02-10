@@ -1,7 +1,8 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { ChangeEventHandle } from '../../utils';
+import { AccountProps } from '../../utils';
 import { DIFFICULTY, SPRINT_DESCRIPTION } from './constants';
+import { fetchSprintAction } from './sprint.saga';
 import { selectedGroup } from './sprint.selectors';
 import { sprintActions } from './sprint.slice';
 import {
@@ -20,18 +21,27 @@ const SprintStartPage: React.FC = () => {
   const DataDescription: string[] = SPRINT_DESCRIPTION;
   const Difficulty: string[] = DIFFICULTY;
 
-  const { changeLevel } = sprintActions;
+  const { changeLevel, changeGameStatus } = sprintActions;
 
   const dispatch = useAppDispatch();
 
   const level = useAppSelector(selectedGroup);
 
   //получаем номер уровня
-  const onLevelChange: ChangeEventHandle = (event) => {
-    const value = event.target.value;
+  const onLevelChange: AccountProps['onLevelChange'] = (event) => {
+    const value = event.target.options.selectedIndex;
     dispatch(changeLevel(value));
+  };
 
-    console.log(level);
+  //меняем статус игры
+  const onChangeStatus = (): void => {
+    dispatch(changeGameStatus());
+  };
+
+  //получаем слова для игры
+  const getWords = () => {
+    onChangeStatus();
+    dispatch(fetchSprintAction(level));
   };
 
   return (
@@ -48,13 +58,13 @@ const SprintStartPage: React.FC = () => {
       <BlockSelect>
         <MenuDifficultySelection>
           <MenuDifficultySelectionTitle>Сложность</MenuDifficultySelectionTitle>
-          <ChoiceDifficulty>
+          <ChoiceDifficulty onChange={onLevelChange}>
             {Difficulty.map((el, index) => (
               <option key={index}>{el}</option>
             ))}
           </ChoiceDifficulty>
         </MenuDifficultySelection>
-        <ButtonPlay>Начать</ButtonPlay>
+        <ButtonPlay onClick={getWords}>Начать</ButtonPlay>
       </BlockSelect>
     </BlockInfo>
   );
