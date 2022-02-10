@@ -25,6 +25,10 @@ export const ItemBookStyled = styled.li`
   list-style-type: none;
   display: inline-block;
   position: relative;
+  transition: 1s;
+  &:hover {
+    transform: rotate(360deg);
+  }
 
   img {
     display: inline-block;
@@ -39,6 +43,12 @@ export const ItemBookStyled = styled.li`
     z-index: 1;
     font-size: 26px;
     color: ${baseTheme.colors.bg};
+
+    &:hover > img {
+      border-radius: 12px;
+      border: 10px solid #fff;
+      transition: border 0.3s;
+    }
   }
 
   a > img {
@@ -47,5 +57,10 @@ export const ItemBookStyled = styled.li`
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
+
+    &:hover {
+      border-radius: 12px;
+      border: 10px solid #fff;
+    }
   }
 `;

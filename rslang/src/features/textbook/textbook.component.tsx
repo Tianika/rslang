@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { TextbookStyled, BooksListStyled, ItemBookStyled } from './styles';
 import './styles';
 
+import { WordsPage } from './wordsPage/wordsPage.component';
+
 import firstBooksSection from '../../assets/svg/firstSection.svg';
 import secondBooksSection from '../../assets/svg/secondSection.svg';
 import thirdBooksSection from '../../assets/svg/thirdSection.svg';
@@ -17,6 +19,7 @@ import fifthBook from '../../assets/svg/fifthBook.svg';
 import sixthBook from '../../assets/svg/sixthBook.svg';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetchTextBookAction } from './textbook.saga';
+import { Link } from 'react-router-dom';
 
 export const Textbook: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -31,10 +34,10 @@ export const Textbook: React.FC = () => {
       <BooksListStyled>
         <ItemBookStyled>
           <img src={firstBooksSection} alt="firstBooksSection" />
-          <a href="#">
+          <Link to="/textbook/wordspage">
             РАЗДЕЛ 1
             <img src={firstBook} alt="firstbook" width={170} />
-          </a>
+          </Link>
         </ItemBookStyled>
         <ItemBookStyled>
           <img src={secondBooksSection} alt="secondBooksSection" />
