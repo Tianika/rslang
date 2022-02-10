@@ -4,7 +4,7 @@ import { AccountProps } from '../../utils';
 import { DIFFICULTY, SPRINT_DESCRIPTION } from './constants';
 import { fetchSprintAction } from './sprint.saga';
 import { selectedGroup } from './sprint.selectors';
-import { sprintActions } from './sprint.slice';
+import { sprintStartActions } from './sprint.slice';
 import {
   BlockInfo,
   BlockSelect,
@@ -21,7 +21,7 @@ const SprintStartPage: React.FC = () => {
   const DataDescription: string[] = SPRINT_DESCRIPTION;
   const Difficulty: string[] = DIFFICULTY;
 
-  const { changeLevel, changeGameStatus } = sprintActions;
+  const { changeLevel, changeGameStatus } = sprintStartActions;
 
   const dispatch = useAppDispatch();
 

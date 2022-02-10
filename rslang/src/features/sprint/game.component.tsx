@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   AnswerButton,
@@ -13,6 +13,7 @@ import {
   GameTimer,
   Level,
   ScorePerAnswer,
+  Shelf,
   SprintGameContainer,
   StyledCheckedCheckbox,
   StyledLevelsContainer,
@@ -27,6 +28,9 @@ import book3 from '../../assets/svg/book3.svg';
 import book4 from '../../assets/svg/book4.svg';
 import arrowLeft from '../../assets/svg/arrow-left.svg';
 import arrowRight from '../../assets/svg/arrow-right.svg';
+import { sprintGameActions } from './game.slice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getLevel, getScore, getScorePerLevel } from './sprint.selectors';
 
 const CheckedCheckbox: React.FC = () => {
   return (
@@ -40,25 +44,39 @@ const LevelContainer: React.FC = () => {
   return (
     <StyledLevelsContainer>
       <Level className="book1">
-        <img src={book1} alt={book1} width={115} height={160} />
+        <img src={book1} alt={book1} width={125} height={160} />
       </Level>
       <Level className="book2">
-        <img src={book2} alt={book2} width={115} height={160} />
+        <img src={book2} alt={book2} width={125} height={160} />
       </Level>
       <Level className="book3">
-        <img src={book3} alt={book3} width={115} height={160} />
+        <img src={book3} alt={book3} width={125} height={160} />
       </Level>
       <Level className="book4">
-        <img src={book4} alt={book4} width={115} height={160} />
+        <img src={book4} alt={book4} width={125} height={160} />
       </Level>
     </StyledLevelsContainer>
   );
 };
 
 export const SprintGame: React.FC = () => {
+  const { changeTotalScore } = sprintGameActions;
+
+  const dispatch = useAppDispatch();
+
+  //получаем данные из state
+  const totalScore = useAppSelector(getScore);
+  const scorePerLevel = useAppSelector(getScorePerLevel);
+  const levelGame = useAppSelector(getLevel);
+
+  //логика игры при нажатии на ответ
+  const sprintGameHandler = () => {
+    dispatch(changeTotalScore());
+  };
+
   return (
     <SprintGameContainer>
-      <GameScore>0</GameScore>
+      <GameScore>{totalScore}</GameScore>
       <BlockGame>
         <GameHeader>
           <CheckboxesContainer>
@@ -66,14 +84,19 @@ export const SprintGame: React.FC = () => {
             <EmptyCheckbox />
             <EmptyCheckbox />
           </CheckboxesContainer>
-          <ScorePerAnswer>+10 очков за слово</ScorePerAnswer>
+          <ScorePerAnswer>+{scorePerLevel} очков за слово</ScorePerAnswer>
         </GameHeader>
         <LevelContainer />
+        <Shelf />
         <Word>Слово</Word>
         <Translation>Перевод</Translation>
         <AnswersButtonsContainer>
-          <AnswerButton className="wrong">НЕВЕРНО</AnswerButton>
-          <AnswerButton className="right">ВЕРНО</AnswerButton>
+          <AnswerButton className="wrong" onClick={sprintGameHandler}>
+            НЕВЕРНО
+          </AnswerButton>
+          <AnswerButton className="right" onClick={sprintGameHandler}>
+            ВЕРНО
+          </AnswerButton>
         </AnswersButtonsContainer>
         <ArrowsContainer>
           <Arrow>

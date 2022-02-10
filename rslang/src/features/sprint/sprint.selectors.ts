@@ -14,3 +14,18 @@ export const sprintGameStatus = (state: RootState) => {
 export const sprintStatusSelector = (state: RootState) => {
   return state.sprint.loadingState;
 };
+
+//общее количество очков
+export const getScore = (state: RootState) => {
+  return state.sprintGame.totalScore;
+};
+
+//количество очков за слово
+export const getScorePerLevel = (state: RootState) => {
+  return state.sprintGame.scorePerWord;
+};
+
+//уровень игры
+export const getLevel = (state: RootState) => {
+  return state.sprintGame.levelAnswer;
+};

@@ -142,14 +142,13 @@ export const StyledLevelsContainer = styled.div`
   text-align: center;
   width: 280px;
   height: 160px;
-  margin-bottom: 30px;
 `;
 
 export const Level = styled.div`
   position: absolute;
   text-align: center;
-  width: 70px;
-  height: 70px;
+  width: 115px;
+  height: 160px;
   &.book1 {
     left: 0;
   }
@@ -162,6 +161,15 @@ export const Level = styled.div`
   &.book4 {
     left: 150px;
   }
+`;
+
+export const Shelf = styled.div`
+  width: 350px;
+  height: 20px;
+  background-color: #008000;
+  margin-bottom: 30px;
+  border: 2px solid #000;
+  border-radius: 3px;
 `;
 
 export const Word = styled.div`
@@ -186,6 +194,7 @@ export const AnswerButton = styled.button`
   font-size: 24px;
   border-radius: 13px;
   border: none;
+  color: #fff;
   cursor: pointer;
   &.wrong {
     background-color: #ff6849;

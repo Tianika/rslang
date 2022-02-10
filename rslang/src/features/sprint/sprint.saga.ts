@@ -2,10 +2,10 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
 import * as Effects from 'redux-saga/effects';
 import { LoadingState } from '../../utils';
-import { sprintActions } from './sprint.slice';
 import { Word } from './types';
 import { requestWordsFromGroup } from './sprint.api';
 import { getRandomNumber } from './utils';
+import { sprintStartActions } from './sprint.slice';
 
 const call: any = Effects.call;
 
@@ -13,7 +13,7 @@ const call: any = Effects.call;
 export const fetchSprintAction = createAction<number, string>('sprint/fetch');
 
 //получаем функцию из экшенов
-const { changeLoadingState } = sprintActions;
+const { changeLoadingState } = sprintStartActions;
 
 export const receviedWordsHandler = (data: Word[]) => {
   console.log(data);

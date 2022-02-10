@@ -10,7 +10,7 @@ const initialState: SprintFetch = {
 
 //создаем редюсеры
 export const sprintSlice = createSlice({
-  name: 'sprint',
+  name: 'sprint/start',
   initialState,
   reducers: {
     changeLevel: (state, action) => {
@@ -25,7 +25,7 @@ export const sprintSlice = createSlice({
   }
 });
 
-export const sprintReducer = sprintSlice.reducer;
-//добавить sprintReducer в reducer.ts
+export const sprintStartReducer = sprintSlice.reducer;
+//добавить sprintStartReducer в reducer.ts
 
-export const sprintActions = sprintSlice.actions;
+export const sprintStartActions = sprintSlice.actions;
