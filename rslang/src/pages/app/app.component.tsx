@@ -12,13 +12,30 @@ import { GamesPage } from '../../components/games/startPageGames.component';
 import { GameAudio } from '../../components/games/audio-games/audio-game.component';
 import { SprintGame, SprintStartPage } from '../../features/sprint';
 import { useAppSelector } from '../../app/hooks';
-import { gameStatus } from '../../features/sprint/sprint.selectors';
+import { sprintGameStatus, sprintStatusSelector } from '../../features/sprint/sprint.selectors';
+import { LoadingState } from '../../utils';
+import { LoadingPage } from '../../components/loading/';
 
 const App: React.FC = () => {
-  const isGame = useAppSelector(gameStatus);
+  //запущена ли игра и статус загрузки для спринта
+  const isGame = useAppSelector(sprintGameStatus);
+  const status = useAppSelector(sprintStatusSelector);
 
+  //меняем элемент в зависимости от isGame и status
   const togglePageForSprintGame = () => {
-    return !isGame ? <SprintStartPage /> : <SprintGame />;
+    if (!isGame) {
+      console.log(status, isGame);
+      return <SprintStartPage />;
+    }
+    if (isGame && status !== LoadingState.Success) {
+      console.log(status, isGame);
+      return <LoadingPage />;
+    }
+
+    if (isGame && status === LoadingState.Success) {
+      console.log(status, isGame);
+      return <SprintGame />;
+    }
   };
 
   return (

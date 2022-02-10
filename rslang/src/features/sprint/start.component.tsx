@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { AccountProps } from '../../utils';
 import { DIFFICULTY, SPRINT_DESCRIPTION } from './constants';
 import { fetchSprintAction } from './sprint.saga';
-import { gameStatus, selectedGroup } from './sprint.selectors';
+import { selectedGroup } from './sprint.selectors';
 import { sprintActions } from './sprint.slice';
 import {
   BlockInfo,

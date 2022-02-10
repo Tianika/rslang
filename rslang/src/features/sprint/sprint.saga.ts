@@ -3,7 +3,7 @@ import { createAction, PayloadAction } from '@reduxjs/toolkit';
 import * as Effects from 'redux-saga/effects';
 import { LoadingState } from '../../utils';
 import { sprintActions } from './sprint.slice';
-import { Level, Word } from './types';
+import { Word } from './types';
 import { requestWordsFromGroup } from './sprint.api';
 import { getRandomNumber } from './utils';
 
@@ -32,10 +32,12 @@ function* sprintGameFetch(action: PayloadAction<number>) {
     //обрабатываем полученный массив слов
     yield call(receviedWordsHandler, data);
 
+    //TODO доделать loading
+
     yield put(changeLoadingState(LoadingState.Success));
   } catch (error: any) {
     console.log(error.response.status);
-    //добавить обработку ошибок???
+    //TODO добавить обработку ошибок???
 
     yield put(changeLoadingState(LoadingState.Error));
   }
