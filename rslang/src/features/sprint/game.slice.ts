@@ -8,8 +8,7 @@ const initialState = {
   currentWord: '',
   currentTranslate: '',
   scorePerWord: 10,
-  chechboxes: [false, false, false],
-  levels: [true, false, false, false]
+  checkboxes: [false, false, false]
 };
 
 //создаем редюсеры
@@ -21,13 +20,25 @@ export const sprintGameSlice = createSlice({
       state.totalScore += state.scorePerWord;
     },
     upCheckboxesLevel: (state) => {
-      state.checkboxesLevel += 1;
-    },
-    upLevelAnswer: (state) => {
-      state.levelAnswer += 1;
-    },
-    upScorePerWord: (state) => {
-      state.levelAnswer *= 2;
+      if (state.levelAnswer < 4) {
+        if (state.checkboxesLevel < 3) {
+          state.checkboxesLevel += 1;
+        } else {
+          state.checkboxesLevel = 0;
+          state.levelAnswer += 1;
+          if (state.scorePerWord < 80) {
+            state.scorePerWord *= 2;
+          }
+        }
+
+        for (let i = 0; i < 3; i++) {
+          state.checkboxes[i] = i < state.checkboxesLevel ? true : false;
+        }
+
+        if (state.levelAnswer === 4) {
+          state.checkboxes = [true, true, true];
+        }
+      }
     },
     resetSprintGameState: (state) => {
       state.checkboxesLevel = 0;

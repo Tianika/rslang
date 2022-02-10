@@ -106,7 +106,7 @@ export const GameHeader = styled.div`
   align-items: center;
 `;
 
-export const CheckboxesContainer = styled.div`
+export const StyledCheckboxesContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;

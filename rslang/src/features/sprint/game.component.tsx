@@ -6,7 +6,6 @@ import {
   Arrow,
   ArrowsContainer,
   BlockGame,
-  CheckboxesContainer,
   EmptyCheckbox,
   GameHeader,
   GameScore,
@@ -15,6 +14,7 @@ import {
   ScorePerAnswer,
   Shelf,
   SprintGameContainer,
+  StyledCheckboxesContainer,
   StyledCheckedCheckbox,
   StyledLevelsContainer,
   Translation,
@@ -22,15 +22,18 @@ import {
 } from './styles';
 
 import checkboxIcon from '../../assets/svg/checked-word-sprint.svg';
-import book1 from '../../assets/svg/book1.svg';
-import book2 from '../../assets/svg/book2.svg';
-import book3 from '../../assets/svg/book3.svg';
-import book4 from '../../assets/svg/book4.svg';
 import arrowLeft from '../../assets/svg/arrow-left.svg';
 import arrowRight from '../../assets/svg/arrow-right.svg';
 import { sprintGameActions } from './game.slice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getLevel, getScore, getScorePerLevel } from './sprint.selectors';
+import {
+  getCheckboxes,
+  getCheckboxesLevel,
+  getLevel,
+  getScore,
+  getScorePerLevel
+} from './sprint.selectors';
+import { BOOK_LINKS } from './constants';
 
 const CheckedCheckbox: React.FC = () => {
   return (
@@ -40,38 +43,50 @@ const CheckedCheckbox: React.FC = () => {
   );
 };
 
+const CheckboxesContainer: React.FC = () => {
+  const checkboxes = useAppSelector(getCheckboxes);
+
+  return (
+    <StyledCheckboxesContainer>
+      {checkboxes.map((checkbox) => {
+        return checkbox ? <CheckedCheckbox /> : <EmptyCheckbox />;
+      })}
+    </StyledCheckboxesContainer>
+  );
+};
+
 const LevelContainer: React.FC = () => {
+  const levelAnswer = useAppSelector(getLevel);
+
   return (
     <StyledLevelsContainer>
-      <Level className="book1">
-        <img src={book1} alt={book1} width={125} height={160} />
-      </Level>
-      <Level className="book2">
-        <img src={book2} alt={book2} width={125} height={160} />
-      </Level>
-      <Level className="book3">
-        <img src={book3} alt={book3} width={125} height={160} />
-      </Level>
-      <Level className="book4">
-        <img src={book4} alt={book4} width={125} height={160} />
-      </Level>
+      {BOOK_LINKS.map((link, index) => {
+        const name = `book${index + 1}`;
+
+        return index < levelAnswer ? (
+          <Level key={name} className={name}>
+            <img src={link} alt={link} width={125} height={160} />
+          </Level>
+        ) : null;
+      })}
     </StyledLevelsContainer>
   );
 };
 
 export const SprintGame: React.FC = () => {
-  const { changeTotalScore } = sprintGameActions;
+  const { changeTotalScore, upCheckboxesLevel } = sprintGameActions;
 
   const dispatch = useAppDispatch();
 
   //получаем данные из state
   const totalScore = useAppSelector(getScore);
   const scorePerLevel = useAppSelector(getScorePerLevel);
-  const levelGame = useAppSelector(getLevel);
+  const checkboxesLevel = useAppSelector(getCheckboxesLevel);
 
   //логика игры при нажатии на ответ
   const sprintGameHandler = () => {
     dispatch(changeTotalScore());
+    dispatch(upCheckboxesLevel());
   };
 
   return (

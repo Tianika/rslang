@@ -25,7 +25,17 @@ export const getScorePerLevel = (state: RootState) => {
   return state.sprintGame.scorePerWord;
 };
 
+//уровень checkboxes
+export const getCheckboxesLevel = (state: RootState) => {
+  return state.sprintGame.checkboxesLevel;
+};
+
 //уровень игры
 export const getLevel = (state: RootState) => {
   return state.sprintGame.levelAnswer;
+};
+
+//чекбоксы
+export const getCheckboxes = (state: RootState) => {
+  return state.sprintGame.checkboxes;
 };
