@@ -80,7 +80,7 @@ export const BlockGame = styled.div`
   border: 1px solid #6dc3ff;
   margin: 30px auto;
   border-radius: 13px;
-  padding: 30px 50px;
+  padding: 0px 0px 30px;
   background: #fff;
 `;
 
@@ -104,6 +104,10 @@ export const GameHeader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  border-radius: 13px 13px 0 0;
+  padding-top: 10px;
+  margin-bottom: 40px;
 `;
 
 export const StyledCheckboxesContainer = styled.div`
@@ -111,7 +115,7 @@ export const StyledCheckboxesContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 200px;
-  margin-bottom: 20px;
+  margin: 20px 0;
 `;
 
 export const EmptyCheckbox = styled.div`
@@ -125,8 +129,7 @@ export const ScorePerAnswer = styled.div`
   width: 300px;
   text-align: center;
   font-size: 24px;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
+  padding-bottom: 30px;
 `;
 
 export const StyledCheckedCheckbox = styled.div`

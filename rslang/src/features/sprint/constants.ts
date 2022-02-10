@@ -17,6 +17,6 @@ export const DIFFICULTY = [
   'сложность 6'
 ];
 
-export const HEADER_BG_COLOR = ['#ffffff', '#FFE320', '#FFA901', 'FF6849'];
+export const HEADER_BG_COLOR = ['#ffffff', '#FFE320', '#FFA901', '#FF6849'];
 
 export const BOOK_LINKS = [book1, book2, book3, book4];

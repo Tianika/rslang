@@ -33,7 +33,7 @@ import {
   getScore,
   getScorePerLevel
 } from './sprint.selectors';
-import { BOOK_LINKS } from './constants';
+import { BOOK_LINKS, HEADER_BG_COLOR } from './constants';
 
 const CheckedCheckbox: React.FC = () => {
   return (
@@ -81,7 +81,7 @@ export const SprintGame: React.FC = () => {
   //получаем данные из state
   const totalScore = useAppSelector(getScore);
   const scorePerLevel = useAppSelector(getScorePerLevel);
-  const checkboxesLevel = useAppSelector(getCheckboxesLevel);
+  const level = useAppSelector(getLevel);
 
   //логика игры при нажатии на ответ
   const sprintGameHandler = () => {
@@ -93,12 +93,8 @@ export const SprintGame: React.FC = () => {
     <SprintGameContainer>
       <GameScore>{totalScore}</GameScore>
       <BlockGame>
-        <GameHeader>
-          <CheckboxesContainer>
-            <CheckedCheckbox />
-            <EmptyCheckbox />
-            <EmptyCheckbox />
-          </CheckboxesContainer>
+        <GameHeader style={{ backgroundColor: HEADER_BG_COLOR[level - 1] }}>
+          <CheckboxesContainer />
           <ScorePerAnswer>+{scorePerLevel} очков за слово</ScorePerAnswer>
         </GameHeader>
         <LevelContainer />
