@@ -15,65 +15,82 @@ import thirdBook from '../../assets/svg/thirdBook.svg';
 import fourthBook from '../../assets/svg/fourthBook.svg';
 import fifthBook from '../../assets/svg/fifthBook.svg';
 import sixthBook from '../../assets/svg/sixthBook.svg';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { fetchTextBookAction } from './textbook.saga';
+
 import { Link } from 'react-router-dom';
 
+const textBookSection = [
+  {
+    imgLink: firstBooksSection,
+    alt: 'firstBooksSection',
+    link: '/textbook/wordspage?group=0&page=0',
+    altForImg: 'firstbook',
+    titleSection: 'РАЗДЕЛ 1',
+    linkBook: firstBook
+  },
+
+  {
+    imgLink: secondBooksSection,
+    alt: 'secondBooksSection',
+    link: '/textbook/wordspage?group=1&page=0',
+    altForImg: 'secondbook',
+    titleSection: 'РАЗДЕЛ 2',
+    linkBook: secondBook
+  },
+
+  {
+    imgLink: thirdBooksSection,
+    alt: 'thirdBooksSection',
+    link: '/textbook/wordspage?group=2&page=0',
+    altForImg: 'secondbook',
+    titleSection: 'РАЗДЕЛ 3',
+    linkBook: thirdBook
+  },
+
+  {
+    imgLink: fourthBooksSection,
+    alt: 'fourthBooksSection',
+    link: '/textbook/wordspage?group=3&page=0',
+    altForImg: 'fourthbook',
+    titleSection: 'РАЗДЕЛ 4',
+    linkBook: fourthBook
+  },
+
+  {
+    imgLink: fifthBooksSection,
+    alt: 'fifthBooksSection',
+    link: '/textbook/wordspage?group=4&page=0',
+    altForImg: 'fifthbook',
+    titleSection: 'РАЗДЕЛ 5',
+    linkBook: fifthBook
+  },
+
+  {
+    imgLink: sixthBooksSection,
+    alt: 'sixthBooksSection',
+    link: '/textbook/wordspage?group=5&page=0',
+    altForImg: 'fifthbook',
+    titleSection: 'РАЗДЕЛ 6',
+    linkBook: sixthBook
+  }
+];
+
 export const Textbook: React.FC = () => {
-  // const dispatch = useAppDispatch();
-  // const words = useAppSelector((state) => state.textBook.words);
-
-  // useEffect(() => {
-  //   dispatch(fetchTextBookAction());
-  // }, []);
-
-  // console.log(words);
-
   return (
     <TextbookStyled>
       <BooksListStyled>
-        <ItemBookStyled>
-          <img src={firstBooksSection} alt="firstBooksSection" />
-          <Link to="/textbook/wordspage">
-            РАЗДЕЛ 1
-            <img src={firstBook} alt="firstbook" width={170} />
-          </Link>
-        </ItemBookStyled>
-        <ItemBookStyled>
-          <img src={secondBooksSection} alt="secondBooksSection" />
-          <a href="#">
-            РАЗДЕЛ 2
-            <img src={secondBook} alt="secondbook" width={170} />
-          </a>
-        </ItemBookStyled>
-        <ItemBookStyled>
-          <img src={thirdBooksSection} alt="thirdBooksSection" />
-          <a href="#">
-            РАЗДЕЛ 3
-            <img src={thirdBook} alt="thirdbook" width={170} />
-          </a>
-        </ItemBookStyled>
-        <ItemBookStyled>
-          <img src={fourthBooksSection} alt="fourthBooksSection" />
-          <a href="#">
-            РАЗДЕЛ 4
-            <img src={fourthBook} alt="fourthbook" width={170} />
-          </a>
-        </ItemBookStyled>
-        <ItemBookStyled>
-          <img src={fifthBooksSection} alt="fifthBooksSection" />
-          <a href="#">
-            РАЗДЕЛ 5
-            <img src={fifthBook} alt="fifthbook" width={170} />
-          </a>
-        </ItemBookStyled>
-        <ItemBookStyled>
-          <img src={sixthBooksSection} alt="sixthBooksSection" />
-          <a href="#">
-            РАЗДЕЛ 6
-            <img src={sixthBook} alt="sixthbook" width={170} />
-          </a>
-        </ItemBookStyled>
+        {textBookSection.map((item) => {
+          const { imgLink, alt, link, altForImg, titleSection, linkBook } = item;
+
+          return (
+            <ItemBookStyled key={item.alt}>
+              <img src={imgLink} alt={alt} />
+              <Link to={link}>
+                {titleSection}
+                <img src={linkBook} alt={altForImg} width={170} />
+              </Link>
+            </ItemBookStyled>
+          );
+        })}
       </BooksListStyled>
     </TextbookStyled>
   );

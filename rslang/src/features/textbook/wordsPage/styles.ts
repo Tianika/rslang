@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../../utils';
-// import cardImg from '../../../assets/png/duck.png';
 
 const hex2rgba = (hex: string, alpha = 1): string => {
   const [r, g, b] = (hex.match(/\w\w/g) as Array<string>).map((x) => parseInt(x, 16));
@@ -26,8 +25,8 @@ export const StyledWrapper = styled.div`
   padding-bottom: 50px;
 `;
 
-export const StyledCard = styled.div`
-  background-image: url('https://learnwords-team17.herokuapp.com/files/01_0002.jpg');
+export const StyledCard = styled.div<{ imgUrl: string }>`
+  background-image: url(${(props) => props.imgUrl});
   min-height: 420px;
   max-width: 400px;
   width: 100%;
