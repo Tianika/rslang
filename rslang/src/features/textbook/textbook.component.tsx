@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { TextbookStyled, BooksListStyled, ItemBookStyled } from './styles';
 import './styles';
 
-import { WordsPage } from './wordsPage/wordsPage.component';
-
 import firstBooksSection from '../../assets/svg/firstSection.svg';
 import secondBooksSection from '../../assets/svg/secondSection.svg';
 import thirdBooksSection from '../../assets/svg/thirdSection.svg';
@@ -22,12 +20,14 @@ import { fetchTextBookAction } from './textbook.saga';
 import { Link } from 'react-router-dom';
 
 export const Textbook: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const words = useAppSelector((state) => state.textBook.words);
+  // const dispatch = useAppDispatch();
+  // const words = useAppSelector((state) => state.textBook.words);
 
-  useEffect(() => {
-    dispatch(fetchTextBookAction());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchTextBookAction());
+  // }, []);
+
+  // console.log(words);
 
   return (
     <TextbookStyled>

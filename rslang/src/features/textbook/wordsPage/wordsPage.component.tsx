@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { fetchTextBookAction } from '../textbook.saga';
+
 import {
   StyledCardSection,
   StyledWrapper,
@@ -12,6 +15,14 @@ import cardIconAudio from '../../../assets/svg/card-icon-audio.svg';
 import cardPlusIcon from '../../../assets/svg/card-plus-icon.svg';
 
 export const WordsPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const words = useAppSelector((state) => state.textBook.words);
+
+  useEffect(() => {
+    dispatch(fetchTextBookAction());
+  }, []);
+
+  console.log(words);
   return (
     <StyledCardSection>
       <StyledWrapper>

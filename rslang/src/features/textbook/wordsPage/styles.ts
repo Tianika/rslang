@@ -10,7 +10,7 @@ const hex2rgba = (hex: string, alpha = 1): string => {
 const { firstBookColor, font } = baseTheme.colors;
 
 export const StyledCardSection = styled.section`
-  background-color: ${hex2rgba(firstBookColor, 0.5)}}
+  background-color: ${hex2rgba(firstBookColor, 0.5)}};
   color: ${font};
   min-height: 100vh;
   padding: 50px;
