@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { SprintGameState } from './types';
 
-const initialState = {
+const initialState: SprintGameState = {
   totalScore: 0,
   words: [],
   checkboxesLevel: 0,
   levelAnswer: 1,
+  currentWordIndex: 0,
   currentWord: '',
   currentTranslate: '',
   scorePerWord: 10,
@@ -44,11 +46,23 @@ export const sprintGameSlice = createSlice({
       state.checkboxesLevel = 0;
       state.levelAnswer = 1;
       state.scorePerWord = 10;
+    },
+    setWordArray: (state, action) => {
+      state.words = action.payload;
+    },
+    upCurrentWordIndex: (state) => {
+      state.currentWordIndex += 1;
+    },
+    setCurrentWord: (state, action) => {
+      state.currentWord = action.payload;
+    },
+    setCurrentTranslate: (state, action) => {
+      state.currentTranslate = action.payload;
     }
   }
 });
 
 export const sprintGameReducer = sprintGameSlice.reducer;
-//добавить gameSlice в reducer.ts
+//добавить sprintGameSlice в reducer.ts
 
 export const sprintGameActions = sprintGameSlice.actions;

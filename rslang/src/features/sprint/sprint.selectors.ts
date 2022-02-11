@@ -16,26 +16,36 @@ export const sprintStatusSelector = (state: RootState) => {
 };
 
 //общее количество очков
-export const getScore = (state: RootState) => {
+export const totalScoreSelector = (state: RootState) => {
   return state.sprintGame.totalScore;
 };
 
 //количество очков за слово
-export const getScorePerLevel = (state: RootState) => {
+export const scorePerLevelSelector = (state: RootState) => {
   return state.sprintGame.scorePerWord;
 };
 
-//уровень checkboxes
-export const getCheckboxesLevel = (state: RootState) => {
-  return state.sprintGame.checkboxesLevel;
-};
-
 //уровень игры
-export const getLevel = (state: RootState) => {
+export const levelSelector = (state: RootState) => {
   return state.sprintGame.levelAnswer;
 };
 
 //чекбоксы
-export const getCheckboxes = (state: RootState) => {
+export const checkboxesSelector = (state: RootState) => {
   return state.sprintGame.checkboxes;
+};
+
+//получить текущее слово
+export const currentWordSelector = (state: RootState) => {
+  return state.sprintGame.currentWord;
+};
+
+//получить текущий перевод
+export const currentTranslateSelector = (state: RootState) => {
+  return state.sprintGame.currentTranslate;
+};
+
+//получить текущее слово
+export const wordSelector = (state: RootState) => {
+  return state.sprintGame.words[state.sprintGame.currentWordIndex];
 };

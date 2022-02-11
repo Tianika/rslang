@@ -29,3 +29,15 @@ export type Word = {
   textMeaningTranslate: 'string';
   textExampleTranslate: 'string';
 };
+
+export type SprintGameState = {
+  totalScore: number;
+  words: Array<Word | undefined>;
+  checkboxesLevel: number;
+  levelAnswer: number;
+  currentWordIndex: number;
+  currentWord: '';
+  currentTranslate: '';
+  scorePerWord: number;
+  checkboxes: Boolean[];
+};

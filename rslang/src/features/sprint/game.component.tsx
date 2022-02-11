@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   AnswerButton,
@@ -18,7 +18,7 @@ import {
   StyledCheckedCheckbox,
   StyledLevelsContainer,
   Translation,
-  Word
+  WordText
 } from './styles';
 
 import checkboxIcon from '../../assets/svg/checked-word-sprint.svg';
@@ -27,13 +27,16 @@ import arrowRight from '../../assets/svg/arrow-right.svg';
 import { sprintGameActions } from './game.slice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  getCheckboxes,
-  getCheckboxesLevel,
-  getLevel,
-  getScore,
-  getScorePerLevel
+  checkboxesSelector,
+  currentWordSelector,
+  wordSelector,
+  levelSelector,
+  scorePerLevelSelector,
+  totalScoreSelector,
+  currentTranslateSelector
 } from './sprint.selectors';
 import { BOOK_LINKS, HEADER_BG_COLOR } from './constants';
+import { Word } from './types';
 
 const CheckedCheckbox: React.FC = () => {
   return (
@@ -44,19 +47,23 @@ const CheckedCheckbox: React.FC = () => {
 };
 
 const CheckboxesContainer: React.FC = () => {
-  const checkboxes = useAppSelector(getCheckboxes);
+  const checkboxes = useAppSelector(checkboxesSelector);
 
   return (
     <StyledCheckboxesContainer>
-      {checkboxes.map((checkbox) => {
-        return checkbox ? <CheckedCheckbox /> : <EmptyCheckbox />;
+      {checkboxes.map((checkbox, index) => {
+        return checkbox ? (
+          <CheckedCheckbox key={`checkboxItem${index}`} />
+        ) : (
+          <EmptyCheckbox key={`checkboxItem${index}`} />
+        );
       })}
     </StyledCheckboxesContainer>
   );
 };
 
 const LevelContainer: React.FC = () => {
-  const levelAnswer = useAppSelector(getLevel);
+  const levelAnswer = useAppSelector(levelSelector);
 
   return (
     <StyledLevelsContainer>
@@ -65,7 +72,7 @@ const LevelContainer: React.FC = () => {
 
         return index < levelAnswer ? (
           <Level key={name} className={name}>
-            <img src={link} alt={link} width={125} height={160} />
+            <img src={link} alt={link} width={115} height={140} />
           </Level>
         ) : null;
       })}
@@ -74,19 +81,37 @@ const LevelContainer: React.FC = () => {
 };
 
 export const SprintGame: React.FC = () => {
-  const { changeTotalScore, upCheckboxesLevel } = sprintGameActions;
+  const {
+    changeTotalScore,
+    upCheckboxesLevel,
+    upCurrentWordIndex,
+    setCurrentWord,
+    setCurrentTranslate
+  } = sprintGameActions;
 
   const dispatch = useAppDispatch();
 
+  //устанавливаем первоначальные значения
+  const currentWord: Word | undefined = useAppSelector(wordSelector);
+
+  if (currentWord) {
+    console.log(currentWord);
+    dispatch(setCurrentWord(currentWord.word));
+    dispatch(setCurrentTranslate(currentWord.wordTranslate));
+  }
+
   //получаем данные из state
-  const totalScore = useAppSelector(getScore);
-  const scorePerLevel = useAppSelector(getScorePerLevel);
-  const level = useAppSelector(getLevel);
+  const totalScore = useAppSelector(totalScoreSelector);
+  const scorePerLevel = useAppSelector(scorePerLevelSelector);
+  const level = useAppSelector(levelSelector);
+  const word = useAppSelector(currentWordSelector);
+  const translate = useAppSelector(currentTranslateSelector);
 
   //логика игры при нажатии на ответ
   const sprintGameHandler = () => {
     dispatch(changeTotalScore());
     dispatch(upCheckboxesLevel());
+    dispatch(upCurrentWordIndex());
   };
 
   return (
@@ -99,8 +124,8 @@ export const SprintGame: React.FC = () => {
         </GameHeader>
         <LevelContainer />
         <Shelf />
-        <Word>Слово</Word>
-        <Translation>Перевод</Translation>
+        <WordText>{word}</WordText>
+        <Translation>{translate}</Translation>
         <AnswersButtonsContainer>
           <AnswerButton className="wrong" onClick={sprintGameHandler}>
             НЕВЕРНО

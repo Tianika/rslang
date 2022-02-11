@@ -68,8 +68,8 @@ export const SprintGameContainer = styled.div`
 
 export const GameScore = styled.div`
   text-align: center;
-  font-size: 50px;
-  margin-top: 30px;
+  font-size: 46px;
+  margin-top: 20px;
 `;
 
 export const BlockGame = styled.div`
@@ -78,7 +78,7 @@ export const BlockGame = styled.div`
   flex-direction: column;
   align-items: center;
   border: 1px solid #6dc3ff;
-  margin: 30px auto;
+  margin: 20px auto;
   border-radius: 13px;
   padding: 0px 0px 30px;
   background: #fff;
@@ -107,7 +107,7 @@ export const GameHeader = styled.div`
   width: 100%;
   border-radius: 13px 13px 0 0;
   padding-top: 10px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 `;
 
 export const StyledCheckboxesContainer = styled.div`
@@ -143,8 +143,8 @@ export const StyledLevelsContainer = styled.div`
   display: flex;
   justify-content: center;
   text-align: center;
-  width: 280px;
-  height: 160px;
+  width: 250px;
+  height: 140px;
 `;
 
 export const Level = styled.div`
@@ -156,33 +156,33 @@ export const Level = styled.div`
     left: 0;
   }
   &.book2 {
-    left: 50px;
+    left: 45px;
   }
   &.book3 {
-    left: 100px;
+    left: 90px;
   }
   &.book4 {
-    left: 150px;
+    left: 135px;
   }
 `;
 
 export const Shelf = styled.div`
   width: 350px;
-  height: 20px;
+  height: 16px;
   background-color: #008000;
   margin-bottom: 30px;
   border: 2px solid #000;
   border-radius: 3px;
 `;
 
-export const Word = styled.div`
+export const WordText = styled.div`
   font-size: 47px;
-  margin-bottom: 45px;
+  margin-bottom: 40px;
 `;
 
 export const Translation = styled.div`
   font-size: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `;
 
 export const AnswersButtonsContainer = styled.div`
