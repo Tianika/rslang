@@ -38,6 +38,7 @@ export type SprintGameState = {
   currentWordIndex: number;
   currentWord: '';
   currentTranslate: '';
+  isRightTranslate: boolean;
   scorePerWord: number;
   checkboxes: Boolean[];
 };

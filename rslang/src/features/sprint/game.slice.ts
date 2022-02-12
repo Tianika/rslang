@@ -9,6 +9,7 @@ const initialState: SprintGameState = {
   currentWordIndex: 0,
   currentWord: '',
   currentTranslate: '',
+  isRightTranslate: true,
   scorePerWord: 10,
   checkboxes: [false, false, false]
 };
@@ -21,7 +22,7 @@ export const sprintGameSlice = createSlice({
     changeTotalScore: (state) => {
       state.totalScore += state.scorePerWord;
     },
-    upCheckboxesLevel: (state) => {
+    upLevelForRightAnswer: (state) => {
       if (state.levelAnswer < 4) {
         if (state.checkboxesLevel < 3) {
           state.checkboxesLevel += 1;

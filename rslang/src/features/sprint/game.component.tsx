@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   AnswerButton,
@@ -83,7 +83,7 @@ const LevelContainer: React.FC = () => {
 export const SprintGame: React.FC = () => {
   const {
     changeTotalScore,
-    upCheckboxesLevel,
+    upLevelForRightAnswer,
     upCurrentWordIndex,
     setCurrentWord,
     setCurrentTranslate
@@ -94,12 +94,6 @@ export const SprintGame: React.FC = () => {
   //устанавливаем первоначальные значения
   const currentWord: Word | undefined = useAppSelector(wordSelector);
 
-  if (currentWord) {
-    console.log(currentWord);
-    dispatch(setCurrentWord(currentWord.word));
-    dispatch(setCurrentTranslate(currentWord.wordTranslate));
-  }
-
   //получаем данные из state
   const totalScore = useAppSelector(totalScoreSelector);
   const scorePerLevel = useAppSelector(scorePerLevelSelector);
@@ -107,10 +101,18 @@ export const SprintGame: React.FC = () => {
   const word = useAppSelector(currentWordSelector);
   const translate = useAppSelector(currentTranslateSelector);
 
+  useEffect(() => {
+    if (currentWord) {
+      console.log(currentWord);
+      dispatch(setCurrentWord(currentWord.word));
+      dispatch(setCurrentTranslate(currentWord.wordTranslate));
+    }
+  }, [currentWord]);
+
   //логика игры при нажатии на ответ
   const sprintGameHandler = () => {
     dispatch(changeTotalScore());
-    dispatch(upCheckboxesLevel());
+    dispatch(upLevelForRightAnswer());
     dispatch(upCurrentWordIndex());
   };
 
