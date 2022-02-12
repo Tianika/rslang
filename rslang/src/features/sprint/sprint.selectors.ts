@@ -49,3 +49,8 @@ export const currentTranslateSelector = (state: RootState) => {
 export const wordSelector = (state: RootState) => {
   return state.sprintGame.words[state.sprintGame.currentWordIndex];
 };
+
+//правильный ли перевод выводится на экран
+export const isRightTranslateSelector = (state: RootState) => {
+  return state.sprintGame.isRightTranslate;
+};

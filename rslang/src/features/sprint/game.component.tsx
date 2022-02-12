@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   AnswerButton,
@@ -22,8 +22,6 @@ import {
 } from './styles';
 
 import checkboxIcon from '../../assets/svg/checked-word-sprint.svg';
-import arrowLeft from '../../assets/svg/arrow-left.svg';
-import arrowRight from '../../assets/svg/arrow-right.svg';
 import { sprintGameActions } from './game.slice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
@@ -33,10 +31,13 @@ import {
   levelSelector,
   scorePerLevelSelector,
   totalScoreSelector,
-  currentTranslateSelector
+  currentTranslateSelector,
+  isRightTranslateSelector
 } from './sprint.selectors';
-import { BOOK_LINKS, HEADER_BG_COLOR } from './constants';
+import { ARROWS, BOOK_LINKS, HEADER_BG_COLOR } from './constants';
 import { Word } from './types';
+import { sprintStartActions } from './sprint.slice';
+import { LoadingState } from '../../utils';
 
 const CheckedCheckbox: React.FC = () => {
   return (
@@ -86,7 +87,10 @@ export const SprintGame: React.FC = () => {
     upLevelForRightAnswer,
     upCurrentWordIndex,
     setCurrentWord,
-    setCurrentTranslate
+    setCurrentTranslate,
+    changeIsRightTranslate,
+    resetSprintGameState,
+    resetTotalScore
   } = sprintGameActions;
 
   const dispatch = useAppDispatch();
@@ -99,22 +103,71 @@ export const SprintGame: React.FC = () => {
   const scorePerLevel = useAppSelector(scorePerLevelSelector);
   const level = useAppSelector(levelSelector);
   const word = useAppSelector(currentWordSelector);
+  const isRightTranslate = useAppSelector(isRightTranslateSelector);
   const translate = useAppSelector(currentTranslateSelector);
+
+  const errorTranslate = 'error';
 
   useEffect(() => {
     if (currentWord) {
       console.log(currentWord);
       dispatch(setCurrentWord(currentWord.word));
-      dispatch(setCurrentTranslate(currentWord.wordTranslate));
+
+      if (isRightTranslate) {
+        dispatch(setCurrentTranslate(currentWord.wordTranslate));
+      } else {
+        dispatch(setCurrentTranslate(errorTranslate));
+      }
     }
   }, [currentWord]);
 
-  //логика игры при нажатии на ответ
-  const sprintGameHandler = () => {
+  //логика игры при нажатии на правильный ответ
+  const sprintGameRightAnswerHandler = () => {
     dispatch(changeTotalScore());
     dispatch(upLevelForRightAnswer());
     dispatch(upCurrentWordIndex());
+    dispatch(changeIsRightTranslate());
   };
+
+  //логика игры при нажатии на неверный ответ
+  const sprintGameErrorAnswerHandler = () => {
+    dispatch(resetSprintGameState());
+    dispatch(upCurrentWordIndex());
+    dispatch(changeIsRightTranslate());
+  };
+
+  //таймер
+  const [timer, setTimer] = useState(60);
+  const { changeLoadingState, changeGameStatus } = sprintStartActions;
+
+  useEffect(() => {
+    if (timer === 0) {
+      dispatch(changeGameStatus());
+      dispatch(changeLoadingState(LoadingState.Initial));
+      dispatch(resetTotalScore());
+      dispatch(resetSprintGameState());
+      return;
+    }
+
+    const timerFunction = setInterval(() => {
+      setTimer((state) => (state = state - 1));
+    }, 1000);
+
+    return () => clearInterval(timerFunction);
+  }, [timer]);
+
+  const ANSWER_BUTTONS = [
+    {
+      className: 'wrong',
+      content: 'НЕВЕРНО',
+      handler: isRightTranslate ? sprintGameErrorAnswerHandler : sprintGameRightAnswerHandler
+    },
+    {
+      className: 'right',
+      content: 'ВЕРНО',
+      handler: isRightTranslate ? sprintGameRightAnswerHandler : sprintGameErrorAnswerHandler
+    }
+  ];
 
   return (
     <SprintGameContainer>
@@ -129,23 +182,25 @@ export const SprintGame: React.FC = () => {
         <WordText>{word}</WordText>
         <Translation>{translate}</Translation>
         <AnswersButtonsContainer>
-          <AnswerButton className="wrong" onClick={sprintGameHandler}>
-            НЕВЕРНО
-          </AnswerButton>
-          <AnswerButton className="right" onClick={sprintGameHandler}>
-            ВЕРНО
-          </AnswerButton>
+          {ANSWER_BUTTONS.map((button) => (
+            <AnswerButton
+              key={button.content}
+              className={button.className}
+              onClick={button.handler}
+            >
+              {button.content}
+            </AnswerButton>
+          ))}
         </AnswersButtonsContainer>
         <ArrowsContainer>
-          <Arrow>
-            <img src={arrowLeft} alt={arrowLeft} width={110} height={50} />
-          </Arrow>
-          <Arrow>
-            <img src={arrowRight} alt={arrowRight} width={110} height={50} />
-          </Arrow>
+          {ARROWS.map((arrow) => (
+            <Arrow key={arrow}>
+              <img src={arrow} alt={arrow} width={110} height={50} />
+            </Arrow>
+          ))}
         </ArrowsContainer>
       </BlockGame>
-      <GameTimer>60</GameTimer>
+      <GameTimer>{timer}</GameTimer>
     </SprintGameContainer>
   );
 };
