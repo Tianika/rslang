@@ -14,7 +14,7 @@ import {
   TitleGame
 } from './styles';
 
-const SprintStartPage = (): JSX.Element => {
+const SprintStartPage = (): React.ReactElement => {
   const DataDescription: string[] = SPRINT_DESCRIPTION;
   const Difficulty: string[] = DIFFICULTY;
 

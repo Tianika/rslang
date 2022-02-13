@@ -1,5 +1,10 @@
 import { RootState } from '../../app/store';
 
+//статус загрузки
+export const loadingStatus = (state: RootState) => {
+  return state.sprintGame.loadingState;
+};
+
 //общее количество очков
 export const totalScoreSelector = (state: RootState) => {
   return state.sprintGame.totalScore;
@@ -38,4 +43,9 @@ export const wordSelector = (state: RootState) => {
 //правильный ли перевод выводится на экран
 export const isRightTranslateSelector = (state: RootState) => {
   return state.sprintGame.isRightTranslate;
+};
+
+//текущий индекс слова в массиве
+export const currentIndex = (state: RootState) => {
+  return state.sprintGame.currentWordIndex;
 };

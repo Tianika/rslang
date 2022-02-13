@@ -32,14 +32,17 @@ import {
   scorePerLevelSelector,
   totalScoreSelector,
   currentTranslateSelector,
-  isRightTranslateSelector
+  isRightTranslateSelector,
+  loadingStatus,
+  currentIndex
 } from './sprint.selectors';
 import { ARROWS, BOOK_LINKS, HEADER_BG_COLOR } from './constants';
 import { Word } from './types';
 import { LoadingState } from '../../utils';
 import { fetchSprintAction } from './sprint.saga';
+import { LoadingPage } from '../../components/loading';
 
-export const SprintGame = (props: { level: number }): JSX.Element => {
+export const SprintGame = (props: { level: number }): React.ReactElement => {
   const {
     changeTotalScore,
     upLevelForRightAnswer,
@@ -48,7 +51,8 @@ export const SprintGame = (props: { level: number }): JSX.Element => {
     setCurrentTranslate,
     changeIsRightTranslate,
     resetSprintGameLevel,
-    resetSprintGame
+    resetSprintGame,
+    resetWordIndex
   } = sprintGameActions;
 
   const dispatch = useAppDispatch();
@@ -63,13 +67,23 @@ export const SprintGame = (props: { level: number }): JSX.Element => {
   const word = useAppSelector(currentWordSelector);
   const isRightTranslate = useAppSelector(isRightTranslateSelector);
   const translate = useAppSelector(currentTranslateSelector);
+  const checkboxes = useAppSelector(checkboxesSelector);
+  const wordIndex = useAppSelector(currentIndex);
 
   const errorTranslate = 'error';
 
+  //запрос слов
   useEffect(() => {
     console.log(props);
     dispatch(fetchSprintAction(props.level));
   }, []);
+
+  // useEffect(() => {
+  //   if (wordIndex === 19) {
+  //     dispatch(fetchSprintAction(props.level));
+  //     dispatch(resetWordIndex());
+  //   }
+  // }, [wordIndex]);
 
   useEffect(() => {
     if (currentWord) {
@@ -82,7 +96,7 @@ export const SprintGame = (props: { level: number }): JSX.Element => {
         dispatch(setCurrentTranslate(errorTranslate));
       }
     }
-  }, [currentWord, dispatch, isRightTranslate, setCurrentTranslate, setCurrentWord]);
+  }, [currentWord]);
 
   //логика игры при нажатии на правильный ответ
   const sprintGameRightAnswerHandler = () => {
@@ -101,7 +115,6 @@ export const SprintGame = (props: { level: number }): JSX.Element => {
 
   //таймер
   const [timer, setTimer] = useState(60);
-  //const { changeLoadingState, changeGameStatus } = sprintStartActions;
 
   useEffect(() => {
     if (timer === 0) {
@@ -133,23 +146,38 @@ export const SprintGame = (props: { level: number }): JSX.Element => {
   ];
 
   //управление ответами с клавиатуры
-  document.body.onkeydown = (event) => {
+  document.body.onkeydown = (event: KeyboardEvent) => {
     if (isRightTranslate) {
-      if (event.keyCode == 37) {
+      if (event.key === 'ArrowLeft') {
         sprintGameErrorAnswerHandler();
       }
-      if (event.keyCode == 39) {
+      if (event.key === 'ArrowRight') {
         sprintGameRightAnswerHandler();
       }
     } else {
-      if (event.keyCode == 37) {
+      if (event.key === 'ArrowLeft') {
         sprintGameRightAnswerHandler();
       }
-      if (event.keyCode == 39) {
+      if (event.key === 'ArrowRight') {
         sprintGameErrorAnswerHandler();
       }
     }
   };
+
+  //отслеживаем статус загрузки
+  const status = useAppSelector(loadingStatus);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const disableIsLoading = () => {
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (status === LoadingState.Success) {
+      disableIsLoading();
+    }
+  }, [status]);
+
   const CheckedCheckbox: React.FC = () => {
     return (
       <StyledCheckedCheckbox>
@@ -159,12 +187,9 @@ export const SprintGame = (props: { level: number }): JSX.Element => {
   };
 
   const CheckboxesContainer: React.FC = () => {
-    const checkboxes = useAppSelector(checkboxesSelector);
-    const levelGame = useAppSelector(levelSelector);
-
     return (
       <StyledCheckboxesContainer>
-        {levelGame === 4 ? (
+        {level === 4 ? (
           <CheckedCheckbox />
         ) : (
           checkboxes.map((checkbox, index) => {
@@ -180,14 +205,12 @@ export const SprintGame = (props: { level: number }): JSX.Element => {
   };
 
   const LevelContainer: React.FC = () => {
-    const levelAnswer = useAppSelector(levelSelector);
-
     return (
       <StyledLevelsContainer>
         {BOOK_LINKS.map((link, index) => {
           const name = `book${index + 1}`;
 
-          return index < levelAnswer ? (
+          return index < level ? (
             <Level key={name} className={name}>
               <img src={link} alt={link} width={115} height={140} />
             </Level>
@@ -196,6 +219,9 @@ export const SprintGame = (props: { level: number }): JSX.Element => {
       </StyledLevelsContainer>
     );
   };
+
+  //пока не догрузились данные страница Loading
+  if (isLoading) return <LoadingPage />;
 
   return (
     <SprintGameContainer>

@@ -72,6 +72,9 @@ export const sprintGameSlice = createSlice({
       state.currentWord = '';
       state.currentTranslate = '';
       state.isRightTranslate = true;
+    },
+    resetWordIndex: (state) => {
+      state.currentWordIndex = 0;
     }
   }
 });
