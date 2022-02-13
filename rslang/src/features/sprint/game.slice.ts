@@ -22,9 +22,6 @@ export const sprintGameSlice = createSlice({
     changeTotalScore: (state) => {
       state.totalScore += state.scorePerWord;
     },
-    resetTotalScore: (state) => {
-      state.totalScore = 0;
-    },
     upLevelForRightAnswer: (state) => {
       if (state.levelAnswer < 4) {
         if (state.checkboxesLevel < 3) {
@@ -40,13 +37,9 @@ export const sprintGameSlice = createSlice({
         for (let i = 0; i < 3; i++) {
           state.checkboxes[i] = i < state.checkboxesLevel ? true : false;
         }
-
-        if (state.levelAnswer === 4) {
-          state.checkboxes = [true, true, true];
-        }
       }
     },
-    resetSprintGameState: (state) => {
+    resetSprintGameLevel: (state) => {
       state.checkboxesLevel = 0;
       state.levelAnswer = 1;
       state.scorePerWord = 10;
@@ -69,6 +62,14 @@ export const sprintGameSlice = createSlice({
       console.log(random);
 
       state.isRightTranslate = random < 0.5 ? false : true;
+    },
+    resetSprintGame: (state) => {
+      state.totalScore = 0;
+      state.words = [];
+      state.currentWordIndex = 0;
+      state.currentWord = '';
+      state.currentTranslate = '';
+      state.isRightTranslate = true;
     }
   }
 });

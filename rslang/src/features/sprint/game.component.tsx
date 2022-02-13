@@ -49,16 +49,21 @@ const CheckedCheckbox: React.FC = () => {
 
 const CheckboxesContainer: React.FC = () => {
   const checkboxes = useAppSelector(checkboxesSelector);
+  const level = useAppSelector(levelSelector);
 
   return (
     <StyledCheckboxesContainer>
-      {checkboxes.map((checkbox, index) => {
-        return checkbox ? (
-          <CheckedCheckbox key={`checkboxItem${index}`} />
-        ) : (
-          <EmptyCheckbox key={`checkboxItem${index}`} />
-        );
-      })}
+      {level === 4 ? (
+        <CheckedCheckbox />
+      ) : (
+        checkboxes.map((checkbox, index) => {
+          return checkbox ? (
+            <CheckedCheckbox key={`checkboxItem${index}`} />
+          ) : (
+            <EmptyCheckbox key={`checkboxItem${index}`} />
+          );
+        })
+      )}
     </StyledCheckboxesContainer>
   );
 };
@@ -89,8 +94,8 @@ export const SprintGame: React.FC = () => {
     setCurrentWord,
     setCurrentTranslate,
     changeIsRightTranslate,
-    resetSprintGameState,
-    resetTotalScore
+    resetSprintGameLevel,
+    resetSprintGame
   } = sprintGameActions;
 
   const dispatch = useAppDispatch();
@@ -119,7 +124,7 @@ export const SprintGame: React.FC = () => {
         dispatch(setCurrentTranslate(errorTranslate));
       }
     }
-  }, [currentWord]);
+  }, [currentWord, dispatch, isRightTranslate, setCurrentTranslate, setCurrentWord]);
 
   //логика игры при нажатии на правильный ответ
   const sprintGameRightAnswerHandler = () => {
@@ -131,7 +136,7 @@ export const SprintGame: React.FC = () => {
 
   //логика игры при нажатии на неверный ответ
   const sprintGameErrorAnswerHandler = () => {
-    dispatch(resetSprintGameState());
+    dispatch(resetSprintGameLevel());
     dispatch(upCurrentWordIndex());
     dispatch(changeIsRightTranslate());
   };
@@ -144,8 +149,8 @@ export const SprintGame: React.FC = () => {
     if (timer === 0) {
       dispatch(changeGameStatus());
       dispatch(changeLoadingState(LoadingState.Initial));
-      dispatch(resetTotalScore());
-      dispatch(resetSprintGameState());
+      dispatch(resetSprintGameLevel());
+      dispatch(resetSprintGame());
       return;
     }
 
@@ -168,6 +173,25 @@ export const SprintGame: React.FC = () => {
       handler: isRightTranslate ? sprintGameRightAnswerHandler : sprintGameErrorAnswerHandler
     }
   ];
+
+  //управление ответами с клавиатуры
+  document.body.onkeydown = (event) => {
+    if (isRightTranslate) {
+      if (event.keyCode == 37) {
+        sprintGameErrorAnswerHandler();
+      }
+      if (event.keyCode == 39) {
+        sprintGameRightAnswerHandler();
+      }
+    } else {
+      if (event.keyCode == 37) {
+        sprintGameRightAnswerHandler();
+      }
+      if (event.keyCode == 39) {
+        sprintGameErrorAnswerHandler();
+      }
+    }
+  };
 
   return (
     <SprintGameContainer>
