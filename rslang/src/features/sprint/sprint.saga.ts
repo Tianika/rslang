@@ -13,9 +13,7 @@ const call: any = Effects.call;
 export const fetchSprintAction = createAction<number, string>('sprint/fetch');
 
 //получаем функцию из экшенов
-const { changeLoadingState } = sprintGameActions;
-
-const { setWordArray } = sprintGameActions;
+const { changeLoadingState, setWordsArray } = sprintGameActions;
 
 function* sprintGameFetch(action: PayloadAction<number>) {
   yield put(changeLoadingState(LoadingState.Loading));
@@ -28,7 +26,7 @@ function* sprintGameFetch(action: PayloadAction<number>) {
     const { data } = yield call(requestWordsFromGroup, action.payload, pageNumber) as Response;
 
     //обрабатываем полученный массив слов
-    yield put(setWordArray(data));
+    yield put(setWordsArray(data));
 
     //TODO доделать loading
 

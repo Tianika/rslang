@@ -5,47 +5,52 @@ export const loadingStatus = (state: RootState) => {
   return state.sprintGame.loadingState;
 };
 
-//общее количество очков
-export const totalScoreSelector = (state: RootState) => {
-  return state.sprintGame.totalScore;
+//массив слов
+export const wordsSelector = (state: RootState) => {
+  return state.sprintGame.words;
 };
 
-//количество очков за слово
-export const scorePerLevelSelector = (state: RootState) => {
-  return state.sprintGame.scorePerWord;
-};
+// //общее количество очков
+// export const totalScoreSelector = (state: RootState) => {
+//   return state.sprintGame.totalScore;
+// };
 
-//уровень игры
-export const levelSelector = (state: RootState) => {
-  return state.sprintGame.levelAnswer;
-};
+// //количество очков за слово
+// export const scorePerLevelSelector = (state: RootState) => {
+//   return state.sprintGame.scorePerWord;
+// };
 
-//чекбоксы
-export const checkboxesSelector = (state: RootState) => {
-  return state.sprintGame.checkboxes;
-};
+// //уровень игры
+// export const levelSelector = (state: RootState) => {
+//   return state.sprintGame.levelAnswer;
+// };
 
-//получить текущее слово
-export const currentWordSelector = (state: RootState) => {
-  return state.sprintGame.currentWord;
-};
+// //чекбоксы
+// export const checkboxesSelector = (state: RootState) => {
+//   return state.sprintGame.checkboxes;
+// };
 
-//получить текущий перевод
-export const currentTranslateSelector = (state: RootState) => {
-  return state.sprintGame.currentTranslate;
-};
+// //получить текущее слово
+// export const currentWordSelector = (state: RootState) => {
+//   return state.sprintGame.currentWord;
+// };
 
-//получить текущее слово
-export const wordSelector = (state: RootState) => {
-  return state.sprintGame.words[state.sprintGame.currentWordIndex];
-};
+// //получить текущий перевод
+// export const currentTranslateSelector = (state: RootState) => {
+//   return state.sprintGame.currentTranslate;
+// };
 
-//правильный ли перевод выводится на экран
-export const isRightTranslateSelector = (state: RootState) => {
-  return state.sprintGame.isRightTranslate;
-};
+// //получить текущее слово
+// export const wordSelector = (state: RootState) => {
+//   return state.sprintGame.words[state.sprintGame.currentWordIndex];
+// };
 
-//текущий индекс слова в массиве
-export const currentIndex = (state: RootState) => {
-  return state.sprintGame.currentWordIndex;
-};
+// //правильный ли перевод выводится на экран
+// export const isRightTranslateSelector = (state: RootState) => {
+//   return state.sprintGame.isRightTranslate;
+// };
+
+// //текущий индекс слова в массиве
+// export const currentIndex = (state: RootState) => {
+//   return state.sprintGame.currentWordIndex;
+// };

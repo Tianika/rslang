@@ -30,16 +30,11 @@ export type Word = {
   textExampleTranslate: 'string';
 };
 
-export type SprintGameState = {
+export type SprintWordsState = {
   loadingState: LoadingState;
-  totalScore: number;
   words: Array<Word | undefined>;
-  checkboxesLevel: number;
-  levelAnswer: number;
-  currentWordIndex: number;
-  currentWord: '';
-  currentTranslate: '';
-  isRightTranslate: boolean;
-  scorePerWord: number;
-  checkboxes: Boolean[];
+};
+
+export type SprintGameState = {
+  words: Array<Word | undefined>;
 };

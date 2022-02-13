@@ -22,95 +22,95 @@ import {
 } from './styles';
 
 import checkboxIcon from '../../assets/svg/checked-word-sprint.svg';
-import { sprintGameActions } from './sprint.slice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-  checkboxesSelector,
-  currentWordSelector,
-  wordSelector,
-  levelSelector,
-  scorePerLevelSelector,
-  totalScoreSelector,
-  currentTranslateSelector,
-  isRightTranslateSelector,
-  loadingStatus,
-  currentIndex
-} from './sprint.selectors';
+import { loadingStatus, wordsSelector } from './sprint.selectors';
 import { ARROWS, BOOK_LINKS, HEADER_BG_COLOR } from './constants';
-import { Word } from './types';
+import { SprintGameState } from './types';
 import { LoadingState } from '../../utils';
 import { fetchSprintAction } from './sprint.saga';
 import { LoadingPage } from '../../components/loading';
 
 export const SprintGame = (props: { level: number }): React.ReactElement => {
-  const {
-    changeTotalScore,
-    upLevelForRightAnswer,
-    upCurrentWordIndex,
-    setCurrentWord,
-    setCurrentTranslate,
-    changeIsRightTranslate,
-    resetSprintGameLevel,
-    resetSprintGame,
-    resetWordIndex
-  } = sprintGameActions;
-
   const dispatch = useAppDispatch();
 
   //устанавливаем первоначальные значения
-  const currentWord: Word | undefined = useAppSelector(wordSelector);
+  const state: SprintGameState = {
+    words: []
+  };
 
-  //получаем данные из state
-  const totalScore = useAppSelector(totalScoreSelector);
-  const scorePerLevel = useAppSelector(scorePerLevelSelector);
-  const level = useAppSelector(levelSelector);
-  const word = useAppSelector(currentWordSelector);
-  const isRightTranslate = useAppSelector(isRightTranslateSelector);
-  const translate = useAppSelector(currentTranslateSelector);
-  const checkboxes = useAppSelector(checkboxesSelector);
-  const wordIndex = useAppSelector(currentIndex);
+  const [totalScore, setTotalScore] = useState(0);
+  const [scorePerWord, setScorePerWord] = useState(10);
+  const [levelAnswer, setLevelAnswer] = useState(1);
+  const [checkboxesLevel, setCheckboxesLevel] = useState(0);
+  const [isRightTranslate, setIsRightTranslate] = useState(true);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [checkboxes, setCheckboxes] = useState([false, false, false]);
 
-  const errorTranslate = 'error';
+  //получаем слова
+  state.words = useAppSelector(wordsSelector);
 
-  //запрос слов
   useEffect(() => {
-    console.log(props);
     dispatch(fetchSprintAction(props.level));
   }, []);
 
-  // useEffect(() => {
-  //   if (wordIndex === 19) {
-  //     dispatch(fetchSprintAction(props.level));
-  //     dispatch(resetWordIndex());
-  //   }
-  // }, [wordIndex]);
+  //функции
+  const changeTotalScore = () => {
+    setTotalScore(totalScore + scorePerWord);
+  };
 
-  useEffect(() => {
-    if (currentWord) {
-      console.log(currentWord);
-      dispatch(setCurrentWord(currentWord.word));
+  const upLevelForRightAnswer = () => {
+    if (levelAnswer < 4) {
+      if (checkboxesLevel < 3) {
+        setCheckboxesLevel(checkboxesLevel + 1);
 
-      if (isRightTranslate) {
-        dispatch(setCurrentTranslate(currentWord.wordTranslate));
+        const copyCheckboxes = checkboxes.map((checkbox, index) =>
+          index <= checkboxesLevel ? true : false
+        );
+        setCheckboxes(copyCheckboxes);
       } else {
-        dispatch(setCurrentTranslate(errorTranslate));
+        setCheckboxesLevel(0);
+        setLevelAnswer(levelAnswer + 1);
+        setCheckboxes([false, false, false]);
+
+        if (scorePerWord < 80) {
+          setScorePerWord(scorePerWord * 2);
+        }
       }
     }
-  }, [currentWord]);
+
+    console.log(checkboxesLevel, checkboxes);
+  };
+
+  const upCurrentWordIndex = () => {
+    setCurrentWordIndex(currentWordIndex + 1);
+  };
+
+  const changeIsRightTranslate = () => {
+    setIsRightTranslate(Math.random() < 0.5 ? false : true);
+  };
+
+  const resetSprintGameLevel = () => {
+    setCheckboxesLevel(0);
+    setLevelAnswer(1);
+    setScorePerWord(10);
+    setCheckboxes([false, false, false]);
+  };
 
   //логика игры при нажатии на правильный ответ
   const sprintGameRightAnswerHandler = () => {
-    dispatch(changeTotalScore());
-    dispatch(upLevelForRightAnswer());
-    dispatch(upCurrentWordIndex());
-    dispatch(changeIsRightTranslate());
+    changeTotalScore();
+    upLevelForRightAnswer();
+    upCurrentWordIndex();
+    changeIsRightTranslate();
+    console.log('right');
   };
 
   //логика игры при нажатии на неверный ответ
   const sprintGameErrorAnswerHandler = () => {
-    dispatch(resetSprintGameLevel());
-    dispatch(upCurrentWordIndex());
-    dispatch(changeIsRightTranslate());
+    resetSprintGameLevel();
+    upCurrentWordIndex();
+    changeIsRightTranslate();
+    console.log('error');
   };
 
   //таймер
@@ -118,15 +118,11 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   useEffect(() => {
     if (timer === 0) {
-      // dispatch(changeGameStatus());
-      // dispatch(changeLoadingState(LoadingState.Initial));
-      dispatch(resetSprintGameLevel());
-      dispatch(resetSprintGame());
       return;
     }
 
     const timerFunction = setInterval(() => {
-      setTimer((state) => (state = state - 1));
+      setTimer((time) => (time = time - 1));
     }, 1000);
 
     return () => clearInterval(timerFunction);
@@ -189,10 +185,11 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const CheckboxesContainer: React.FC = () => {
     return (
       <StyledCheckboxesContainer>
-        {level === 4 ? (
+        {levelAnswer === 4 ? (
           <CheckedCheckbox />
         ) : (
           checkboxes.map((checkbox, index) => {
+            console.log(checkbox);
             return checkbox ? (
               <CheckedCheckbox key={`checkboxItem${index}`} />
             ) : (
@@ -210,7 +207,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
         {BOOK_LINKS.map((link, index) => {
           const name = `book${index + 1}`;
 
-          return index < level ? (
+          return index < levelAnswer ? (
             <Level key={name} className={name}>
               <img src={link} alt={link} width={115} height={140} />
             </Level>
@@ -227,20 +224,22 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     <SprintGameContainer>
       <GameScore>{totalScore}</GameScore>
       <BlockGame>
-        <GameHeader style={{ backgroundColor: HEADER_BG_COLOR[level - 1] }}>
+        <GameHeader style={{ backgroundColor: HEADER_BG_COLOR[levelAnswer - 1] }}>
           <CheckboxesContainer />
-          <ScorePerAnswer>+{scorePerLevel} очков за слово</ScorePerAnswer>
+          <ScorePerAnswer>+{scorePerWord} очков за слово</ScorePerAnswer>
         </GameHeader>
         <LevelContainer />
         <Shelf />
-        <WordText>{word}</WordText>
-        <Translation>{translate}</Translation>
+        <WordText>{state.words[currentWordIndex]?.word}</WordText>
+        <Translation>
+          {isRightTranslate ? state.words[currentWordIndex]?.wordTranslate : 'Error'}
+        </Translation>
         <AnswersButtonsContainer>
           {ANSWER_BUTTONS.map((button) => (
             <AnswerButton
               key={button.content}
               className={button.className}
-              onClick={button.handler}
+              onClick={() => button.handler()}
             >
               {button.content}
             </AnswerButton>
