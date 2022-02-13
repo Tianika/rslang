@@ -31,6 +31,7 @@ export type Word = {
 };
 
 export type SprintGameState = {
+  loadingState: LoadingState;
   totalScore: number;
   words: Array<Word | undefined>;
   checkboxesLevel: number;

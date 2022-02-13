@@ -22,7 +22,7 @@ import {
 } from './styles';
 
 import checkboxIcon from '../../assets/svg/checked-word-sprint.svg';
-import { sprintGameActions } from './game.slice';
+import { sprintGameActions } from './sprint.slice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   checkboxesSelector,
@@ -36,57 +36,10 @@ import {
 } from './sprint.selectors';
 import { ARROWS, BOOK_LINKS, HEADER_BG_COLOR } from './constants';
 import { Word } from './types';
-import { sprintStartActions } from './sprint.slice';
 import { LoadingState } from '../../utils';
+import { fetchSprintAction } from './sprint.saga';
 
-const CheckedCheckbox: React.FC = () => {
-  return (
-    <StyledCheckedCheckbox>
-      <img src={checkboxIcon} alt={checkboxIcon} width={40} height={40} />
-    </StyledCheckedCheckbox>
-  );
-};
-
-const CheckboxesContainer: React.FC = () => {
-  const checkboxes = useAppSelector(checkboxesSelector);
-  const level = useAppSelector(levelSelector);
-
-  return (
-    <StyledCheckboxesContainer>
-      {level === 4 ? (
-        <CheckedCheckbox />
-      ) : (
-        checkboxes.map((checkbox, index) => {
-          return checkbox ? (
-            <CheckedCheckbox key={`checkboxItem${index}`} />
-          ) : (
-            <EmptyCheckbox key={`checkboxItem${index}`} />
-          );
-        })
-      )}
-    </StyledCheckboxesContainer>
-  );
-};
-
-const LevelContainer: React.FC = () => {
-  const levelAnswer = useAppSelector(levelSelector);
-
-  return (
-    <StyledLevelsContainer>
-      {BOOK_LINKS.map((link, index) => {
-        const name = `book${index + 1}`;
-
-        return index < levelAnswer ? (
-          <Level key={name} className={name}>
-            <img src={link} alt={link} width={115} height={140} />
-          </Level>
-        ) : null;
-      })}
-    </StyledLevelsContainer>
-  );
-};
-
-export const SprintGame: React.FC = () => {
+export const SprintGame = (props: { level: number }): JSX.Element => {
   const {
     changeTotalScore,
     upLevelForRightAnswer,
@@ -112,6 +65,11 @@ export const SprintGame: React.FC = () => {
   const translate = useAppSelector(currentTranslateSelector);
 
   const errorTranslate = 'error';
+
+  useEffect(() => {
+    console.log(props);
+    dispatch(fetchSprintAction(props.level));
+  }, []);
 
   useEffect(() => {
     if (currentWord) {
@@ -143,12 +101,12 @@ export const SprintGame: React.FC = () => {
 
   //таймер
   const [timer, setTimer] = useState(60);
-  const { changeLoadingState, changeGameStatus } = sprintStartActions;
+  //const { changeLoadingState, changeGameStatus } = sprintStartActions;
 
   useEffect(() => {
     if (timer === 0) {
-      dispatch(changeGameStatus());
-      dispatch(changeLoadingState(LoadingState.Initial));
+      // dispatch(changeGameStatus());
+      // dispatch(changeLoadingState(LoadingState.Initial));
       dispatch(resetSprintGameLevel());
       dispatch(resetSprintGame());
       return;
@@ -191,6 +149,52 @@ export const SprintGame: React.FC = () => {
         sprintGameErrorAnswerHandler();
       }
     }
+  };
+  const CheckedCheckbox: React.FC = () => {
+    return (
+      <StyledCheckedCheckbox>
+        <img src={checkboxIcon} alt={checkboxIcon} width={40} height={40} />
+      </StyledCheckedCheckbox>
+    );
+  };
+
+  const CheckboxesContainer: React.FC = () => {
+    const checkboxes = useAppSelector(checkboxesSelector);
+    const levelGame = useAppSelector(levelSelector);
+
+    return (
+      <StyledCheckboxesContainer>
+        {levelGame === 4 ? (
+          <CheckedCheckbox />
+        ) : (
+          checkboxes.map((checkbox, index) => {
+            return checkbox ? (
+              <CheckedCheckbox key={`checkboxItem${index}`} />
+            ) : (
+              <EmptyCheckbox key={`checkboxItem${index}`} />
+            );
+          })
+        )}
+      </StyledCheckboxesContainer>
+    );
+  };
+
+  const LevelContainer: React.FC = () => {
+    const levelAnswer = useAppSelector(levelSelector);
+
+    return (
+      <StyledLevelsContainer>
+        {BOOK_LINKS.map((link, index) => {
+          const name = `book${index + 1}`;
+
+          return index < levelAnswer ? (
+            <Level key={name} className={name}>
+              <img src={link} alt={link} width={115} height={140} />
+            </Level>
+          ) : null;
+        })}
+      </StyledLevelsContainer>
+    );
   };
 
   return (

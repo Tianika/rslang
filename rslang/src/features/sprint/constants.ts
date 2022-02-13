@@ -6,7 +6,7 @@ import arrowLeft from '../../assets/svg/arrow-left.svg';
 import arrowRight from '../../assets/svg/arrow-right.svg';
 
 export const SPRINT_DESCRIPTION = [
-  'Используйте мышь, чтобы выбрать.',
+  'Используйте мышь, чтобы выбрать ответ.',
   'Используйте клавиши влево или вправо.'
 ];
 

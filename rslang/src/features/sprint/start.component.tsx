@@ -1,10 +1,7 @@
-import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useState } from 'react';
+import { SprintGame } from '.';
 import { AccountProps } from '../../utils';
 import { DIFFICULTY, SPRINT_DESCRIPTION } from './constants';
-import { fetchSprintAction } from './sprint.saga';
-import { selectedGroup } from './sprint.selectors';
-import { sprintStartActions } from './sprint.slice';
 import {
   BlockInfo,
   BlockSelect,
@@ -17,56 +14,51 @@ import {
   TitleGame
 } from './styles';
 
-const SprintStartPage: React.FC = () => {
+const SprintStartPage = (): JSX.Element => {
   const DataDescription: string[] = SPRINT_DESCRIPTION;
   const Difficulty: string[] = DIFFICULTY;
 
-  const { changeLevel, changeGameStatus } = sprintStartActions;
-
-  const dispatch = useAppDispatch();
-
-  const level = useAppSelector(selectedGroup);
-
-  //получаем номер уровня
-  const onLevelChange: AccountProps['onLevelChange'] = (event) => {
+  //меняем уровень игры
+  const [level, setLevel] = useState(0);
+  const levelChange: AccountProps['onLevelChange'] = (event) => {
     const value = event.target.options.selectedIndex;
-    dispatch(changeLevel(value));
+    setLevel(value);
   };
 
-  //меняем статус игры
-  const onChangeStatus = (): void => {
-    dispatch(changeGameStatus());
+  //старт игры
+  const [isGame, setIsGame] = useState(false);
+  const startGame = () => {
+    setIsGame(true);
   };
 
-  //получаем слова для игры
-  const getWords = () => {
-    onChangeStatus();
-    dispatch(fetchSprintAction(level));
-  };
+  if (isGame) {
+    return <SprintGame level={level} />;
+  }
 
   return (
     <BlockInfo>
       <TitleGame>СПРИНТ</TitleGame>
       <GameDescription>
-        "Спринт" - это тренировка для повторения заученных слов из вашего словаря.
+        "Спринт" - это тренировка для изучения слов из вашего словаря.
       </GameDescription>
       <ul>
-        {DataDescription.map((el, index) => (
-          <GameDescriptionElement key={index}>{el}</GameDescriptionElement>
+        {DataDescription.map((text, index) => (
+          <GameDescriptionElement key={index}>{text}</GameDescriptionElement>
         ))}
       </ul>
       <BlockSelect>
         <MenuDifficultySelection>
           <MenuDifficultySelectionTitle>Сложность</MenuDifficultySelectionTitle>
-          <ChoiceDifficulty onChange={onLevelChange}>
+          <ChoiceDifficulty onChange={levelChange}>
             {Difficulty.map((el, index) => (
               <option key={index}>{el}</option>
             ))}
           </ChoiceDifficulty>
         </MenuDifficultySelection>
-        <ButtonPlay onClick={getWords}>Начать</ButtonPlay>
+        <ButtonPlay onClick={startGame}>Начать</ButtonPlay>
       </BlockSelect>
     </BlockInfo>
   );
 };
+
 export default SprintStartPage;
