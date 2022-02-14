@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { SprintGame } from '.';
 import { AccountProps } from '../../utils';
 import { DIFFICULTY, SPRINT_DESCRIPTION } from './constants';

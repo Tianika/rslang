@@ -77,9 +77,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       if (checkboxesLevel < 3) {
         setCheckboxesLevel(checkboxesLevel + 1);
 
-        const copyCheckboxes = checkboxes.map((checkbox, index) =>
-          index <= checkboxesLevel ? true : false
-        );
+        const copyCheckboxes = checkboxes.map((checkbox, index) => index <= checkboxesLevel);
         setCheckboxes(copyCheckboxes);
       } else {
         setCheckboxesLevel(0);
@@ -108,7 +106,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   };
 
   const changeIsRightTranslate = () => {
-    setIsRightTranslate(Math.random() < 0.5 ? false : true);
+    setIsRightTranslate(Math.random() >= 0.5);
   };
 
   const resetSprintGameLevel = () => {
@@ -119,9 +117,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   };
 
   const incorrectTranslate = () => {
-    const error = 'Error';
-
-    return error;
+    return 'Error';
   };
 
   //логика общее

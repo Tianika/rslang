@@ -80,7 +80,7 @@ export const BlockGame = styled.div`
   border: 1px solid #6dc3ff;
   margin: 20px auto;
   border-radius: 13px;
-  padding: 0px 0px 30px;
+  padding: 0 0 30px;
   background: #fff;
 `;
 
