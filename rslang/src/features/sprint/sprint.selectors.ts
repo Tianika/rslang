@@ -9,3 +9,13 @@ export const loadingStatus = (state: RootState) => {
 export const wordsSelector = (state: RootState) => {
   return state.sprintGame.words;
 };
+
+//правильные ответы
+export const rightAnswersSelector = (state: RootState) => {
+  return state.sprintGame.rightAnswers;
+};
+
+//неправильные ответы
+export const errorAnswersSelector = (state: RootState) => {
+  return state.sprintGame.errorAnswers;
+};

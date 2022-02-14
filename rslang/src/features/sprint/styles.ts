@@ -1,22 +1,23 @@
 import styled from 'styled-components';
+import { baseTheme } from '../../utils';
 
 export const BlockInfo = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #6dc3ff;
+  border: 1px solid ${baseTheme.colors.blue};
   margin: 50px auto;
   border-radius: 13px;
   padding: 40px 50px;
-  background: #fff;
+  background: ${baseTheme.colors.bg};
 `;
 
 export const TitleGame = styled.h1`
   font-size: 60px;
-  color: #6dc3ff;
+  color: ${baseTheme.colors.blue};
   font-weight: 100;
-  border-bottom: 1px solid #ff6849;
+  border-bottom: 1px solid ${baseTheme.colors.red};
   width: 80%;
   text-align: center;
   padding-bottom: 20px;
@@ -40,12 +41,12 @@ export const BlockSelect = styled.div`
 
 export const MenuDifficultySelection = styled.fieldset`
   border-radius: 6px;
-  border: 1px solid #6dc3ff;
+  border: 1px solid ${baseTheme.colors.blue};
   margin: 20px;
 `;
 
 export const MenuDifficultySelectionTitle = styled.legend`
-  color: #ff6849;
+  color: ${baseTheme.colors.red};
 `;
 
 export const ChoiceDifficulty = styled.select`
@@ -53,8 +54,8 @@ export const ChoiceDifficulty = styled.select`
 `;
 
 export const ButtonPlay = styled.button`
-  background: #6dc3ff;
-  color: #ffffff;
+  background: ${baseTheme.colors.blue};
+  color: ${baseTheme.colors.bg};
   font-size: 22px;
   border: none;
   border-radius: 6px;
@@ -64,7 +65,7 @@ export const ButtonPlay = styled.button`
   transition: 1s;
   cursor: pointer;
   &:hover {
-    background: #70af46;
+    background: ${baseTheme.colors.green};
   }
 `;
 
@@ -84,11 +85,17 @@ export const BlockGame = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #6dc3ff;
+  border: 1px solid ${baseTheme.colors.blue};
   margin: 20px auto;
   border-radius: 13px;
   padding: 0 0 30px;
   background: #fff;
+  &.green {
+    border: 3px solid ${baseTheme.colors.green};
+  }
+  &.red {
+    border: 3px solid ${baseTheme.colors.red};
+  }
 `;
 
 export const GameTimer = styled.div`
@@ -101,10 +108,10 @@ export const GameTimer = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  border: 1px solid #6dc3ff;
+  border: 1px solid ${baseTheme.colors.blue};
   text-align: center;
   font-size: 60px;
-  color: #6dc3ff;
+  color: ${baseTheme.colors.blue};
 `;
 
 export const GameHeader = styled.div`
@@ -180,7 +187,7 @@ export const Shelf = styled.div`
   height: 16px;
   background-color: #008000;
   margin-bottom: 30px;
-  border: 2px solid #000;
+  border: 2px solid ${baseTheme.colors.font};
   border-radius: 3px;
 `;
 
@@ -206,13 +213,13 @@ export const AnswerButton = styled.button`
   font-size: 24px;
   border-radius: 13px;
   border: none;
-  color: #fff;
+  color: ${baseTheme.colors.bg};
   cursor: pointer;
   &.wrong {
-    background-color: #ff6849;
+    background-color: ${baseTheme.colors.red};
   }
   &.right {
-    background-color: #70af46;
+    background-color: ${baseTheme.colors.green};
   }
 `;
 

@@ -124,7 +124,7 @@ export const SoundIcon = styled.button`
   width: 32px;
   height: 28px;
   margin-right: 15px;
-  background-color: transparent;
+  background-color: ${baseTheme.colors.bg};
   border: none;
   cursor: pointer;
 `;
@@ -148,4 +148,5 @@ export const ExitButton = styled.button`
   border-radius: 13px;
   border: none;
   background-color: ${baseTheme.colors.darkBlue};
+  cursor: pointer;
 `;

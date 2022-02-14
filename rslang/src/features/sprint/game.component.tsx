@@ -23,13 +23,19 @@ import {
 
 import checkboxIcon from '../../assets/svg/checked-word-sprint.svg';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { loadingStatus, wordsSelector } from './sprint.selectors';
+import {
+  errorAnswersSelector,
+  loadingStatus,
+  rightAnswersSelector,
+  wordsSelector
+} from './sprint.selectors';
 import { ARROWS, BOOK_LINKS, HEADER_BG_COLOR } from './constants';
 import { SprintGameState } from './types';
 import { LoadingState } from '../../utils';
 import { fetchSprintAction } from './sprint.saga';
 import { LoadingPage } from '../../components/loading';
 import { sprintGameActions } from './sprint.slice';
+import { ResultGamePage } from '../result-game';
 
 export const SprintGame = (props: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -50,9 +56,12 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [checkboxes, setCheckboxes] = useState([false, false, false]);
   const [currentWord, setCurrentWord] = useState('');
   const [currentTranslate, setCurrentTranslate] = useState('');
+  const [borderColor, setBorderColor] = useState('');
 
   //получаем слова
   state.words = useAppSelector(wordsSelector);
+  const rightAnswersArr = useAppSelector(rightAnswersSelector);
+  const errorAnswersArr = useAppSelector(errorAnswersSelector);
 
   useEffect(() => {
     dispatch(fetchSprintAction(props.level));
@@ -131,23 +140,36 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       setCurrentWord(word.word);
       setCurrentTranslate(word.wordTranslate);
     }
+
+    setTimeout(() => setBorderColor(''), 300);
   };
 
   //логика игры при нажатии на правильный ответ
   const sprintGameRightAnswerHandler = () => {
+    setBorderColor('green');
     const word = state.words[currentWordIndex];
     dispatch(addRightAnswers(word));
     changeTotalScore();
-    upLevelForRightAnswer();
-    commonHandler();
+    setTimeout(() => {
+      upLevelForRightAnswer();
+      commonHandler();
+    }, 0);
   };
 
   //логика игры при нажатии на неверный ответ
   const sprintGameErrorAnswerHandler = () => {
+    setBorderColor('red');
     const word = state.words[currentWordIndex];
     dispatch(addErrorAnswers(word));
+
     resetSprintGameLevel();
     commonHandler();
+  };
+
+  //конец игры
+  const [isEndGame, setIsEndGame] = useState(false);
+  const enableIsEndGame = () => {
+    setIsEndGame(true);
   };
 
   //таймер
@@ -155,6 +177,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   useEffect(() => {
     if (timer === 0) {
+      enableIsEndGame();
       return;
     }
 
@@ -211,6 +234,20 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     }
   }, [status]);
 
+  //пока не догрузились данные страница Loading
+  if (isLoading) return <LoadingPage />;
+
+  //конец игры
+  if (isEndGame) {
+    return (
+      <ResultGamePage
+        score={totalScore}
+        rightAnswers={rightAnswersArr}
+        errorAnswers={errorAnswersArr}
+      />
+    );
+  }
+
   const CheckedCheckbox: React.FC = () => {
     return (
       <StyledCheckedCheckbox>
@@ -253,13 +290,10 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     );
   };
 
-  //пока не догрузились данные страница Loading
-  if (isLoading) return <LoadingPage />;
-
   return (
     <SprintGameContainer>
       <GameScore>{totalScore}</GameScore>
-      <BlockGame>
+      <BlockGame className={borderColor}>
         <GameHeader style={{ backgroundColor: HEADER_BG_COLOR[levelAnswer - 1] }}>
           <CheckboxesContainer />
           <ScorePerAnswer>+{scorePerWord} очков за слово</ScorePerAnswer>
