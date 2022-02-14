@@ -33,6 +33,8 @@ export type Word = {
 export type SprintWordsState = {
   loadingState: LoadingState;
   words: Array<Word | undefined>;
+  rightAnswers: Array<Word | undefined>;
+  errorAnswers: Array<Word | undefined>;
 };
 
 export type SprintGameState = {

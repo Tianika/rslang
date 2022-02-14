@@ -4,7 +4,9 @@ import { SprintWordsState } from './types';
 
 const initialState: SprintWordsState = {
   loadingState: LoadingState.Initial,
-  words: []
+  words: [],
+  rightAnswers: [],
+  errorAnswers: []
 };
 
 //создаем редюсеры
@@ -17,6 +19,16 @@ export const sprintGameSlice = createSlice({
     },
     setWordsArray: (state, action) => {
       state.words = [...action.payload];
+    },
+    addRightAnswers: (state, action) => {
+      state.rightAnswers.push(action.payload);
+    },
+    addErrorAnswers: (state, action) => {
+      state.errorAnswers.push(action.payload);
+    },
+    resetAnswerArrays: (state) => {
+      state.rightAnswers = [];
+      state.errorAnswers = [];
     }
   }
 });

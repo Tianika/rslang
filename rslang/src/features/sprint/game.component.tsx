@@ -29,9 +29,12 @@ import { SprintGameState } from './types';
 import { LoadingState } from '../../utils';
 import { fetchSprintAction } from './sprint.saga';
 import { LoadingPage } from '../../components/loading';
+import { sprintGameActions } from './sprint.slice';
 
 export const SprintGame = (props: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
+
+  const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = sprintGameActions;
 
   // устанавливаем первоначальные значения
   const state: SprintGameState = {
@@ -53,6 +56,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   useEffect(() => {
     dispatch(fetchSprintAction(props.level));
+    dispatch(resetAnswerArrays());
   }, []);
 
   useEffect(() => {
@@ -121,11 +125,12 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   };
 
   //логика общее
+
   const commonHandler = () => {
     upCurrentWordIndex();
     changeIsRightTranslate();
-
     const word = state.words[currentWordIndex];
+
     if (word) {
       setCurrentWord(word.word);
       setCurrentTranslate(word.wordTranslate);
@@ -134,13 +139,19 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //логика игры при нажатии на правильный ответ
   const sprintGameRightAnswerHandler = () => {
+    const word = state.words[currentWordIndex];
+    dispatch(addRightAnswers(word));
     changeTotalScore();
     upLevelForRightAnswer();
     commonHandler();
+
+    console.log(state);
   };
 
   //логика игры при нажатии на неверный ответ
   const sprintGameErrorAnswerHandler = () => {
+    const word = state.words[currentWordIndex];
+    dispatch(addErrorAnswers(word));
     resetSprintGameLevel();
     commonHandler();
   };
