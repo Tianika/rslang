@@ -79,6 +79,7 @@ export const WordsPage: React.FC = () => {
       const audioWord = await new Audio(`${baseUrl}/${audio}`);
 
       audioWord.paused ? audioWord.play() : audioWord.pause();
+      target.style.pointerEvents = 'none';
 
       audioWord.addEventListener('ended', () => {
         audioMean.currentTime = 0;
@@ -88,6 +89,10 @@ export const WordsPage: React.FC = () => {
           audioExamp.currentTime = 0;
           audioExamp.paused ? audioExamp.play() : audioExamp.pause();
         });
+      });
+
+      audioExamp.addEventListener('ended', () => {
+        target.style.pointerEvents = 'auto';
       });
     }
   };
