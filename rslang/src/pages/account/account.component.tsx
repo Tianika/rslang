@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Login } from '../../features/login';
 import { ContainerButton, TabEntrance, TabRecord } from '../../features/login/styles';
 
-export const Account: React.FC = (props) => (
+export const Account: React.FC = () => (
   <div>
     <ContainerButton>
       <Link to={'/account/login'}>

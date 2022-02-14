@@ -57,7 +57,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   useEffect(() => {
     dispatch(fetchSprintAction(props.level));
     dispatch(resetAnswerArrays());
-  }, []);
+  });
 
   useEffect(() => {
     if (state.words[0]) {

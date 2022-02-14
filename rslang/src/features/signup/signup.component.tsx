@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   EntryFieldEmail,
   EntryFieldPassword,
@@ -22,7 +22,7 @@ import { AccountProps } from '../../utils/types';
 //получаем экшены
 const { changeName, changeEmail, changePassword } = signupActions;
 
-export const Signup: React.FC = (props) => {
+export const Signup: React.FC = () => {
   const dispatch = useAppDispatch();
 
   //получаем данные для fetchSignupAction
@@ -34,9 +34,9 @@ export const Signup: React.FC = (props) => {
   //вкл-выкл кнопку при отправке запроса
   const [disable, setDisable] = useState(false);
 
-  const toggleDisable = () => {
+  const toggleDisable = useCallback(() => {
     setDisable(!disable);
-  };
+  }, [disable]);
 
   //функции для отслеживания изменений
   const onNameChange: AccountProps['onNameChange'] = (event) => {
@@ -59,7 +59,7 @@ export const Signup: React.FC = (props) => {
     if (disable && status.status === 'Error') {
       toggleDisable();
     }
-  }, [status]);
+  }, [status, disable, toggleDisable]);
 
   //запрос
   const fetchSignup = () => {
