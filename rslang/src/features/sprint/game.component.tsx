@@ -57,7 +57,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   useEffect(() => {
     dispatch(fetchSprintAction(props.level));
     dispatch(resetAnswerArrays());
-  });
+  }, []);
 
   useEffect(() => {
     if (state.words[0]) {
@@ -140,8 +140,6 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     changeTotalScore();
     upLevelForRightAnswer();
     commonHandler();
-
-    console.log(state);
   };
 
   //логика игры при нажатии на неверный ответ

@@ -11,6 +11,7 @@ export const BlockInfo = styled.div`
   padding: 40px 50px;
   background: #fff;
 `;
+
 export const TitleGame = styled.h1`
   font-size: 60px;
   color: #6dc3ff;
@@ -20,27 +21,33 @@ export const TitleGame = styled.h1`
   text-align: center;
   padding-bottom: 20px;
 `;
+
 export const GameDescription = styled.p`
   font-size: 22px;
   font-weight: 100;
 `;
+
 export const GameDescriptionElement = styled.li`
   margin-left: 20px;
   font-size: 22px;
   margin-bottom: 10px;
 `;
+
 export const BlockSelect = styled.div`
   display: flex;
   align-items: center;
 `;
+
 export const MenuDifficultySelection = styled.fieldset`
   border-radius: 6px;
   border: 1px solid #6dc3ff;
   margin: 20px;
 `;
+
 export const MenuDifficultySelectionTitle = styled.legend`
   color: #ff6849;
 `;
+
 export const ChoiceDifficulty = styled.select`
   border: none;
 `;
