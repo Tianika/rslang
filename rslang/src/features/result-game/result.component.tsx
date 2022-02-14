@@ -10,6 +10,8 @@ import {
   SoundIcon,
   SubtitleGame,
   TitleGame,
+  TranslateItem,
+  TransriptionItem,
   WordContainer,
   WordItem,
   WordsTitle
@@ -38,6 +40,8 @@ export const ResultGamePage = (props: ResultGame): React.ReactElement => {
               <img data-url={answer.audio} src={audioIcon} alt={answer.word} />
             </SoundIcon>
             <WordItem>{answer.word}</WordItem>
+            <TransriptionItem>{answer.transcription}</TransriptionItem>
+            <TranslateItem>{answer.wordTranslate}</TranslateItem>
           </WordContainer>
         );
     });
