@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../../utils';
 
-const hex2rgba = (hex: string, alpha = 1): string => {
+export const hex2rgba = (hex: string, alpha = 1): string => {
   const [r, g, b] = (hex.match(/\w\w/g) as Array<string>).map((x) => parseInt(x, 16));
   return `rgba(${r},${g},${b},${alpha})`;
 };
 
 const { firstBookColor, font } = baseTheme.colors;
 
-export const StyledCardSection = styled.section`
-  background-color: ${hex2rgba(firstBookColor, 0.5)}};
+export const StyledCardSection = styled.section<{ group: string }>`
+  background-color: ${(props) => props.group};
   color: ${font};
   min-height: 100vh;
   padding: 50px;
@@ -28,7 +28,7 @@ export const StyledWrapper = styled.div`
 export const StyledCard = styled.div<{ imgUrl: string }>`
   background-image: url(${(props) => props.imgUrl});
   min-height: 420px;
-  max-width: 400px;
+  min-width: 400px;
   width: 100%;
   position: relative;
   z-index: 1;
@@ -45,7 +45,7 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
   color: #fff;
 
   &:hover {
-    box-shadow: 5px 5px 15px 5px ${firstBookColor};
+    box-shadow: 5px 5px 15px 5px #fff;
   }
 
   &::before {
@@ -79,6 +79,7 @@ export const StyledCardContent = styled.div`
   right: 15px;
   font-size: 18px;
   font-weight: 500;
+  color: ${font};
 
   & > div:first-child {
     margin-bottom: 15px;
@@ -122,6 +123,11 @@ export const StyledCardContent = styled.div`
       margin: 0;
       margin-bottom: 5px;
     }
+  }
+
+  span {
+    display: inline-block;
+    margin-left: 15px;
   }
 `;
 
