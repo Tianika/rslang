@@ -139,6 +139,7 @@ export const WordItem = styled.div`
 `;
 
 export const ExitButton = styled.button`
+  display: block;
   float: right;
   right: 0;
   width: 146px;
@@ -150,5 +151,9 @@ export const ExitButton = styled.button`
   border-radius: 13px;
   border: none;
   background-color: ${baseTheme.colors.darkBlue};
+  transition: 500ms;
   cursor: pointer;
+  &:hover {
+    background-color: ${baseTheme.colors.green};
+  }
 `;

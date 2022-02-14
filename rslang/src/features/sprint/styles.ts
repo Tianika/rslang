@@ -89,12 +89,15 @@ export const BlockGame = styled.div`
   margin: 20px auto;
   border-radius: 13px;
   padding: 0 0 30px;
-  background: #fff;
+  background: ${baseTheme.colors.bg};
+
   &.green {
-    border: 3px solid ${baseTheme.colors.green};
+    border: 1px solid ${baseTheme.colors.green};
+    outline: 9px solid ${baseTheme.colors.green};
   }
   &.red {
-    border: 3px solid ${baseTheme.colors.red};
+    border: 1px solid ${baseTheme.colors.red};
+    outline: 9px solid ${baseTheme.colors.red};
   }
 `;
 

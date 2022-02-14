@@ -62,9 +62,9 @@ export const ResultGamePage = (props: ResultGame): React.ReactElement => {
             })}
           </ResultBlock>
         </ResultWrapper>
-        <ExitButton>
-          <Link to="/games">Закрыть</Link>
-        </ExitButton>
+        <Link to="/games">
+          <ExitButton>Закрыть</ExitButton>
+        </Link>
       </Content>
     </BlockResult>
   );

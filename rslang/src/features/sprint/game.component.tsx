@@ -141,7 +141,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       setCurrentTranslate(word.wordTranslate);
     }
 
-    setTimeout(() => setBorderColor(''), 300);
+    setTimeout(() => setBorderColor(''), 100);
   };
 
   //логика игры при нажатии на правильный ответ
@@ -153,7 +153,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     setTimeout(() => {
       upLevelForRightAnswer();
       commonHandler();
-    }, 0);
+    }, 500);
   };
 
   //логика игры при нажатии на неверный ответ
@@ -162,8 +162,10 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     const word = state.words[currentWordIndex];
     dispatch(addErrorAnswers(word));
 
-    resetSprintGameLevel();
-    commonHandler();
+    setTimeout(() => {
+      resetSprintGameLevel();
+      commonHandler();
+    }, 500);
   };
 
   //конец игры
