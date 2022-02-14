@@ -17,8 +17,6 @@ import {
 import audio from '../../assets/svg/soundIcon.svg';
 import { Link } from 'react-router-dom';
 import { ResultGame } from './types';
-import { useAppSelector } from '../../app/hooks';
-import { errorAnswersSelector, rightAnswersSelector } from '../sprint/sprint.selectors';
 
 export const ResultGamePage = (props: ResultGame): React.ReactElement => {
   console.log(props);
@@ -33,25 +31,35 @@ export const ResultGamePage = (props: ResultGame): React.ReactElement => {
         <ResultWrapper>
           <ResultBlock>
             <WordsTitle>
-              Я знаю <RightWordsResult>5</RightWordsResult> слов
+              Я знаю <RightWordsResult>{props.rightAnswers.length}</RightWordsResult> слов
             </WordsTitle>
-            <WordContainer>
-              <SoundIcon>
-                <img src={audio} alt="word" />
-              </SoundIcon>
-              <WordItem>слово</WordItem>
-            </WordContainer>
+            {props.rightAnswers.map((answer) => {
+              if (answer)
+                return (
+                  <WordContainer key={answer.word}>
+                    <SoundIcon>
+                      <img src={audio} alt={answer.word} />
+                    </SoundIcon>
+                    <WordItem>{answer.word}</WordItem>
+                  </WordContainer>
+                );
+            })}
           </ResultBlock>
           <ResultBlock>
             <WordsTitle>
-              Я не знаю <ErrorWordsResult>5</ErrorWordsResult> слов
+              Я не знаю <ErrorWordsResult>{props.errorAnswers.length}</ErrorWordsResult> слов
             </WordsTitle>
-            <WordContainer>
-              <SoundIcon>
-                <img src={audio} alt="word" />
-              </SoundIcon>
-              <WordItem>слово</WordItem>
-            </WordContainer>
+            {props.errorAnswers.map((answer) => {
+              if (answer)
+                return (
+                  <WordContainer key={answer.word}>
+                    <SoundIcon>
+                      <img src={audio} alt={answer.word} />
+                    </SoundIcon>
+                    <WordItem>{answer.word}</WordItem>
+                  </WordContainer>
+                );
+            })}
           </ResultBlock>
         </ResultWrapper>
         <ExitButton>

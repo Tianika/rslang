@@ -40,7 +40,7 @@ export const Result = styled.span`
 export const Content = styled.div`
   color: ${baseTheme.colors.font};
   width: 480px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 `;
 
 export const ResultBlock = styled.div`
@@ -57,7 +57,7 @@ export const ResultBlock = styled.div`
 export const ResultWrapper = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: 60vh;
+  max-height: 57vh;
   scrollbar-width: auto;
   scrollbar-color: ${baseTheme.colors.purple} #c4c4c4;
   margin: 10px 0;
@@ -79,6 +79,7 @@ export const ResultWrapper = styled.div`
 
 export const WordsTitle = styled.h4`
   display: flex;
+  align-items: center;
   color: ${baseTheme.colors.font};
   font-size: 22px;
   line-height: 26px;
@@ -117,13 +118,14 @@ export const ErrorWordsResult = styled.span`
 
 export const WordContainer = styled.div`
   display: flex;
+  align-items: center;
   margin-bottom: 15px;
 `;
 
 export const SoundIcon = styled.button`
   width: 32px;
   height: 28px;
-  margin-right: 15px;
+  margin-right: 25px;
   background-color: ${baseTheme.colors.bg};
   border: none;
   cursor: pointer;
