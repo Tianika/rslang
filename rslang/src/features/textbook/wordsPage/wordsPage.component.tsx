@@ -22,6 +22,7 @@ import {
   StyledAddBtn,
   hex2rgba,
   StyledPagination,
+  StyledGroupNumber,
   StyledPrevGroupBtn,
   StyledPrevPageBtn,
   StyledNextGroupBtn,
@@ -176,11 +177,14 @@ export const WordsPage: React.FC = () => {
           <div>
             <Link to={changePrevGroup()}>{'<<'}</Link>
             <Link to={changePrevPage()}>{'<'}</Link>
-            <span>
-              {`${copyPrevGroup}`}/{`${copyPrevPage}`}
-            </span>
+            <span>{`${copyPrevPage}`}/30</span>
             <Link to={changeNextPage()}>{'>'}</Link>
             <Link to={changeNextGroup()}>{'>>'}</Link>
+          </div>
+          <div>
+            <StyledGroupNumber
+              group={`${checkNumberOfGroup()}`}
+            >{`${copyPrevGroup}`}</StyledGroupNumber>
           </div>
         </StyledPagination>
       </StyledWrapper>

@@ -6,7 +6,7 @@ export const hex2rgba = (hex: string, alpha = 1): string => {
   return `rgba(${r},${g},${b},${alpha})`;
 };
 
-const { font } = baseTheme.colors;
+const { font, bg } = baseTheme.colors;
 
 export const StyledCardSection = styled.section<{ group: string }>`
   background-color: ${(props) => props.group};
@@ -166,7 +166,7 @@ export const StyledPagination = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  div {
+  div:first-child {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -175,6 +175,12 @@ export const StyledPagination = styled.div`
     width: 100%;
     margin: 0 auto;
     font-size: 30px;
+
+    position: relative;
+  }
+
+  div:nth-child(2) {
+    position: relative;
   }
 
   button {
@@ -194,6 +200,24 @@ const StyledClearPaginationBtn = styled.button`
     transform: scale(1.2);
     transition: transform 0.2s;
   }
+`;
+
+export const StyledGroupNumber = styled.span<{ group: string }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+
+  /* background: rgba(255, 1, 1, 0.5); */
+  background-color: ${(props) => props.group};
+  border: 3px solid ${bg};
+  color: ${bg};
+  font-size: 26px;
+  border-radius: 50%;
+  position: absolute;
+  right: 65px;
+  top: -55px;
 `;
 
 export const StyledPrevGroupBtn = styled(StyledClearPaginationBtn)``;
