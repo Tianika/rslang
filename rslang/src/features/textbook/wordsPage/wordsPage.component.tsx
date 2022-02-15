@@ -20,13 +20,18 @@ import {
   StyledCardContent,
   StyledAudioBtn,
   StyledAddBtn,
-  hex2rgba
+  hex2rgba,
+  StyledPagination,
+  StyledPrevGroupBtn,
+  StyledPrevPageBtn,
+  StyledNextGroupBtn,
+  StyledNextPageBtn
 } from './styles';
 
 import cardIconAudio from '../../../assets/svg/card-icon-audio.svg';
 import cardPlusIcon from '../../../assets/svg/card-plus-icon.svg';
 import { baseUrl } from '../textbook.api';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { IWord } from '../types';
 
 export const WordsPage: React.FC = () => {
@@ -41,6 +46,45 @@ export const WordsPage: React.FC = () => {
 
   const group = searchParams.get('group') ?? '0';
   const page = searchParams.get('page') ?? '0';
+
+  // переменная для отрисовки текущего раздела
+  let copyPrevGroup = +group;
+  copyPrevGroup += 1;
+
+  // переход на предыдущий раздел
+  const changePrevGroup = () => {
+    let groupNumber = +group;
+    groupNumber === 0 ? 0 : (groupNumber -= 1);
+
+    return `?group=${groupNumber}&page=0`;
+  };
+
+  // переход на следующий раздел
+  const changeNextGroup = () => {
+    let groupNumber = +group;
+    groupNumber === 5 ? 5 : (groupNumber += 1);
+
+    return `?group=${groupNumber}&page=0`;
+  };
+
+  const changePrevPage = () => {
+    let pageNumber = +page;
+    pageNumber === 0 ? 0 : (pageNumber -= 1);
+    console.log(pageNumber);
+
+    return `?group=${group}&page=${pageNumber}`;
+  };
+
+  let copyPrevPage = +page;
+  copyPrevPage += 1;
+
+  const changeNextPage = () => {
+    let pageNumber = +page;
+    pageNumber === 29 ? 29 : (pageNumber += 1);
+    console.log(pageNumber);
+
+    return `?group=${group}&page=${pageNumber}`;
+  };
 
   useEffect(() => {
     dispatch(fetchTextBookAction({ group, page }));
@@ -128,6 +172,17 @@ export const WordsPage: React.FC = () => {
             </StyledCardContent>
           </StyledCard>
         ))}
+        <StyledPagination>
+          <div>
+            <Link to={changePrevGroup()}>{'<<'}</Link>
+            <Link to={changePrevPage()}>{'<'}</Link>
+            <span>
+              {`${copyPrevGroup}`}/{`${copyPrevPage}`}
+            </span>
+            <Link to={changeNextPage()}>{'>'}</Link>
+            <Link to={changeNextGroup()}>{'>>'}</Link>
+          </div>
+        </StyledPagination>
       </StyledWrapper>
     </StyledCardSection>
   );

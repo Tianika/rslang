@@ -18,7 +18,7 @@ import sixthBook from '../../assets/svg/sixthBook.svg';
 
 import { Link } from 'react-router-dom';
 
-const textBookSection = [
+export const textBookSection = [
   {
     imgLink: firstBooksSection,
     alt: 'firstBooksSection',

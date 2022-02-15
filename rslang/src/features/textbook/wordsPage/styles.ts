@@ -6,7 +6,7 @@ export const hex2rgba = (hex: string, alpha = 1): string => {
   return `rgba(${r},${g},${b},${alpha})`;
 };
 
-const { firstBookColor, font } = baseTheme.colors;
+const { font } = baseTheme.colors;
 
 export const StyledCardSection = styled.section<{ group: string }>`
   background-color: ${(props) => props.group};
@@ -22,7 +22,6 @@ export const StyledWrapper = styled.div`
   max-width: 1800px;
   width: 100%;
   gap: 40px;
-  padding-bottom: 50px;
 `;
 
 export const StyledCard = styled.div<{ imgUrl: string }>`
@@ -148,3 +147,56 @@ const StyledClearBtn = styled.button`
 export const StyledAudioBtn = styled(StyledClearBtn)``;
 
 export const StyledAddBtn = styled(StyledClearBtn)``;
+
+export const StyledPagination = styled.div`
+  max-width: 1534px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 94px;
+  border-radius: 70px 70px 0px 0px;
+  background: rgba(196, 196, 196, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 4;
+  position: fixed;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    max-width: 270px;
+    width: 100%;
+    margin: 0 auto;
+    font-size: 30px;
+  }
+
+  button {
+    font-size: 30px;
+  }
+`;
+
+const StyledClearPaginationBtn = styled.button`
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  display: inline-block;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s;
+  }
+`;
+
+export const StyledPrevGroupBtn = styled(StyledClearPaginationBtn)``;
+export const StyledPrevPageBtn = styled(StyledClearPaginationBtn)``;
+export const StyledNextGroupBtn = styled(StyledClearPaginationBtn)``;
+export const StyledNextPageBtn = styled(StyledClearPaginationBtn)``;
