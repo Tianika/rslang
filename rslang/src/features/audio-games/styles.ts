@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { baseTheme } from '../../utils';
 
 export const BlockInfo = styled.div`
   width: 50%;
@@ -43,11 +44,72 @@ export const MenuDifficultySelectionTitle = styled.legend`
 `;
 export const ChoiceDifficulty = styled.select`
   border: none;
+
+  &:focus {
+    border: none;
+  }
 `;
 
 export const ButtonPlay = styled.button`
-  background: #6dc3ff;
-  color: #ffffff;
+  background: ${baseTheme.colors.blue};
+  color: ${baseTheme.colors.bg};
+  font-size: 22px;
+  border: none;
+  border-radius: 6px;
+  width: 113px;
+  height: 48px;
+  margin-top: 6px;
+  transition: 1s;
+
+  &:hover {
+    cursor: pointer;
+    background: ${baseTheme.colors.green};
+  }
+`;
+
+export const ButtonOptionAnswer = styled.div`
+  background: ${baseTheme.colors.blue};
+  color: ${baseTheme.colors.bg};
+  font-size: 22px;
+  border: none;
+  border-radius: 6px;
+  width: 113px;
+  height: 48px;
+  margin-top: 6px;
+  transition: 1s;
+
+  &:hover {
+    background: ${baseTheme.colors.yellow};
+  }
+`;
+
+export const ButtonCorrectAnswer = styled.div`
+  background: ${baseTheme.colors.green};
+  color: ${baseTheme.colors.bg};
+  font-size: 22px;
+  border: none;
+  border-radius: 6px;
+  width: 113px;
+  height: 48px;
+  margin-top: 6px;
+  transition: 1s;
+`;
+
+export const ButtonWrongAnswer = styled.div`
+  background: ${baseTheme.colors.red};
+  color: ${baseTheme.colors.bg};
+  font-size: 22px;
+  border: none;
+  border-radius: 6px;
+  width: 113px;
+  height: 48px;
+  margin-top: 6px;
+  transition: 1s;
+`;
+
+export const ButtonNext = styled.div`
+  background: ${baseTheme.colors.yellow};
+  color: ${baseTheme.colors.bg};
   font-size: 22px;
   border: none;
   border-radius: 6px;
@@ -56,6 +118,6 @@ export const ButtonPlay = styled.button`
   margin-top: 6px;
   transition: 1s;
   &:hover {
-    background: #70af46;
+    cursor: pointer;
   }
 `;
