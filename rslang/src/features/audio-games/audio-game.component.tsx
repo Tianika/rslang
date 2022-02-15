@@ -10,22 +10,9 @@ import {
   MenuDifficultySelectionTitle,
   TitleGame
 } from './styles';
-//TODO вынести в константу
-const GameAudio: React.FC = () => {
-  const DataDescription = [
-    'Используте мышь, чтобы выбрать.',
-    'Используте цифровые клавиши от 1 до 5 для выбора ответа.',
-    ' Используте пробел для повторного изучения слова.',
-    'Используте клавишу Enter для подсказки или перехода к следующему слову.'
-  ];
-  const Difficulty = [
-    'сложность 1',
-    'сложность 2',
-    'сложность 3',
-    'сложность 4',
-    'сложность 5',
-    'сложность 6'
-  ];
+import { DIFFICULTY, AUDIO_DESCRIPTION } from './constants';
+
+const StartPageAudioCall = (): React.ReactElement => {
   return (
     <BlockInfo>
       <TitleGame>АУДИОВЫЗОВ</TitleGame>
@@ -33,7 +20,7 @@ const GameAudio: React.FC = () => {
         "Аудиовызов" - это тренировка, которая улучшает восприятие речи на слух.
       </GameDescription>
       <ul>
-        {DataDescription.map((el, index) => (
+        {AUDIO_DESCRIPTION.map((el, index) => (
           <GameDescriptionElement key={index}>{el}</GameDescriptionElement>
         ))}
       </ul>
@@ -41,7 +28,7 @@ const GameAudio: React.FC = () => {
         <MenuDifficultySelection>
           <MenuDifficultySelectionTitle>Сложность</MenuDifficultySelectionTitle>
           <ChoiceDifficulty>
-            {Difficulty.map((el, index) => (
+            {DIFFICULTY.map((el, index) => (
               <option key={index}>{el}</option>
             ))}
           </ChoiceDifficulty>
@@ -51,4 +38,4 @@ const GameAudio: React.FC = () => {
     </BlockInfo>
   );
 };
-export default GameAudio;
+export default StartPageAudioCall;
