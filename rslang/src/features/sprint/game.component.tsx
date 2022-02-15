@@ -36,6 +36,7 @@ import { fetchSprintAction } from './sprint.saga';
 import { LoadingPage } from '../../components/loading';
 import { sprintGameActions } from './sprint.slice';
 import { ResultGamePage } from '../result-game';
+import { getRandomNumber } from './utils';
 
 export const SprintGame = (props: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -51,8 +52,8 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [scorePerWord, setScorePerWord] = useState(10);
   const [levelAnswer, setLevelAnswer] = useState(1);
   const [checkboxesLevel, setCheckboxesLevel] = useState(0);
-  const [isRightTranslate, setIsRightTranslate] = useState(true);
-  const [currentWordIndex, setCurrentWordIndex] = useState(1);
+  const [isRight, setIsRight] = useState(true);
+  const [currentWordIndex, setCurrentWordIndex] = useState(-1);
   const [checkboxes, setCheckboxes] = useState([false, false, false]);
   const [currentWord, setCurrentWord] = useState('');
   const [currentTranslate, setCurrentTranslate] = useState('');
@@ -63,24 +64,26 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const rightAnswersArr = useAppSelector(rightAnswersSelector);
   const errorAnswersArr = useAppSelector(errorAnswersSelector);
 
+  //при включении игры
   useEffect(() => {
     dispatch(fetchSprintAction(props.level));
     dispatch(resetAnswerArrays());
   }, []);
 
   useEffect(() => {
-    if (state.words[0]) {
-      const value = state.words[0];
-      setCurrentWord(value.word);
-      setCurrentTranslate(value.wordTranslate);
+    const word = state.words[0];
+    if (word) {
+      setCurrentWord(word.word);
+      setCurrentTranslate(word.wordTranslate);
     }
   }, [state.words]);
 
-  //функции
+  //увеличить общее кол-во очков
   const changeTotalScore = () => {
     setTotalScore(totalScore + scorePerWord);
   };
 
+  //повысить уровень при правильном ответе
   const upLevelForRightAnswer = () => {
     if (levelAnswer < 4) {
       if (checkboxesLevel < 3) {
@@ -98,26 +101,19 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
         }
       }
     }
-
-    console.log(checkboxesLevel, checkboxes);
   };
 
+  //изменить индекс
   const upCurrentWordIndex = () => {
     setCurrentWordIndex(currentWordIndex + 1);
 
-    if (currentWordIndex === 15) {
-      dispatch(fetchSprintAction(props.level));
-    }
-
     if (currentWordIndex === 19) {
+      dispatch(fetchSprintAction(props.level));
       setCurrentWordIndex(0);
     }
   };
 
-  const changeIsRightTranslate = () => {
-    setIsRightTranslate(Math.random() >= 0.5);
-  };
-
+  //сброс уровня при неправильном ответе
   const resetSprintGameLevel = () => {
     setCheckboxesLevel(0);
     setLevelAnswer(1);
@@ -125,48 +121,87 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     setCheckboxes([false, false, false]);
   };
 
-  const incorrectTranslate = () => {
-    return 'Error';
+  //перевод
+  const getTranslate = () => {
+    const isRightTranslate = Math.random() >= 0.5;
+    setIsRight(isRightTranslate);
+    console.log('isRightTranslate', isRightTranslate);
+
+    if (isRightTranslate) {
+      const word = state.words[currentWordIndex];
+
+      if (word) {
+        setCurrentTranslate(word.wordTranslate);
+      }
+    } else {
+      let random;
+
+      do {
+        random = getRandomNumber(20);
+      } while (random === currentWordIndex);
+
+      const word = state.words[random];
+      if (word) {
+        setCurrentTranslate(word.wordTranslate);
+      }
+    }
+
+    console.log('currentTranslate', currentTranslate);
   };
 
-  //логика общее
-
-  const commonHandler = () => {
-    upCurrentWordIndex();
-    changeIsRightTranslate();
+  //поменять слово
+  const changeCurrentWord = () => {
     const word = state.words[currentWordIndex];
+    console.log(word);
 
     if (word) {
       setCurrentWord(word.word);
-      setCurrentTranslate(word.wordTranslate);
     }
 
-    setTimeout(() => setBorderColor(''), 100);
+    setTimeout(() => {
+      setBorderColor('');
+    }, 100);
+  };
+
+  //логика общее
+  const changeAnswer = () => {
+    console.log('before', currentWord, currentTranslate);
+
+    getTranslate();
+    changeCurrentWord();
+    console.log('after', currentWord, currentTranslate);
   };
 
   //логика игры при нажатии на правильный ответ
   const sprintGameRightAnswerHandler = () => {
     setBorderColor('green');
+
     const word = state.words[currentWordIndex];
     dispatch(addRightAnswers(word));
+
     changeTotalScore();
-    setTimeout(() => {
-      upLevelForRightAnswer();
-      commonHandler();
-    }, 500);
+    upLevelForRightAnswer();
+
+    upCurrentWordIndex();
   };
 
   //логика игры при нажатии на неверный ответ
   const sprintGameErrorAnswerHandler = () => {
     setBorderColor('red');
+
     const word = state.words[currentWordIndex];
     dispatch(addErrorAnswers(word));
 
-    setTimeout(() => {
-      resetSprintGameLevel();
-      commonHandler();
-    }, 500);
+    resetSprintGameLevel();
+
+    upCurrentWordIndex();
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      changeAnswer();
+    }, 500);
+  }, [currentWordIndex]);
 
   //конец игры
   const [isEndGame, setIsEndGame] = useState(false);
@@ -194,18 +229,18 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     {
       className: 'wrong',
       content: 'НЕВЕРНО',
-      handler: isRightTranslate ? sprintGameErrorAnswerHandler : sprintGameRightAnswerHandler
+      handler: isRight ? sprintGameErrorAnswerHandler : sprintGameRightAnswerHandler
     },
     {
       className: 'right',
       content: 'ВЕРНО',
-      handler: isRightTranslate ? sprintGameRightAnswerHandler : sprintGameErrorAnswerHandler
+      handler: isRight ? sprintGameRightAnswerHandler : sprintGameErrorAnswerHandler
     }
   ];
 
   //управление ответами с клавиатуры
   document.body.onkeydown = (event: KeyboardEvent) => {
-    if (isRightTranslate) {
+    if (isRight) {
       if (event.key === 'ArrowLeft') {
         sprintGameErrorAnswerHandler();
       }
@@ -303,7 +338,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
         <LevelContainer />
         <Shelf />
         <WordText>{currentWord}</WordText>
-        <Translation>{isRightTranslate ? currentTranslate : incorrectTranslate()}</Translation>
+        <Translation>{currentTranslate}</Translation>
         <AnswersButtonsContainer>
           {ANSWER_BUTTONS.map((button) => (
             <AnswerButton
