@@ -13,3 +13,25 @@ export const DIFFICULTY = [
   'сложность 5',
   'сложность 6'
 ];
+export const VALUE = [
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial',
+  'initial'
+];

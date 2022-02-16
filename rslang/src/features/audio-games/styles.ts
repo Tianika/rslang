@@ -83,7 +83,7 @@ export const ButtonOptionAnswer = styled.div`
   }
 `;
 
-export const ButtonCorrectAnswer = styled.div`
+export const ElemCorrectAnswer = styled.div`
   background: ${baseTheme.colors.green};
   color: ${baseTheme.colors.bg};
   font-size: 22px;
@@ -95,7 +95,7 @@ export const ButtonCorrectAnswer = styled.div`
   transition: 1s;
 `;
 
-export const ButtonWrongAnswer = styled.div`
+export const ElemWrongAnswer = styled.div`
   background: ${baseTheme.colors.red};
   color: ${baseTheme.colors.bg};
   font-size: 22px;
@@ -107,16 +107,76 @@ export const ButtonWrongAnswer = styled.div`
   transition: 1s;
 `;
 
-export const ButtonNext = styled.div`
-  background: ${baseTheme.colors.yellow};
-  color: ${baseTheme.colors.bg};
-  font-size: 22px;
+export const BlockGame = styled.div`
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+`;
+
+export const BlockIndicatorAnswer = styled.div`
+  margin: 40px;
+  width: 70%;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+export const InitialIndicatorAnswer = styled.span`
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  background: ${baseTheme.colors.gray};
   border: none;
-  border-radius: 6px;
-  width: 113px;
-  height: 48px;
-  margin-top: 6px;
+`;
+
+export const ButtonAudio = styled.img`
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
   transition: 1s;
+  margin-top: 40px;
+  &:hover {
+    box-shadow: 0 0 24px 0 ${baseTheme.colors.blue};
+    transform: scale(1.1);
+  }
+`;
+export const BlockButtonAnswer = styled.div`
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+export const RightButtonAnswer = styled.button`
+  border-radius: 13px;
+  margin: 20px;
+  color: ${baseTheme.colors.bg};
+  width: 300px;
+  height: 100px;
+  background: ${baseTheme.colors.green};
+  border: none;
+`;
+export const WrongButtonAnswer = styled.button`
+  border-radius: 13px;
+  margin: 20px;
+  color: ${baseTheme.colors.bg};
+  width: 300px;
+  height: 100px;
+  background: ${baseTheme.colors.red};
+  border: none;
+`;
+export const InitialStateButtonAnswer = styled.button`
+  border-radius: 13px;
+  margin: 20px;
+  color: ${baseTheme.colors.bg};
+  width: 300px;
+  height: 100px;
+  font-size: ${baseTheme.fonts.mainParagraphSize};
+  background: ${baseTheme.colors.blue};
+  border: none;
+  &:hover {
+    background: ${baseTheme.colors.purple};
+  }
+`;
+export const ButtonNextQuestions = styled.button`
   &:hover {
     cursor: pointer;
   }
