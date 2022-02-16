@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import {
   AnswerButton,
@@ -38,15 +38,12 @@ import { sprintGameActions } from './sprint.slice';
 import { ResultGamePage } from '../result-game';
 import { getRandomNumber } from './utils';
 
+const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = sprintGameActions;
+
 export const SprintGame = (props: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
 
-  const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = sprintGameActions;
-
-  // устанавливаем первоначальные значения
-  const state: SprintGameState = {
-    words: []
-  };
+  const words = useAppSelector(wordsSelector);
 
   const [totalScore, setTotalScore] = useState(0);
   const [scorePerWord, setScorePerWord] = useState(10);
@@ -60,7 +57,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [borderColor, setBorderColor] = useState('');
 
   //получаем слова
-  state.words = useAppSelector(wordsSelector);
+
   const rightAnswersArr = useAppSelector(rightAnswersSelector);
   const errorAnswersArr = useAppSelector(errorAnswersSelector);
 
@@ -68,15 +65,18 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   useEffect(() => {
     dispatch(fetchSprintAction(props.level));
     dispatch(resetAnswerArrays());
+    setCurrentWordIndex(0);
   }, []);
 
   useEffect(() => {
-    const word = state.words[0];
+    const word = words[0];
+
     if (word) {
+      console.warn(word);
       setCurrentWord(word.word);
       setCurrentTranslate(word.wordTranslate);
     }
-  }, [state.words]);
+  }, [words]);
 
   //увеличить общее кол-во очков
   const changeTotalScore = () => {
@@ -111,6 +111,8 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       dispatch(fetchSprintAction(props.level));
       setCurrentWordIndex(0);
     }
+
+    console.log('currentWordIndex', currentWordIndex);
   };
 
   //сброс уровня при неправильном ответе
@@ -128,7 +130,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     console.log('isRightTranslate', isRightTranslate);
 
     if (isRightTranslate) {
-      const word = state.words[currentWordIndex];
+      const word = words[currentWordIndex];
 
       if (word) {
         setCurrentTranslate(word.wordTranslate);
@@ -140,7 +142,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
         random = getRandomNumber(20);
       } while (random === currentWordIndex);
 
-      const word = state.words[random];
+      const word = words[random];
       if (word) {
         setCurrentTranslate(word.wordTranslate);
       }
@@ -151,7 +153,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //поменять слово
   const changeCurrentWord = () => {
-    const word = state.words[currentWordIndex];
+    const word = words[currentWordIndex];
     console.log(word);
 
     if (word) {
@@ -167,8 +169,9 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const changeAnswer = () => {
     console.log('before', currentWord, currentTranslate);
 
-    getTranslate();
     changeCurrentWord();
+    getTranslate();
+
     console.log('after', currentWord, currentTranslate);
   };
 
@@ -176,7 +179,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const sprintGameRightAnswerHandler = () => {
     setBorderColor('green');
 
-    const word = state.words[currentWordIndex];
+    const word = words[currentWordIndex];
     dispatch(addRightAnswers(word));
 
     changeTotalScore();
@@ -189,7 +192,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const sprintGameErrorAnswerHandler = () => {
     setBorderColor('red');
 
-    const word = state.words[currentWordIndex];
+    const word = words[currentWordIndex];
     dispatch(addErrorAnswers(word));
 
     resetSprintGameLevel();
@@ -201,7 +204,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     setTimeout(() => {
       changeAnswer();
     }, 500);
-  }, [currentWordIndex]);
+  }, [currentWordIndex, words]);
 
   //конец игры
   const [isEndGame, setIsEndGame] = useState(false);
@@ -219,7 +222,9 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     }
 
     const timerFunction = setInterval(() => {
-      setTimer((time) => (time = time - 1));
+      setTimer((time) => {
+        return time - 1;
+      });
     }, 1000);
 
     return () => clearInterval(timerFunction);

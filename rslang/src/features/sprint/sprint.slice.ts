@@ -18,7 +18,8 @@ export const sprintGameSlice = createSlice({
       state.loadingState = action.payload;
     },
     setWordsArray: (state, action) => {
-      state.words = [...action.payload];
+      console.log(action.payload);
+      state.words = action.payload;
     },
     addRightAnswers: (state, action) => {
       state.rightAnswers.push(action.payload);
