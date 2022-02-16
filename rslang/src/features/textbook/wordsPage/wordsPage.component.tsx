@@ -22,11 +22,7 @@ import {
   StyledAddBtn,
   hex2rgba,
   StyledPagination,
-  StyledGroupNumber,
-  StyledPrevGroupBtn,
-  StyledPrevPageBtn,
-  StyledNextGroupBtn,
-  StyledNextPageBtn
+  StyledGroupNumber
 } from './styles';
 
 import cardIconAudio from '../../../assets/svg/card-icon-audio.svg';
@@ -71,7 +67,6 @@ export const WordsPage: React.FC = () => {
   const changePrevPage = () => {
     let pageNumber = +page;
     pageNumber === 0 ? 0 : (pageNumber -= 1);
-    console.log(pageNumber);
 
     return `?group=${group}&page=${pageNumber}`;
   };
@@ -82,14 +77,14 @@ export const WordsPage: React.FC = () => {
   const changeNextPage = () => {
     let pageNumber = +page;
     pageNumber === 29 ? 29 : (pageNumber += 1);
-    console.log(pageNumber);
-
     return `?group=${group}&page=${pageNumber}`;
   };
 
   useEffect(() => {
     dispatch(fetchTextBookAction({ group, page }));
   }, [group, page]);
+
+  console.log(words);
 
   // задаю бекграунд разделу с карточками в зависимости от того на какой раздел кликнули
   const checkNumberOfGroup = () => {
@@ -123,7 +118,7 @@ export const WordsPage: React.FC = () => {
       const audioExamp = await new Audio(`${baseUrl}/${audioExample}`);
       const audioWord = await new Audio(`${baseUrl}/${audio}`);
 
-      audioWord.paused ? audioWord.play() : audioWord.pause();
+      audioWord.paused ? await audioWord.play() : audioWord.pause();
       target.style.pointerEvents = 'none';
 
       audioWord.addEventListener('ended', () => {
@@ -141,45 +136,67 @@ export const WordsPage: React.FC = () => {
       });
     }
   };
+  // const sortedWordList = (wordList: IWord[]) => {
+  //   if (wordList.length) {
+  //     const copyWordsList = wordList.slice();
+  //     return copyWordsList.sort((item, item2) => item.word.localeCompare(item2.word));
+  //   }
+  //   return 'yo';
+  // };
+  // console.log(sortedWordList(words));
 
   return (
     <StyledCardSection group={`${checkNumberOfGroup()}`}>
       <StyledWrapper>
-        {words.map((word) => (
-          <StyledCard key={word.id} imgUrl={`${baseUrl}/${word.image}`}>
-            <StyledCardContent>
-              <div>
-                <p>{word.word}</p>
+        {words
+          .slice()
+          .sort((a, b) => a.word.localeCompare(b.word))
+          .map((word) => (
+            <StyledCard key={word.id} imgUrl={`${baseUrl}/${word.image}`}>
+              <StyledCardContent>
                 <div>
-                  <StyledAudioBtn onClick={(e: React.MouseEvent) => playAudio(e, word)}>
-                    <img src={cardIconAudio} width="32" height="28" alt="audioButton" />
-                  </StyledAudioBtn>
-                  <StyledAddBtn>
-                    <img src={cardPlusIcon} width="32" height="28" alt="add word" />
-                  </StyledAddBtn>
-                  <span>{word.wordTranslate}</span>
-                  <span>{word.transcription}</span>
+                  <p>{word.word}</p>
+                  <div>
+                    <StyledAudioBtn
+                      onClick={(e: React.MouseEvent) => playAudio(e, word)}
+                      title={'Послушать'}
+                    >
+                      <img src={cardIconAudio} width="32" height="28" alt="audioButton" />
+                    </StyledAudioBtn>
+                    <StyledAddBtn title={'Добавить в сложные слова'}>
+                      <img src={cardPlusIcon} width="32" height="28" alt="add word" />
+                    </StyledAddBtn>
+                    <span>{word.wordTranslate}</span>
+                    <span>{word.transcription}</span>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <p>{word.textMeaning.replace(/<\/?[^>]+(>|$)/gi, '').replace(/&nbsp;/gi, ' ')}</p>
-                <p>{word.textExample.replace(/<\/?[^>]+(>|$)/gi, '').replace(/&nbsp;/gi, ' ')}</p>
-              </div>
-              <hr />
-              <div>
-                <p>{word.textExampleTranslate}</p>
-                <p>{word.textMeaningTranslate}</p>
-              </div>
-            </StyledCardContent>
-          </StyledCard>
-        ))}
+                <div>
+                  <p>{word.textMeaning.replace(/<\/?[^>]+(>|$)/gi, '').replace(/&nbsp;/gi, ' ')}</p>
+                  <p>{word.textExample.replace(/<\/?[^>]+(>|$)/gi, '').replace(/&nbsp;/gi, ' ')}</p>
+                </div>
+                <hr />
+                <div>
+                  <p>{word.textExampleTranslate}</p>
+                  <p>{word.textMeaningTranslate}</p>
+                </div>
+              </StyledCardContent>
+            </StyledCard>
+          ))}
         <StyledPagination>
           <div>
-            <Link to={changePrevGroup()}>{'<<'}</Link>
-            <Link to={changePrevPage()}>{'<'}</Link>
+            <Link to={changePrevGroup()} title={group === '0' ? '' : 'следующий раздел'}>
+              {'<<'}
+            </Link>
+            <Link to={changePrevPage()} title={page === '0' ? '' : 'предыдущая страница'}>
+              {'<'}
+            </Link>
             <span>{`${copyPrevPage}`}/30</span>
-            <Link to={changeNextPage()}>{'>'}</Link>
-            <Link to={changeNextGroup()}>{'>>'}</Link>
+            <Link to={changeNextPage()} title={page === '29' ? '' : 'следующая страница'}>
+              {'>'}
+            </Link>
+            <Link to={changeNextGroup()} title={group === '5' ? '' : 'следующий раздел'}>
+              {'>>'}
+            </Link>
           </div>
           <div>
             <StyledGroupNumber

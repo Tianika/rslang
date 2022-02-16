@@ -26,6 +26,7 @@ export const ItemBookStyled = styled.li`
   display: inline-block;
   position: relative;
   transition: 1s;
+
   &:hover {
     transform: rotate(360deg);
   }

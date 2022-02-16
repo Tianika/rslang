@@ -22,6 +22,7 @@ export const StyledWrapper = styled.div`
   max-width: 1800px;
   width: 100%;
   gap: 40px;
+  padding-bottom: 115px;
 `;
 
 export const StyledCard = styled.div<{ imgUrl: string }>`
@@ -57,8 +58,8 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
     background: linear-gradient(
       180deg,
       rgba(196, 196, 196, 0) 0%,
-      rgba(196, 196, 196, 0.0753941) 16.15%,
-      rgba(196, 196, 196, 0.142857) 33.33%,
+      rgba(196, 196, 196, 0.0753941) -7.85%,
+      rgba(196, 196, 196, 0.142857) -40.67%,
       #c4c4c4 100%
     );
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -146,7 +147,9 @@ const StyledClearBtn = styled.button`
 
 export const StyledAudioBtn = styled(StyledClearBtn)``;
 
-export const StyledAddBtn = styled(StyledClearBtn)``;
+export const StyledAddBtn = styled(StyledClearBtn)`
+  display: none;
+`;
 
 export const StyledPagination = styled.div`
   max-width: 1534px;
