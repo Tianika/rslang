@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   AnswerButton,
@@ -30,7 +30,6 @@ import {
   wordsSelector
 } from './sprint.selectors';
 import { ARROWS, BOOK_LINKS, HEADER_BG_COLOR } from './constants';
-import { SprintGameState } from './types';
 import { LoadingState } from '../../utils';
 import { fetchSprintAction } from './sprint.saga';
 import { LoadingPage } from '../../components/loading';
@@ -42,8 +41,6 @@ const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = sprintGameAction
 
 export const SprintGame = (props: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
-
-  const words = useAppSelector(wordsSelector);
 
   const [totalScore, setTotalScore] = useState(0);
   const [scorePerWord, setScorePerWord] = useState(10);
@@ -58,6 +55,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //получаем слова
 
+  const words = useAppSelector(wordsSelector);
   const rightAnswersArr = useAppSelector(rightAnswersSelector);
   const errorAnswersArr = useAppSelector(errorAnswersSelector);
 
@@ -72,7 +70,6 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     const word = words[0];
 
     if (word) {
-      console.warn(word);
       setCurrentWord(word.word);
       setCurrentTranslate(word.wordTranslate);
     }
@@ -106,13 +103,6 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   //изменить индекс
   const upCurrentWordIndex = () => {
     setCurrentWordIndex(currentWordIndex + 1);
-
-    if (currentWordIndex === 19) {
-      dispatch(fetchSprintAction(props.level));
-      setCurrentWordIndex(0);
-    }
-
-    console.log('currentWordIndex', currentWordIndex);
   };
 
   //сброс уровня при неправильном ответе
@@ -127,7 +117,6 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const getTranslate = () => {
     const isRightTranslate = Math.random() >= 0.5;
     setIsRight(isRightTranslate);
-    console.log('isRightTranslate', isRightTranslate);
 
     if (isRightTranslate) {
       const word = words[currentWordIndex];
@@ -147,14 +136,11 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
         setCurrentTranslate(word.wordTranslate);
       }
     }
-
-    console.log('currentTranslate', currentTranslate);
   };
 
   //поменять слово
   const changeCurrentWord = () => {
     const word = words[currentWordIndex];
-    console.log(word);
 
     if (word) {
       setCurrentWord(word.word);
@@ -167,12 +153,8 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //логика общее
   const changeAnswer = () => {
-    console.log('before', currentWord, currentTranslate);
-
     changeCurrentWord();
     getTranslate();
-
-    console.log('after', currentWord, currentTranslate);
   };
 
   //логика игры при нажатии на правильный ответ

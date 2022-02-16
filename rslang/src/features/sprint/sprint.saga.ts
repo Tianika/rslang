@@ -6,8 +6,23 @@ import { requestWordsFromGroup } from './sprint.api';
 import { getRandomNumber } from './utils';
 //import { sprintStartActions } from './sprint.slice';
 import { sprintGameActions } from './sprint.slice';
+import { Word } from './types';
 
 const call: any = Effects.call;
+
+const createNumberArr = () => {
+  const numbers: Array<number | undefined> = [];
+
+  while (numbers.length < 6) {
+    const number = getRandomNumber(29);
+
+    if (!numbers.includes(number)) {
+      numbers.push(number);
+    }
+  }
+
+  return numbers;
+};
 
 //создаем экшен для запроса
 export const fetchSprintAction = createAction<number, string>('sprint/fetch');
@@ -19,14 +34,19 @@ function* sprintGameFetch(action: PayloadAction<number>) {
   yield put(changeLoadingState(LoadingState.Loading));
 
   try {
-    //рандомный номер страницы
-    const pageNumber = getRandomNumber(30);
+    //массив номеров страниц
+    const numbers = createNumberArr();
+    const words: Array<Word | undefined> = [];
 
-    //получаем данные из запроса
-    const { data } = yield call(requestWordsFromGroup, action.payload, pageNumber) as Response;
+    for (let i = 0; i < numbers.length; i++) {
+      //получаем данные из запроса
+      const { data } = yield call(requestWordsFromGroup, action.payload, numbers[i]) as Response;
+
+      words.push(...data);
+    }
 
     //обрабатываем полученный массив слов
-    yield put(setWordsArray(data));
+    yield put(setWordsArray(words));
 
     //TODO доделать loading
 
