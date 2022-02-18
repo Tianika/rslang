@@ -8,3 +8,8 @@ export enum LoadingState {
 }
 
 export const EmptyComponent: React.FC = () => null;
+
+export enum GameTypes {
+  Sprint = 'Sprint',
+  AudioCall = 'AudioCall'
+}

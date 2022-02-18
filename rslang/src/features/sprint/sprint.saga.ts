@@ -4,7 +4,6 @@ import * as Effects from 'redux-saga/effects';
 import { LoadingState } from '../../utils';
 import { requestWordsFromGroup } from './sprint.api';
 import { getRandomNumber } from './utils';
-//import { sprintStartActions } from './sprint.slice';
 import { sprintGameActions } from './sprint.slice';
 import { Word } from './types';
 
@@ -13,7 +12,7 @@ const call: any = Effects.call;
 const createNumberArr = () => {
   const numbers: Array<number | undefined> = [];
 
-  while (numbers.length < 6) {
+  while (numbers.length < 4) {
     const number = getRandomNumber(29);
 
     if (!numbers.includes(number)) {

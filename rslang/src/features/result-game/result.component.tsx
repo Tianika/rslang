@@ -21,8 +21,15 @@ import { Link } from 'react-router-dom';
 import { ResultGame } from './types';
 import { Word } from '../sprint/types';
 import { AudioEventHandle } from '../../utils';
+import { useAppDispatch } from '../../app/hooks';
+import { fetchStatisticsAction } from './result.saga';
 
 export const ResultGamePage = (props: ResultGame): React.ReactElement => {
+  console.log('props', props);
+  const dispatch = useAppDispatch();
+
+  dispatch(fetchStatisticsAction(props));
+
   const playAudio: AudioEventHandle = (event) => {
     const target = event.target as HTMLElement;
     const url = target.dataset.url;

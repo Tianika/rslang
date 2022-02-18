@@ -30,7 +30,7 @@ import {
   wordsSelector
 } from './sprint.selectors';
 import { ARROWS, BOOK_LINKS, HEADER_BG_COLOR } from './constants';
-import { LoadingState } from '../../utils';
+import { GameTypes, LoadingState } from '../../utils';
 import { fetchSprintAction } from './sprint.saga';
 import { LoadingPage } from '../../components/loading';
 import { sprintGameActions } from './sprint.slice';
@@ -128,7 +128,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       let random;
 
       do {
-        random = getRandomNumber(20);
+        random = getRandomNumber(79);
       } while (random === currentWordIndex);
 
       const word = words[random];
@@ -268,6 +268,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
         score={totalScore}
         rightAnswers={rightAnswersArr}
         errorAnswers={errorAnswersArr}
+        gameType={GameTypes.Sprint}
       />
     );
   }
