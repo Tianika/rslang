@@ -4,18 +4,17 @@ import * as Effects from 'redux-saga/effects';
 import { LoadingState } from '../../utils';
 import { requestWordsFromGroup } from './audio-call.api';
 import { getRandomNumber } from './utils';
-//import { sprintStartActions } from './sprint.slice';
-import { sprintGameActions } from './audio-call.slice';
+import { audioGameActions } from './audio-call.slice';
 
 const call: any = Effects.call;
 
 //создаем экшен для запроса
-export const fetchSprintAction = createAction<number, string>('sprint/fetch');
+export const fetchAudioAction = createAction<number, string>('audio/fetch');
 
 //получаем функцию из экшенов
-const { changeLoadingState, setWordsArray } = sprintGameActions;
+const { changeLoadingState, setWordsArray } = audioGameActions;
 
-function* sprintGameFetch(action: PayloadAction<number>) {
+function* audioGameFetch(action: PayloadAction<number>) {
   yield put(changeLoadingState(LoadingState.Loading));
 
   try {
@@ -39,9 +38,9 @@ function* sprintGameFetch(action: PayloadAction<number>) {
   }
 }
 
-function* sprintSaga() {
-  yield takeLatest(fetchSprintAction, sprintGameFetch);
+function* audioSaga() {
+  yield takeLatest(fetchAudioAction, audioGameFetch);
 }
 
-export default sprintSaga;
+export default audioSaga;
 //добавить в rootsaga

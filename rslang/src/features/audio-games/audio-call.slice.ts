@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingState } from '../../utils';
-import { SprintWordsState } from './types';
+import { AudioWordsState } from './types';
 
-const initialState: SprintWordsState = {
+const initialState: AudioWordsState = {
   loadingState: LoadingState.Initial,
   words: [],
   rightAnswers: [],
@@ -10,8 +10,8 @@ const initialState: SprintWordsState = {
 };
 
 //создаем редюсеры
-export const sprintGameSlice = createSlice({
-  name: 'sprint/game',
+export const audioGameSlice = createSlice({
+  name: 'audio/game',
   initialState,
   reducers: {
     changeLoadingState: (state, action) => {
@@ -33,7 +33,7 @@ export const sprintGameSlice = createSlice({
   }
 });
 
-export const sprintGameReducer = sprintGameSlice.reducer;
+export const audioGameReducer = audioGameSlice.reducer;
 //добавить sprintGameSlice в reducer.ts
 
-export const sprintGameActions = sprintGameSlice.actions;
+export const audioGameActions = audioGameSlice.actions;

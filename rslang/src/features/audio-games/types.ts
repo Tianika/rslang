@@ -8,7 +8,7 @@ export type IsGame = {
   isGame: boolean;
 };
 
-export type SprintFetch = Level &
+export type AudioFetch = Level &
   IsGame & {
     loadingState: LoadingState;
   };
@@ -30,13 +30,13 @@ export type Word = {
   textExampleTranslate: 'string';
 };
 
-export type SprintWordsState = {
+export type AudioWordsState = {
   loadingState: LoadingState;
   words: Array<Word | undefined>;
   rightAnswers: Array<Word | undefined>;
   errorAnswers: Array<Word | undefined>;
 };
 
-export type SprintGameState = {
+export type AudioGameState = {
   words: Array<Word | undefined>;
 };
