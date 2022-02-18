@@ -10,7 +10,7 @@ const initialState: SprintWordsState = {
 };
 
 //создаем редюсеры
-export const audioCallGameSlice = createSlice({
+export const sprintGameSlice = createSlice({
   name: 'sprint/game',
   initialState,
   reducers: {
@@ -18,7 +18,7 @@ export const audioCallGameSlice = createSlice({
       state.loadingState = action.payload;
     },
     setWordsArray: (state, action) => {
-      state.words = [...action.payload];
+      state.words = action.payload;
     },
     addRightAnswers: (state, action) => {
       state.rightAnswers.push(action.payload);
@@ -33,7 +33,7 @@ export const audioCallGameSlice = createSlice({
   }
 });
 
-export const sprintGameReducer = audioCallGameSlice.reducer;
+export const sprintGameReducer = sprintGameSlice.reducer;
 //добавить sprintGameSlice в reducer.ts
 
-export const sprintGameActions = audioCallGameSlice.actions;
+export const sprintGameActions = sprintGameSlice.actions;
