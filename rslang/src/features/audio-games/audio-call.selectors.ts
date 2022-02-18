@@ -14,7 +14,6 @@ export const wordsSelector = (state: RootState) => {
 export const rightAnswersSelector = (state: RootState) => {
   return state.audioGame.rightAnswers;
 };
-
 //неправильные ответы
 export const errorAnswersSelector = (state: RootState) => {
   return state.audioGame.errorAnswers;
