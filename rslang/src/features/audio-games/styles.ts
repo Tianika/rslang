@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../utils';
+import audioButton from '../../assets/svg/audioButton.svg';
 
 export const BlockInfo = styled.div`
   width: 50%;
@@ -128,7 +129,8 @@ export const InitialIndicatorAnswer = styled.span`
   border: none;
 `;
 
-export const ButtonAudio = styled.img`
+export const ButtonAudio = styled.div`
+  background-image: url(${audioButton});
   width: 250px;
   height: 250px;
   border-radius: 50%;
