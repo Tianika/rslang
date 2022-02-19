@@ -10,14 +10,11 @@ export const fetchGetStatisticsAction = createAction<ResultGame, string>('getSta
 
 function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
   const call: any = Effects.call;
-
-  console.log(action.payload);
   const result = { ...action.payload };
 
   try {
     //запрос на получение статистики
     const { data } = yield call(getStatisticsRequest);
-    console.log('get', data);
 
     let newData;
     const today = new Date().toDateString();
@@ -97,10 +94,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     //отправить на сервер
     yield call(putStatisticsRequest, newData);
   } catch (error: any) {
-    console.log(error.response);
     if (error.response) {
-      console.log(error.response);
-
       if (error.response.status == 404) {
         let newData;
         const today = new Date().toDateString();

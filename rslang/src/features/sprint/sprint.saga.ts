@@ -51,7 +51,6 @@ function* sprintGameFetch(action: PayloadAction<number>) {
 
     yield put(changeLoadingState(LoadingState.Success));
   } catch (error: any) {
-    console.log(error.response.status);
     //TODO добавить обработку ошибок???
 
     yield put(changeLoadingState(LoadingState.Error));
