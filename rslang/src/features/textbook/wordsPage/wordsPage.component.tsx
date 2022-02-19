@@ -48,11 +48,9 @@ export const WordsPage: React.FC = () => {
   const group = searchParams.get('group') ?? '0';
   const page = searchParams.get('page') ?? '0';
 
-  // переменная для отрисовки текущего раздела
   let copyPrevGroup = +group;
   copyPrevGroup += 1;
 
-  // переход на предыдущий раздел
   const changePrevGroup = () => {
     let groupNumber = +group;
     groupNumber === 0 ? 0 : (groupNumber -= 1);
@@ -60,7 +58,6 @@ export const WordsPage: React.FC = () => {
     return `?group=${groupNumber}&page=0`;
   };
 
-  // переход на следующий раздел
   const changeNextGroup = () => {
     let groupNumber = +group;
     groupNumber === 5 ? 5 : (groupNumber += 1);
@@ -88,7 +85,6 @@ export const WordsPage: React.FC = () => {
     dispatch(fetchTextBookAction({ group, page }));
   }, [group, page]);
 
-  // задаю бекграунд разделу с карточками в зависимости от того на какой раздел кликнули
   const checkNumberOfGroup = () => {
     switch (group) {
       case '0':

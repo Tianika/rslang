@@ -10,12 +10,9 @@ import { getAggregatedWords } from './wordsPage.api';
 
 const call: any = Effects.call;
 
-//создаем экшен для запроса
 export const postUserWordAction = createAction<string, string>('userWord/post');
 export const getAggregatedWordsAction = createAction<undefined, string>('aggregatedWords/get');
-// export const fetchTextBookAction = createAction()
 
-//получаем функцию из экшенов
 const { changeLoadingState, setAggregatedWords } = textBookActions;
 
 function* getAggregatedWordsSaga() {
@@ -25,17 +22,12 @@ function* getAggregatedWordsSaga() {
 
 function* postUserWordSaga(action: PayloadAction<string>) {
   try {
-    //получаем данные из запроса
-
     console.log(action);
     const { data } = yield call(postUserWord, action.payload) as Response;
     console.log(data);
     const { slova } = yield call(getAggregatedWords());
     yield put(setAggregatedWords(slova));
-    //сохраняем данные
-  } catch (error: any) {
-    // console.log(error.response.status);
-  }
+  } catch (error: any) {}
 }
 
 function* wordsPageSaga() {
@@ -44,4 +36,3 @@ function* wordsPageSaga() {
 }
 
 export { wordsPageSaga };
-//добавить в rootsaga
