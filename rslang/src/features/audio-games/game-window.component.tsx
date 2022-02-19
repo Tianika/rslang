@@ -3,18 +3,10 @@ import { BlockGame, ButtonAudio } from './styles';
 
 import BlockButton from './block-buttom.component';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-  errorAnswersSelector,
-  loadingStatus,
-  rightAnswersSelector,
-  wordsSelector
-} from './audio-call.selectors';
-import { LoadingState } from '../../utils';
+import { errorAnswersSelector, rightAnswersSelector, wordsSelector } from './audio-call.selectors';
 import { fetchAudioAction } from './audio-call.saga';
-import { LoadingPage } from '../../components/loading';
 import { audioGameActions } from './audio-call.slice';
 import { ResultGamePage } from '../result-game';
-import { getRandomNumber } from './utils';
 
 const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = audioGameActions;
 const GameWindow = (props: { level: number }): React.ReactElement => {
@@ -24,8 +16,10 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const errorAnswersArr = useAppSelector(errorAnswersSelector);
   const [currentWordIndex, setCurrentWordIndex] = useState(-1);
   const [currentAudio, setCurrentAudio] = useState('');
+  const [englishWord, setEnglishWord] = useState('');
   const [currentWord, setCurrentWord] = useState('');
-  const [currentTranslate, setCurrentTranslate] = useState('');
+  const [count, setCount] = useState(0);
+  const [IdCurrentWord, setIdCurrentWord] = useState('');
   useEffect(() => {
     dispatch(fetchAudioAction(props.level));
     dispatch(resetAnswerArrays());
@@ -34,14 +28,36 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
 
   useEffect(() => {
     const word = words[0];
-
     if (word) {
-      setCurrentWord(word.word);
+      setEnglishWord(word.word);
       setCurrentAudio(word.audio);
-      setCurrentTranslate(word.wordTranslate);
+      setCurrentWord(word.wordTranslate);
+      setIdCurrentWord(word.id);
     }
   }, [words]);
-  const answerArray = [currentTranslate];
+  const upCurrentWordIndex = () => {
+    setCurrentWordIndex(currentWordIndex + 1);
+  };
+  // TODO поменять слово
+  const changeCurrentWord = () => {
+    const word = words[currentWordIndex];
+    if (word) {
+      setEnglishWord(word.word);
+      setCurrentAudio(word.audio);
+      setCurrentWord(word.wordTranslate);
+      setIdCurrentWord(word.id);
+    }
+  };
+  if (count === 20) {
+    return <ResultGamePage errorAnswers={errorAnswersArr} rightAnswers={rightAnswersArr} />;
+  }
+  const answerArray = [
+    currentWord,
+    'не правильный',
+    'не правильный',
+    'не правильный',
+    'не правильный'
+  ];
   return (
     <BlockGame>
       <ButtonAudio
@@ -51,7 +67,14 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
         }}
       />
 
-      <BlockButton arrayAnswer={answerArray} />
+      <BlockButton
+        arrayAnswer={answerArray}
+        rightWord={currentWord}
+        countChoice={setCount}
+        function={changeCurrentWord}
+        count={count}
+        functionWorn={upCurrentWordIndex}
+      />
     </BlockGame>
   );
 };
