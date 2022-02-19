@@ -81,6 +81,16 @@ export const ListItem = styled.li`
       text-align: center;
     }
   }
+
+  &:nth-child(3) {
+    ul li:first-child {
+      background-color: #84dbff;
+    }
+    ul li:last-child {
+      background-color: #ff7058;
+    }
+  }
+
   &:hover {
     color: #5984e2;
 
