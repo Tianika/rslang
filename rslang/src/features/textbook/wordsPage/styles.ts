@@ -25,7 +25,7 @@ export const StyledWrapper = styled.div`
   padding-bottom: 115px;
 `;
 
-export const StyledCard = styled.div<{ imgUrl: string; bgCardColor: string }>`
+export const StyledCard = styled.div<{ imgUrl: string }>`
   background-image: url(${(props) => props.imgUrl});
   min-height: 420px;
   min-width: 400px;
@@ -62,7 +62,7 @@ export const StyledCard = styled.div<{ imgUrl: string; bgCardColor: string }>`
       rgba(196, 196, 196, 0) 0%,
       rgba(196, 196, 196, 0.0753941) -7.85%,
       rgba(196, 196, 196, 0.4) -40.67%,
-      ${(props) => props.bgCardColor} 100%
+      #c4c4c4 100%
     );
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     border-radius: 13px;

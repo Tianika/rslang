@@ -39,8 +39,6 @@ export const WordsPage: React.FC = () => {
     return state.textBook.words;
   });
 
-  const [bgCardColor, setBgCardColor] = useState('#c4c4c4');
-
   const { search } = useLocation();
 
   const searchParams = new URLSearchParams(search);
@@ -140,9 +138,6 @@ export const WordsPage: React.FC = () => {
 
     const responseWords = await getAggregatedWords();
     const { paginatedResults } = await responseWords.data[0];
-    console.log(paginatedResults);
-
-    const parent = (event.target as HTMLElement).closest('.sc-jgrJph');
   };
 
   return (
@@ -152,7 +147,7 @@ export const WordsPage: React.FC = () => {
           .slice()
           .sort((a, b) => a.word.localeCompare(b.word))
           .map((word) => (
-            <StyledCard key={word.id} imgUrl={`${baseUrl}/${word.image}`} bgCardColor={bgCardColor}>
+            <StyledCard key={word.id} imgUrl={`${baseUrl}/${word.image}`}>
               <StyledCardContent>
                 <div>
                   <p>{word.word}</p>
