@@ -13,6 +13,8 @@ import {
   PreloadLine
 } from './styles';
 import { AccountProps, LoadingState } from '../../utils';
+import { Link } from 'react-router-dom';
+import { ContainerButton, TabEntrance, TabRecord } from '../../features/login/styles';
 
 const { changeEmail, changePassword } = loginActions;
 
@@ -65,6 +67,14 @@ export const Login: React.FC = () => {
 
   return (
     <div>
+      <ContainerButton>
+        <Link to={'/account/login'}>
+          <TabEntrance type={'button'}>ВХОД</TabEntrance>
+        </Link>
+        <Link to={'/account/signup'}>
+          <TabRecord type={'button'}>РЕГИСТРАЦИЯ</TabRecord>
+        </Link>
+      </ContainerButton>
       <WindowAuthorizationAccount>
         <EmailTitle>ЭЛЕКТРОННАЯ ПОЧТА</EmailTitle>
         <EntryFieldEmail onChange={onEmailChange} type={'email'} autoComplete="on" />

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../utils';
 
-export const WindowAuthorizationAccount = styled.div`
+export const WindowAuthorizationAccount = styled.form`
   width: 600px;
   height: 450px;
   background-color: ${baseTheme.colors.blue};
@@ -100,20 +100,6 @@ export const PreloadLine = styled.div`
     }
   }
 `;
-
-// export const ButtonAuthPreload = styled.button`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 150px;
-//   height: 50px;
-//   color: #ffffff;
-//   background: ${baseTheme.colors.primary};
-//   border-radius: 50px;
-//   margin: 30px auto;
-//   font-size: 22px;
-//   border: none;
-// `;
 
 export const ContainerButton = styled.div`
   width: 600px;

@@ -1,18 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Login } from '../../features/login';
-import { ContainerButton, TabEntrance, TabRecord } from '../../features/login/styles';
+import { Signup } from '../../features/signup';
 
 export const Account: React.FC = () => (
   <div>
-    <ContainerButton>
-      <Link to={'/account/login'}>
-        <TabEntrance type={'button'}>ВХОД</TabEntrance>
-      </Link>
-      <Link to={'/account/signup'}>
-        <TabRecord type={'button'}>РЕГИСТРАЦИЯ</TabRecord>
-      </Link>
-    </ContainerButton>
-    <Login />
+    <Routes>
+      <Route path="/account/login" element={<Login />} />
+      <Route path="/account/signup" element={<Signup />} />
+    </Routes>
   </div>
 );

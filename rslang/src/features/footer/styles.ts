@@ -10,6 +10,7 @@ export const Wrapper = styled.footer`
   position: fixed;
   bottom: 0;
   background-color: ${baseTheme.colors.bg};
+  z-index: 3;
 `;
 
 export const Container = styled.div`

@@ -11,6 +11,9 @@ import { Statistics } from '../statistics/statistics.component';
 import { GamesPage } from '../../components/games/startPageGames.component';
 import { GameAudio } from '../../components/games/audio-games/audio-game.component';
 import { SprintStartPage } from '../../features/sprint';
+import { Textbook } from '../../features/textbook/textbook.component';
+import { WordsPage } from '../../features/textbook/wordsPage/wordsPage.component';
+import { Login } from '../../features/login';
 
 const App: React.FC = () => {
   return (
@@ -21,12 +24,15 @@ const App: React.FC = () => {
       <main>
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/textbook" element={<Textbook />} />
           <Route path="/statistic" element={<Statistics />} />
-          <Route path="/account/login" element={<Account />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/account/login" element={<Login />} />
           <Route path="/account/signup" element={<Signup />} />
           <Route path="/games" element={<GamesPage />} />
           <Route path="/games/audio" element={<GameAudio />} />
           <Route path="/games/sprint" element={<SprintStartPage />} />
+          <Route path="/textbook/wordspage" element={<WordsPage />} />
         </Routes>
       </main>
 
