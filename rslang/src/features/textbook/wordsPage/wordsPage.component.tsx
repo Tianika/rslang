@@ -145,6 +145,8 @@ export const WordsPage: React.FC = () => {
     const responseWords = await getAggregatedWords();
     const { paginatedResults } = await responseWords.data[0];
     console.log(paginatedResults);
+
+    const parent = (event.target as HTMLElement).closest('.sc-jgrJph');
   };
 
   return (
