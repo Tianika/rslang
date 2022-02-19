@@ -54,9 +54,10 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [borderColor, setBorderColor] = useState('');
   const [isDisableButton, setIsDisableButton] = useState(false);
   const [isDisableKeydown, setIsDisableKeydown] = useState(false);
+  const [longestSeries, setLongestSeries] = useState(0);
+  const [currentLongestSeries, setCurrentLongestSeries] = useState(0);
 
   //получаем слова
-
   const words = useAppSelector(wordsSelector);
   const rightAnswersArr = useAppSelector(rightAnswersSelector);
   const errorAnswersArr = useAppSelector(errorAnswersSelector);
@@ -193,6 +194,8 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     changeTotalScore();
     upLevelForRightAnswer();
 
+    setCurrentLongestSeries(currentLongestSeries + 1);
+
     upCurrentWordIndex();
   };
 
@@ -206,6 +209,11 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     dispatch(addErrorAnswers(word));
 
     resetSprintGameLevel();
+
+    if (currentLongestSeries > longestSeries) {
+      setLongestSeries(currentLongestSeries);
+    }
+    setCurrentLongestSeries(0);
 
     upCurrentWordIndex();
   };
@@ -299,6 +307,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
         rightAnswers={rightAnswersArr}
         errorAnswers={errorAnswersArr}
         gameType={GameTypes.Sprint}
+        longestSeries={longestSeries}
       />
     );
   }

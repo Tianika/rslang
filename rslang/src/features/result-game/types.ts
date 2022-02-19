@@ -6,6 +6,7 @@ export type ResultGame = {
   rightAnswers: Array<Word | undefined>;
   errorAnswers: Array<Word | undefined>;
   gameType: GameTypes;
+  longestSeries: number;
 };
 
 export type UserId = { id: string };
