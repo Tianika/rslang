@@ -24,3 +24,25 @@ export const HEADER_BG_COLOR = ['#ffffff', '#FFE320', '#FFA901', '#FF6849'];
 export const BOOK_LINKS = [book1, book2, book3, book4];
 
 export const ARROWS = [arrowLeft, arrowRight];
+
+export enum KeyTypes {
+  ArrowLeft = 'ArrowLeft',
+  ArrowRight = 'ArrowRight'
+}
+
+export const GAME_TIME = 60;
+
+export enum BorderColors {
+  Red = 'red',
+  Green = 'green'
+}
+
+export const MAX_SCORE_PER_WORD = 80;
+
+export const MAX_LEVEL_SCORE = 4;
+
+export const MAX_LEVEL_CHECKBOXES = 3;
+
+export const MAX_REQUESTS_COUNT = 4;
+
+export const MAX_PAGE_PER_GROUP = 30;

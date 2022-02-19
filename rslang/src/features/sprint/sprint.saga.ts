@@ -6,14 +6,15 @@ import { requestWordsFromGroup } from './sprint.api';
 import { getRandomNumber } from './utils';
 import { sprintGameActions } from './sprint.slice';
 import { Word } from './types';
+import { MAX_PAGE_PER_GROUP, MAX_REQUESTS_COUNT } from './constants';
 
 const call: any = Effects.call;
 
 const createNumberArr = () => {
   const numbers: Array<number | undefined> = [];
 
-  while (numbers.length < 4) {
-    const number = getRandomNumber(29);
+  while (numbers.length < MAX_REQUESTS_COUNT) {
+    const number = getRandomNumber(MAX_PAGE_PER_GROUP - 1);
 
     if (!numbers.includes(number)) {
       numbers.push(number);

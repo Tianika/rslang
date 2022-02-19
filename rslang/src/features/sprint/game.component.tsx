@@ -29,7 +29,17 @@ import {
   rightAnswersSelector,
   wordsSelector
 } from './sprint.selectors';
-import { ARROWS, BOOK_LINKS, HEADER_BG_COLOR } from './constants';
+import {
+  ARROWS,
+  BOOK_LINKS,
+  BorderColors,
+  GAME_TIME,
+  HEADER_BG_COLOR,
+  KeyTypes,
+  MAX_LEVEL_CHECKBOXES,
+  MAX_LEVEL_SCORE,
+  MAX_SCORE_PER_WORD
+} from './constants';
 import { GameTypes, LoadingState } from '../../utils';
 import { fetchSprintAction } from './sprint.saga';
 import { LoadingPage } from '../../components/loading';
@@ -105,8 +115,8 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //повысить уровень при правильном ответе
   const upLevelForRightAnswer = () => {
-    if (levelAnswer < 4) {
-      if (checkboxesLevel < 3) {
+    if (levelAnswer < MAX_LEVEL_SCORE) {
+      if (checkboxesLevel < MAX_LEVEL_CHECKBOXES) {
         setCheckboxesLevel(checkboxesLevel + 1);
 
         const copyCheckboxes = checkboxes.map((checkbox, index) => index <= checkboxesLevel);
@@ -116,7 +126,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
         setLevelAnswer(levelAnswer + 1);
         setCheckboxes([false, false, false]);
 
-        if (scorePerWord < 80) {
+        if (scorePerWord < MAX_SCORE_PER_WORD) {
           setScorePerWord(scorePerWord * 2);
         }
       }
@@ -149,9 +159,10 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       }
     } else {
       let random;
+      const max = words.length - 1;
 
       do {
-        random = getRandomNumber(79);
+        random = getRandomNumber(max);
       } while (random === currentWordIndex);
 
       const word = words[random];
@@ -184,7 +195,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //логика игры при нажатии на правильный ответ
   const sprintGameRightAnswerHandler = () => {
-    setBorderColor('green');
+    setBorderColor(BorderColors.Green);
     disableButton();
     disableKeydown();
 
@@ -201,7 +212,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //логика игры при нажатии на неверный ответ
   const sprintGameErrorAnswerHandler = () => {
-    setBorderColor('red');
+    setBorderColor(BorderColors.Red);
     disableButton();
     disableKeydown();
 
@@ -231,7 +242,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   };
 
   //таймер
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(GAME_TIME);
 
   useEffect(() => {
     if (timer === 0) {
@@ -265,17 +276,17 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   document.body.onkeydown = (event: KeyboardEvent) => {
     if (!isDisableButton && !isDisableKeydown) {
       if (isRight) {
-        if (event.key === 'ArrowLeft') {
+        if (event.key === KeyTypes.ArrowLeft) {
           sprintGameErrorAnswerHandler();
         }
-        if (event.key === 'ArrowRight') {
+        if (event.key === KeyTypes.ArrowRight) {
           sprintGameRightAnswerHandler();
         }
       } else {
-        if (event.key === 'ArrowLeft') {
+        if (event.key === KeyTypes.ArrowLeft) {
           sprintGameRightAnswerHandler();
         }
-        if (event.key === 'ArrowRight') {
+        if (event.key === KeyTypes.ArrowRight) {
           sprintGameErrorAnswerHandler();
         }
       }
