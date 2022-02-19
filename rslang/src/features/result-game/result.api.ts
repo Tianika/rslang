@@ -16,7 +16,10 @@ export const getStatisticsRequest = (): AxiosPromise<Response> => {
 
 //отправить статистику на сервер
 export const putStatisticsRequest = (action: Statistics): AxiosPromise<Response> => {
-  const data = action;
+  const data = {
+    learnedWords: action.learnedWords,
+    optional: { ...action.optional }
+  };
 
   const config = {
     headers: {
@@ -25,6 +28,8 @@ export const putStatisticsRequest = (action: Statistics): AxiosPromise<Response>
   };
 
   const id = localStorage.rslangUserId;
+
+  console.log(data);
 
   return axios.put(`https://learnwords-team17.herokuapp.com/users/${id}/statistics`, data, config);
 };

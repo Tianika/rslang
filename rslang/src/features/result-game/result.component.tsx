@@ -22,13 +22,16 @@ import { ResultGame } from './types';
 import { Word } from '../sprint/types';
 import { AudioEventHandle } from '../../utils';
 import { useAppDispatch } from '../../app/hooks';
-import { fetchStatisticsAction } from './result.saga';
+import { fetchGetStatisticsAction } from './result.saga';
 
 export const ResultGamePage = (props: ResultGame): React.ReactElement => {
-  console.log('props', props);
   const dispatch = useAppDispatch();
 
-  dispatch(fetchStatisticsAction(props));
+  setTimeout(() => {
+    const date = dispatch(fetchGetStatisticsAction(props));
+
+    console.log(date.payload);
+  }, 0);
 
   const playAudio: AudioEventHandle = (event) => {
     const target = event.target as HTMLElement;
