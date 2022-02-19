@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { statusSelector, userSelector } from './login.selectors';
 import { fetchLoginAction } from './login.saga';
@@ -12,13 +12,13 @@ import {
   EmailTitle,
   PreloadLine
 } from './styles';
-import { AccountProps } from '../../utils';
+import { AccountProps, LoadingState } from '../../utils';
 import { Link } from 'react-router-dom';
 import { ContainerButton, TabEntrance, TabRecord } from '../../features/login/styles';
 
 const { changeEmail, changePassword } = loginActions;
 
-export const Login: React.FC = (props) => {
+export const Login: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const login = useAppSelector(userSelector);
@@ -26,9 +26,10 @@ export const Login: React.FC = (props) => {
 
   //вкл-выкл кнопку при отправке запроса
   const [disable, setDisable] = useState(false);
-  const toggleDisable = () => {
+
+  const toggleDisable = useCallback(() => {
     setDisable(!disable);
-  };
+  }, [disable]);
 
   //отслеживаем изменение полей ввода
   const onEmailChange: AccountProps['onEmailChange'] = (event) => {
@@ -43,10 +44,10 @@ export const Login: React.FC = (props) => {
 
   //включаем кнопку при ошибке логина
   useEffect(() => {
-    if (disable && status.status === 'Error') {
+    if (disable && status.status === LoadingState.Error) {
       toggleDisable();
     }
-  }, [status]);
+  }, [status, disable, toggleDisable]);
 
   //запрос
   const fetchLogin = () => {
