@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BlockGame, ButtonAudio } from './styles';
-import BlockIndicator from './block-indicator.component';
-import audioButton from '../../assets/svg/audioButton.svg';
+
 import BlockButton from './block-buttom.component';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
@@ -24,12 +23,9 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const rightAnswersArr = useAppSelector(rightAnswersSelector);
   const errorAnswersArr = useAppSelector(errorAnswersSelector);
   const [currentWordIndex, setCurrentWordIndex] = useState(-1);
-  const [checkboxes, setCheckboxes] = useState([false, false, false]);
+  const [currentAudio, setCurrentAudio] = useState('');
   const [currentWord, setCurrentWord] = useState('');
   const [currentTranslate, setCurrentTranslate] = useState('');
-  console.log(words);
-  console.log(rightAnswersArr);
-  console.log(errorAnswersArr);
   useEffect(() => {
     dispatch(fetchAudioAction(props.level));
     dispatch(resetAnswerArrays());
@@ -38,18 +34,24 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
 
   useEffect(() => {
     const word = words[0];
-    console.log(word);
+
     if (word) {
       setCurrentWord(word.word);
+      setCurrentAudio(word.audio);
       setCurrentTranslate(word.wordTranslate);
     }
   }, [words]);
-
+  const answerArray = [currentTranslate];
   return (
     <BlockGame>
-      <BlockIndicator />
-      <ButtonAudio src={audioButton} />
-      <BlockButton />
+      <ButtonAudio
+        onClick={() => {
+          new Audio(`https://learnwords-team17.herokuapp.com/${currentAudio}`).play();
+          return false;
+        }}
+      />
+
+      <BlockButton arrayAnswer={answerArray} />
     </BlockGame>
   );
 };
