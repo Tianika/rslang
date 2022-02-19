@@ -61,8 +61,5 @@ const StartPageAudioCall = (): React.ReactElement => {
     </BlockInfo>
   );
 };
-setInterval(() => {
-  console.log(ChoiceDifficulty.selected);
-}, 3000);
 
 export default StartPageAudioCall;
