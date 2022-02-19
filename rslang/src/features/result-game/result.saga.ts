@@ -28,7 +28,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     yield call(putStatisticsRequest, newData);
   } catch (error: any) {
     console.log(error.response.status);
-    if (error.response.status === '404') {
+    if (error.response.status == 404) {
       yield call(putStatisticsRequest, {
         learnedWords: result.rightAnswers.length,
         optional: {}

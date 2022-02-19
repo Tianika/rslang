@@ -52,6 +52,8 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [currentWord, setCurrentWord] = useState('');
   const [currentTranslate, setCurrentTranslate] = useState('');
   const [borderColor, setBorderColor] = useState('');
+  const [isDisableButton, setIsDisableButton] = useState(false);
+  const [isDisableKeydown, setIsDisableKeydown] = useState(false);
 
   //получаем слова
 
@@ -74,6 +76,26 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       setCurrentTranslate(word.wordTranslate);
     }
   }, [words]);
+
+  //откл кнопки при ответе
+  const disableButton = () => {
+    setIsDisableButton(true);
+  };
+
+  //откл отслеживание событий клавиатуры при ответе
+  const disableKeydown = () => {
+    setIsDisableKeydown(true);
+  };
+
+  //вкл кнопки
+  const enableButton = () => {
+    setIsDisableButton(false);
+  };
+
+  //откл отслеживание событий клавиатуры при ответе
+  const enableKeydown = () => {
+    setIsDisableKeydown(false);
+  };
 
   //увеличить общее кол-во очков
   const changeTotalScore = () => {
@@ -155,11 +177,15 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const changeAnswer = () => {
     changeCurrentWord();
     getTranslate();
+    enableButton();
+    enableKeydown();
   };
 
   //логика игры при нажатии на правильный ответ
   const sprintGameRightAnswerHandler = () => {
     setBorderColor('green');
+    disableButton();
+    disableKeydown();
 
     const word = words[currentWordIndex];
     dispatch(addRightAnswers(word));
@@ -173,6 +199,8 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   //логика игры при нажатии на неверный ответ
   const sprintGameErrorAnswerHandler = () => {
     setBorderColor('red');
+    disableButton();
+    disableKeydown();
 
     const word = words[currentWordIndex];
     dispatch(addErrorAnswers(word));
@@ -227,19 +255,21 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //управление ответами с клавиатуры
   document.body.onkeydown = (event: KeyboardEvent) => {
-    if (isRight) {
-      if (event.key === 'ArrowLeft') {
-        sprintGameErrorAnswerHandler();
-      }
-      if (event.key === 'ArrowRight') {
-        sprintGameRightAnswerHandler();
-      }
-    } else {
-      if (event.key === 'ArrowLeft') {
-        sprintGameRightAnswerHandler();
-      }
-      if (event.key === 'ArrowRight') {
-        sprintGameErrorAnswerHandler();
+    if (!isDisableButton && !isDisableKeydown) {
+      if (isRight) {
+        if (event.key === 'ArrowLeft') {
+          sprintGameErrorAnswerHandler();
+        }
+        if (event.key === 'ArrowRight') {
+          sprintGameRightAnswerHandler();
+        }
+      } else {
+        if (event.key === 'ArrowLeft') {
+          sprintGameRightAnswerHandler();
+        }
+        if (event.key === 'ArrowRight') {
+          sprintGameErrorAnswerHandler();
+        }
       }
     }
   };
@@ -332,6 +362,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
             <AnswerButton
               key={button.content}
               className={button.className}
+              disabled={isDisableButton}
               onClick={() => button.handler()}
             >
               {button.content}
