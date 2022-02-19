@@ -183,3 +183,9 @@ export const ButtonNextQuestions = styled.button`
     cursor: pointer;
   }
 `;
+export const StyledButton = styled(InitialStateButtonAnswer)<{
+  correct?: boolean;
+  isAnswerChosen: boolean;
+}>`
+  background: ${(props) => !props.correct && props.isAnswerChosen && 'red'};
+`;
