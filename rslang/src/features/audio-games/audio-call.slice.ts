@@ -34,6 +34,4 @@ export const audioGameSlice = createSlice({
 });
 
 export const audioGameReducer = audioGameSlice.reducer;
-//добавить sprintGameSlice в reducer.ts
-
 export const audioGameActions = audioGameSlice.actions;
