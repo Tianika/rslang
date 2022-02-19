@@ -25,6 +25,33 @@ const logoutHandle = () => {
   location.href = location.origin;
 };
 
+const menuHeaderData = [
+  {
+    firstSectionLink: '0',
+    firstTitle: 'Раздел №1'
+  },
+  {
+    secondSectionLink: '1',
+    secondTitle: 'Раздел №2'
+  },
+  {
+    thirdSectionLink: '2',
+    thirdTitle: 'Раздел №3'
+  },
+  {
+    fourthSectionLink: '3',
+    fourthTitle: 'Раздел №4'
+  },
+  {
+    fifthSectionLink: '4',
+    fifthTitle: 'Раздел №5'
+  },
+  {
+    sixthSectionLink: '5',
+    sixthTitle: 'Раздел №5'
+  }
+];
+
 const Header: FC = () => {
   return (
     <StyledHeader>
@@ -37,9 +64,43 @@ const Header: FC = () => {
             </ListItem>
             <ListItem>
               <Link to="/textbook">Учебник</Link>
+              <ul>
+                {menuHeaderData.map((item, index) => {
+                  return (
+                    <li key={index}>
+                      <Link to={`textbook/wordspage?group=${item.firstSectionLink}&page=0`}>
+                        {item.firstTitle}
+                      </Link>
+                      <Link to={`textbook/wordspage?group=${item.secondSectionLink}&page=0`}>
+                        {item.secondTitle}
+                      </Link>
+                      <Link to={`textbook/wordspage?group=${item.thirdSectionLink}&page=0`}>
+                        {item.thirdTitle}
+                      </Link>
+                      <Link to={`textbook/wordspage?group=${item.fourthSectionLink}&page=0`}>
+                        {item.fourthTitle}
+                      </Link>
+                      <Link to={`textbook/wordspage?group=${item.fifthSectionLink}&page=0`}>
+                        {item.fifthTitle}
+                      </Link>
+                      <Link to={`textbook/wordspage?group=${item.sixthSectionLink}&page=0`}>
+                        {item.sixthTitle}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </ListItem>
             <ListItem>
               <Link to="/games">Мини-игры</Link>
+              <ul>
+                <li>
+                  <Link to={'/games/audio'}>Аудиовызов</Link>
+                </li>
+                <li>
+                  <Link to={'/games/sprint'}>Спринт</Link>
+                </li>
+              </ul>
             </ListItem>
             <ListItem>
               <Link to="/statistic">Статистика</Link>
