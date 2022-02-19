@@ -4,7 +4,8 @@ import { TextBookState } from './types';
 
 const initialState: TextBookState = {
   words: [],
-  loadingState: LoadingState.Initial
+  loadingState: LoadingState.Initial,
+  aggregatedWords: []
 };
 
 //создаем редюсеры
@@ -17,6 +18,9 @@ export const textBookSlice = createSlice({
     },
     changeLoadingState: (state, action) => {
       state.loadingState = action.payload;
+    },
+    setAggregatedWords: (state, action) => {
+      state.aggregatedWords.push(action.payload);
     }
   }
 });

@@ -25,7 +25,7 @@ export const StyledWrapper = styled.div`
   padding-bottom: 115px;
 `;
 
-export const StyledCard = styled.div<{ imgUrl: string }>`
+export const StyledCard = styled.div<{ imgUrl: string; bgCardColor: string }>`
   background-image: url(${(props) => props.imgUrl});
   min-height: 420px;
   min-width: 400px;
@@ -43,9 +43,11 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
   font-size: 20px;
   overflow: hidden;
   color: #fff;
-
+  transition: all 0.2s;
   &:hover {
     box-shadow: 5px 5px 15px 5px #fff;
+    transform: scale(1.01);
+    transition: all 0.2s;
   }
 
   &::before {
@@ -59,12 +61,13 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
       180deg,
       rgba(196, 196, 196, 0) 0%,
       rgba(196, 196, 196, 0.0753941) -7.85%,
-      rgba(196, 196, 196, 0.142857) -40.67%,
-      #c4c4c4 100%
+      rgba(196, 196, 196, 0.4) -40.67%,
+      ${(props) => props.bgCardColor} 100%
     );
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     border-radius: 13px;
     z-index: -1;
+    transition: all 0.2s;
   }
 `;
 
@@ -148,7 +151,10 @@ const StyledClearBtn = styled.button`
 export const StyledAudioBtn = styled(StyledClearBtn)``;
 
 export const StyledAddBtn = styled(StyledClearBtn)`
-  display: none;
+  display: ${localStorage.getItem('rslangUserName') ? '' : 'none'};
+  img {
+    pointer-events: none;
+  }
 `;
 
 export const StyledPagination = styled.div`
@@ -212,7 +218,6 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
   width: 64px;
   height: 64px;
 
-  /* background: rgba(255, 1, 1, 0.5); */
   background-color: ${(props) => props.group};
   border: 3px solid ${bg};
   color: ${bg};

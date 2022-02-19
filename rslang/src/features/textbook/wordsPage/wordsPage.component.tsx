@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { fetchTextBookAction } from '../textbook.saga';
 import { baseTheme } from '../../../utils';
@@ -30,12 +30,16 @@ import cardPlusIcon from '../../../assets/svg/card-plus-icon.svg';
 import { baseUrl } from '../textbook.api';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { IWord } from '../types';
+import { postUserWordAction } from './wordsPage.saga';
+import { deleteUserWordById, getAggregatedWords } from './wordsPage.api';
 
 export const WordsPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const words = useAppSelector((state) => {
     return state.textBook.words;
   });
+
+  const [bgCardColor, setBgCardColor] = useState('#c4c4c4');
 
   const { search } = useLocation();
 
@@ -84,8 +88,6 @@ export const WordsPage: React.FC = () => {
     dispatch(fetchTextBookAction({ group, page }));
   }, [group, page]);
 
-  console.log(words);
-
   // задаю бекграунд разделу с карточками в зависимости от того на какой раздел кликнули
   const checkNumberOfGroup = () => {
     switch (group) {
@@ -121,13 +123,13 @@ export const WordsPage: React.FC = () => {
       audioWord.paused ? await audioWord.play() : audioWord.pause();
       target.style.pointerEvents = 'none';
 
-      audioWord.addEventListener('ended', () => {
+      audioWord.addEventListener('ended', async () => {
         audioMean.currentTime = 0;
-        audioMean.paused ? audioMean.play() : audioMean.pause();
+        audioMean.paused ? await audioMean.play() : audioMean.pause();
 
-        audioMean.addEventListener('ended', () => {
+        audioMean.addEventListener('ended', async () => {
           audioExamp.currentTime = 0;
-          audioExamp.paused ? audioExamp.play() : audioExamp.pause();
+          audioExamp.paused ? await audioExamp.play() : audioExamp.pause();
         });
       });
 
@@ -136,14 +138,14 @@ export const WordsPage: React.FC = () => {
       });
     }
   };
-  // const sortedWordList = (wordList: IWord[]) => {
-  //   if (wordList.length) {
-  //     const copyWordsList = wordList.slice();
-  //     return copyWordsList.sort((item, item2) => item.word.localeCompare(item2.word));
-  //   }
-  //   return 'yo';
-  // };
-  // console.log(sortedWordList(words));
+
+  const handleUserWord = async (event: React.MouseEvent, wordId: string) => {
+    dispatch(postUserWordAction(wordId));
+
+    const responseWords = await getAggregatedWords();
+    const { paginatedResults } = await responseWords.data[0];
+    console.log(paginatedResults);
+  };
 
   return (
     <StyledCardSection group={`${checkNumberOfGroup()}`}>
@@ -152,7 +154,7 @@ export const WordsPage: React.FC = () => {
           .slice()
           .sort((a, b) => a.word.localeCompare(b.word))
           .map((word) => (
-            <StyledCard key={word.id} imgUrl={`${baseUrl}/${word.image}`}>
+            <StyledCard key={word.id} imgUrl={`${baseUrl}/${word.image}`} bgCardColor={bgCardColor}>
               <StyledCardContent>
                 <div>
                   <p>{word.word}</p>
@@ -163,7 +165,10 @@ export const WordsPage: React.FC = () => {
                     >
                       <img src={cardIconAudio} width="32" height="28" alt="audioButton" />
                     </StyledAudioBtn>
-                    <StyledAddBtn title={'Добавить в сложные слова'}>
+                    <StyledAddBtn
+                      title={'Добавить в сложные слова'}
+                      onClick={(event) => handleUserWord(event, word.id)}
+                    >
                       <img src={cardPlusIcon} width="32" height="28" alt="add word" />
                     </StyledAddBtn>
                     <span>{word.wordTranslate}</span>

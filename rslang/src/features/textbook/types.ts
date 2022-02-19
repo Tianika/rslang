@@ -20,4 +20,7 @@ export interface IWord {
 export type TextBookState = {
   words: IWord[];
   loadingState: LoadingState;
+  aggregatedWords: any[];
 };
+
+// export type AggregatedUserWord = {};

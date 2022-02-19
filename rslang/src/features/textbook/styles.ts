@@ -19,6 +19,13 @@ export const BooksListStyled = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(490px, auto));
   gap: 22px;
+
+  li:last-child {
+    display: ${localStorage.getItem('rslangUserName') ? '' : 'none'};
+    a {
+      font-size: 18px;
+    }
+  }
 `;
 
 export const ItemBookStyled = styled.li`
@@ -30,7 +37,6 @@ export const ItemBookStyled = styled.li`
   &:hover {
     transform: rotate(360deg);
   }
-
   img {
     display: inline-block;
   }
@@ -55,7 +61,7 @@ export const ItemBookStyled = styled.li`
   a > img {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 45%;
     transform: translate(-50%, -50%);
     z-index: -1;
 

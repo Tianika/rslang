@@ -8,6 +8,7 @@ import thirdBooksSection from '../../assets/svg/thirdSection.svg';
 import fourthBooksSection from '../../assets/svg/fourthSection.svg';
 import fifthBooksSection from '../../assets/svg/fifthSection.svg';
 import sixthBooksSection from '../../assets/svg/sixthSection.svg';
+import difficultSection from '../../assets/svg/difficultSection.svg';
 
 import firstBook from '../../assets/svg/firstBook.svg';
 import secondBook from '../../assets/svg/secondBook.svg';
@@ -15,6 +16,7 @@ import thirdBook from '../../assets/svg/thirdBook.svg';
 import fourthBook from '../../assets/svg/fourthBook.svg';
 import fifthBook from '../../assets/svg/fifthBook.svg';
 import sixthBook from '../../assets/svg/sixthBook.svg';
+import difficultBook from '../../assets/svg/difficultBook.svg';
 
 import { Link } from 'react-router-dom';
 
@@ -71,6 +73,15 @@ export const textBookSection = [
     altForImg: 'fifthbook',
     titleSection: 'РАЗДЕЛ 6',
     linkBook: sixthBook
+  },
+
+  {
+    imgLink: difficultSection,
+    alt: 'difficultWord',
+    link: '/textbook/wordspage?group=6&page=0',
+    altForImg: 'difficult words',
+    titleSection: 'Сложные слова',
+    linkBook: difficultBook
   }
 ];
 
