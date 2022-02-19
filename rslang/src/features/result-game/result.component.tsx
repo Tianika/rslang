@@ -28,9 +28,7 @@ export const ResultGamePage = (props: ResultGame): React.ReactElement => {
   const dispatch = useAppDispatch();
 
   setTimeout(() => {
-    const date = dispatch(fetchGetStatisticsAction(props));
-
-    console.log(date.payload);
+    dispatch(fetchGetStatisticsAction(props));
   }, 0);
 
   const playAudio: AudioEventHandle = (event) => {

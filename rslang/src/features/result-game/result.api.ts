@@ -16,6 +16,8 @@ export const getStatisticsRequest = (): AxiosPromise<Response> => {
 
 //отправить статистику на сервер
 export const putStatisticsRequest = (action: Statistics): AxiosPromise<Response> => {
+  console.log(action);
+
   const data = {
     learnedWords: action.learnedWords,
     optional: { ...action.optional }

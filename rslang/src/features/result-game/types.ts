@@ -16,19 +16,19 @@ export type Statistics = {
   learnedWords: number;
   optional: {
     wordStatistics: {
-      date: Date;
+      date: string;
       count: number;
     };
     gameStatistics: {
       sprint: {
-        date: Date;
+        date: string;
         learnedWords: number;
         correctAnswers: number;
         wrongAnswers: number;
         longestSeries: number;
       };
       audiocall: {
-        date: Date;
+        date: string;
         learnedWords: number;
         correctAnswers: number;
         wrongAnswers: number;
