@@ -23,7 +23,6 @@ function* audioGameFetch(action: PayloadAction<number>) {
 
     //получаем данные из запроса
     const { data } = yield call(requestWordsFromGroup, action.payload, pageNumber) as Response;
-    console.log(data);
 
     //обрабатываем полученный массив слов
     yield put(setWordsArray(data));
