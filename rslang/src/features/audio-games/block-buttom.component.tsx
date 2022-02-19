@@ -1,16 +1,20 @@
 import { BlockButtonAnswer, InitialStateButtonAnswer } from './styles';
+import { ShuffleArray } from './utils';
 
 import React from 'react';
 
-const BlockButton = (): React.ReactElement => {
+const BlockButton = (props: { arrayAnswer: string[] }): React.ReactElement => {
+  const array = ShuffleArray(props.arrayAnswer);
   return (
-    <BlockButtonAnswer>
-      <InitialStateButtonAnswer>Вариант 1</InitialStateButtonAnswer>
-      <InitialStateButtonAnswer>Вариант 1</InitialStateButtonAnswer>
-      <InitialStateButtonAnswer>Вариант 1</InitialStateButtonAnswer>
-      <InitialStateButtonAnswer>Вариант 1</InitialStateButtonAnswer>
-      <InitialStateButtonAnswer>Вариант 1</InitialStateButtonAnswer>
-      <InitialStateButtonAnswer>{'---->'}</InitialStateButtonAnswer>
+    <BlockButtonAnswer
+      onClick={(event) => {
+        console.log(event.target);
+      }}
+    >
+      {array.map((el, index) => {
+        return <InitialStateButtonAnswer key={index}>{el}</InitialStateButtonAnswer>;
+      })}
+      <InitialStateButtonAnswer>{'не знаю'}</InitialStateButtonAnswer>
     </BlockButtonAnswer>
   );
 };
