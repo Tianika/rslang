@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingState } from '../../utils';
-//import { TextBookState } from './types';
+import { WordsPageState } from './types';
 
-const initialState = {
+const initialState: WordsPageState = {
   words: [],
-  loadingState: LoadingState.Initial,
-  aggregatedWords: []
+  aggregatedWords: [],
+  loadingState: LoadingState.Initial
 };
 //TODO добавить тип
 
@@ -17,8 +17,11 @@ export const wordsPageSlice = createSlice({
     setWords: (state, action) => {
       state.words = action.payload;
     },
+    changeLoadingState: (state, action) => {
+      state.loadingState = action.payload;
+    },
     setAggregatedWords: (state, action) => {
-      //state.aggregatedWords.push(action);
+      //state.aggregatedWords.push(action.payload);
     }
   }
 });

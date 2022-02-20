@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { fetchTextBookAction } from '../textbook/textbook.saga';
 import { baseTheme, LoadingState } from '../../utils';
 import {
   StyledCardSection,
@@ -18,13 +17,13 @@ import {
 import cardIconAudio from '../../assets/svg/card-icon-audio.svg';
 import cardPlusIcon from '../../assets/svg/card-plus-icon.svg';
 import removeIcon from '../../assets/svg/remove.svg';
-import { baseUrl } from '../textbook/textbook.api';
 import { Link, useLocation } from 'react-router-dom';
 import { IWord } from '../textbook/types';
-import { postUserWordAction } from './wordsPage.saga';
-import { deleteUserWordById, getAggregatedWords } from './wordsPage.api';
+import { deleteUserWordAction, fetchTextBookAction, postUserWordAction } from './wordsPage.saga';
+
 import { LoadingPage } from '../../components/loading';
-import { statusSelector } from '../textbook/textbook.selectors';
+import { statusSelector, wordsSelector } from './wordsPage.selectors';
+import { baseUrl } from './wordsPage.api';
 
 const {
   firstBookColor,
@@ -39,10 +38,10 @@ const {
 export const WordsPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const words = useAppSelector((state) => {
-    return state.textBook.words;
-  });
+  //слова
+  const words = useAppSelector(wordsSelector);
 
+  //роутинг
   const { search } = useLocation();
 
   const searchParams = new URLSearchParams(search);
@@ -145,11 +144,20 @@ export const WordsPage: React.FC = () => {
     }
   };
 
-  const handleUserWord = async (event: React.MouseEvent, wordId: string) => {
+  const handleUserWord = (event: React.MouseEvent, wordId: string) => {
+    console.log(wordId);
     dispatch(postUserWordAction(wordId));
 
-    const responseWords = await getAggregatedWords();
-    const { paginatedResults } = await responseWords.data[0];
+    // const responseWords = await getAggregatedWords();
+    // const { paginatedResults } = await responseWords.data[0];
+  };
+
+  const removeUserWord = (wordId: string | undefined) => {
+    console.log(wordId);
+    if (wordId) {
+      dispatch(deleteUserWordAction(wordId));
+      dispatch(fetchTextBookAction({ group, page }));
+    }
   };
 
   //отслеживаем статус загрузки
@@ -175,51 +183,57 @@ export const WordsPage: React.FC = () => {
         {words
           .slice()
           .sort((a, b) => a.word.localeCompare(b.word))
-          .map((word) => (
-            <StyledCard key={word.word} imgUrl={`${baseUrl}/${word.image}`}>
-              <StyledCardContent>
-                <div>
-                  <p>{word.word}</p>
+          .map((word: IWord) => {
+            return (
+              <StyledCard key={word.word} imgUrl={`${baseUrl}/${word.image}`}>
+                <StyledCardContent>
                   <div>
-                    <StyledAudioBtn
-                      onClick={(e: React.MouseEvent) => playAudio(e, word)}
-                      title={'Послушать'}
-                    >
-                      <img src={cardIconAudio} width="32" height="28" alt="audioButton" />
-                    </StyledAudioBtn>
-
-                    {+group < 6 ? (
-                      <StyledAddBtn
-                        title={'Добавить в сложные слова'}
-                        onClick={(event) => handleUserWord(event, word.id)}
+                    <p>{word.word}</p>
+                    <div>
+                      <StyledAudioBtn
+                        onClick={(e: React.MouseEvent) => playAudio(e, word)}
+                        title={'Послушать'}
                       >
-                        <img src={cardPlusIcon} width="32" height="28" alt="add word" />
-                      </StyledAddBtn>
-                    ) : (
-                      <StyledRemoveBtn
-                        title={'Удалить из сложных слов'}
-                        onClick={(event) => console.log('remove')}
-                      >
-                        <img src={removeIcon} width="32" height="28" alt="remove word" />
-                      </StyledRemoveBtn>
-                    )}
+                        <img src={cardIconAudio} width="32" height="28" alt="audioButton" />
+                      </StyledAudioBtn>
 
-                    <span>{word.wordTranslate}</span>
-                    <span>{word.transcription}</span>
+                      {+group < 6 ? (
+                        <StyledAddBtn
+                          title={'Добавить в сложные слова'}
+                          onClick={(event) => handleUserWord(event, word.id)}
+                        >
+                          <img src={cardPlusIcon} width="32" height="28" alt="add word" />
+                        </StyledAddBtn>
+                      ) : (
+                        <StyledRemoveBtn
+                          title={'Удалить из сложных слов'}
+                          onClick={() => removeUserWord(word._id)}
+                        >
+                          <img src={removeIcon} width="32" height="28" alt="remove word" />
+                        </StyledRemoveBtn>
+                      )}
+
+                      <span>{word.wordTranslate}</span>
+                      <span>{word.transcription}</span>
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <p>{word.textMeaning.replace(/<\/?[^>]+(>|$)/gi, '').replace(/&nbsp;/gi, ' ')}</p>
-                  <p>{word.textExample.replace(/<\/?[^>]+(>|$)/gi, '').replace(/&nbsp;/gi, ' ')}</p>
-                </div>
-                <hr />
-                <div>
-                  <p>{word.textMeaningTranslate}</p>
-                  <p>{word.textExampleTranslate}</p>
-                </div>
-              </StyledCardContent>
-            </StyledCard>
-          ))}
+                  <div>
+                    <p>
+                      {word.textMeaning.replace(/<\/?[^>]+(>|$)/gi, '').replace(/&nbsp;/gi, ' ')}
+                    </p>
+                    <p>
+                      {word.textExample.replace(/<\/?[^>]+(>|$)/gi, '').replace(/&nbsp;/gi, ' ')}
+                    </p>
+                  </div>
+                  <hr />
+                  <div>
+                    <p>{word.textMeaningTranslate}</p>
+                    <p>{word.textExampleTranslate}</p>
+                  </div>
+                </StyledCardContent>
+              </StyledCard>
+            );
+          })}
         <StyledPagination>
           <div>
             <Link to={changePrevGroup()} title={group === '0' ? '' : 'следующий раздел'}>
