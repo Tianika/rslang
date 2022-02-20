@@ -32,9 +32,7 @@ const BlockButton: React.FC<ButtonProps> = ({
 
   let answerArray: any[] = [];
   if (arrayConfusedResponses) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    answerArray = arrayConfusedResponses(fakeArray).concat(rightWord);
+    answerArray = [...arrayConfusedResponses(fakeArray), rightWord];
   }
 
   const responseCheck = (event: EventTarget) => {
