@@ -30,7 +30,8 @@ const {
   thirdBookColor,
   fourthBookColor,
   fifthBookColor,
-  sixthBookColor
+  sixthBookColor,
+  sevenBookColor
 } = baseTheme.colors;
 
 export const WordsPage: React.FC = () => {
@@ -59,7 +60,12 @@ export const WordsPage: React.FC = () => {
 
   const changeNextGroup = () => {
     let groupNumber = +group;
-    groupNumber === 5 ? 5 : (groupNumber += 1);
+
+    if (localStorage.rslangUserId) {
+      groupNumber === 6 ? 6 : (groupNumber += 1);
+    } else {
+      groupNumber === 5 ? 5 : (groupNumber += 1);
+    }
 
     return `?group=${groupNumber}&page=0`;
   };
@@ -103,6 +109,9 @@ export const WordsPage: React.FC = () => {
 
       case '5':
         return hex2rgba(sixthBookColor, 0.5);
+
+      case '6':
+        return hex2rgba(sevenBookColor, 0.5);
     }
   };
 
@@ -165,7 +174,7 @@ export const WordsPage: React.FC = () => {
           .slice()
           .sort((a, b) => a.word.localeCompare(b.word))
           .map((word) => (
-            <StyledCard key={word.id} imgUrl={`${baseUrl}/${word.image}`}>
+            <StyledCard key={word.word} imgUrl={`${baseUrl}/${word.image}`}>
               <StyledCardContent>
                 <div>
                   <p>{word.word}</p>

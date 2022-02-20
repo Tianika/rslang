@@ -67,7 +67,7 @@ export const ListItem = styled.li`
       background-color: #ba2dfc;
     }
     li:nth-child(7) {
-      background-color: #c4c4c4;
+      background-color: ${baseTheme.colors.sevenBookColor};
       font-size: 18px;
     }
 

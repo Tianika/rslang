@@ -55,7 +55,6 @@ const menuHeaderData = [
     title: 'Сложные слова'
   }
 ];
-///users/{id}/aggregatedWords?wordsPerPage=3600&filter={"userWord.difficulty":"hard"}
 
 const Header: FC = () => {
   return (
