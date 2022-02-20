@@ -6,7 +6,7 @@ import * as Effects from 'redux-saga/effects';
 import { loginActions } from './login.slice';
 import { LoadingState } from '../../utils';
 
-const call: any = Effects.call;
+const call = Effects.call;
 
 //создаем экшен для запроса
 export const fetchLoginAction = createAction<User, string>('login/fetch');
@@ -14,7 +14,7 @@ export const fetchLoginAction = createAction<User, string>('login/fetch');
 //получаем функцию из экшенов
 const { changeLoadingState } = loginActions;
 
-const saveUserData = (data: Signin) => {
+export const saveUserData = (data: Signin) => {
   const content = data;
 
   localStorage.rslangUserName = content.name;
@@ -30,7 +30,7 @@ function* workLoginFetch(action: PayloadAction<User>) {
 
   try {
     //получаем данные из запроса
-    const { data } = yield call(requestLogin, action.payload) as Response;
+    const { data } = yield call(requestLogin, action.payload);
 
     //сохраняем данные
     yield call(saveUserData, data);

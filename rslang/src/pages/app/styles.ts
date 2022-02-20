@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { baseTheme } from '../../utils';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -26,6 +25,11 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
   }
 `;
 
