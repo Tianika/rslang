@@ -4,6 +4,7 @@ import { ButtonProps } from './types';
 import { getRandomNumber, shuffleArray } from './utils';
 
 const BlockButton: React.FC<ButtonProps> = ({
+  updateCurrentLongestSeries,
   fakeArray,
   rightWord,
   countChoice,
@@ -19,13 +20,13 @@ const BlockButton: React.FC<ButtonProps> = ({
   const [clickedButtonIndex, setClickedButtonIndex] = useState(-1);
   const [disable, setDisable] = useState(false);
 
-  const arrayConfusedResponses = (fW: any[] | undefined): string[] | [] => {
-    return fW !== undefined
+  const arrayConfusedResponses = (fakeWords: any[] | undefined): string[] | [] => {
+    return fakeWords !== undefined
       ? [
-          fW[getRandomNumber(80)]?.wordTranslate,
-          fW[getRandomNumber(80)]?.wordTranslate,
-          fW[getRandomNumber(80)]?.wordTranslate,
-          fW[getRandomNumber(80)]?.wordTranslate
+          fakeWords[getRandomNumber(80)]?.wordTranslate,
+          fakeWords[getRandomNumber(80)]?.wordTranslate,
+          fakeWords[getRandomNumber(80)]?.wordTranslate,
+          fakeWords[getRandomNumber(80)]?.wordTranslate
         ]
       : [];
   };
@@ -46,6 +47,7 @@ const BlockButton: React.FC<ButtonProps> = ({
       case rightWord:
         setDisable(true);
         audioGameRightAnswerHandler();
+        updateCurrentLongestSeries();
         // setArrayWordRightId.push(idCurrentWord);
         break;
       case 'nextWord':
@@ -58,6 +60,7 @@ const BlockButton: React.FC<ButtonProps> = ({
       default:
         setDisable(true);
         audioGameErrorAnswerHandler();
+        updateCurrentLongestSeries(0);
         break;
     }
   };

@@ -19,7 +19,7 @@ import {
 import audioIcon from '../../assets/svg/soundIcon.svg';
 import { Link } from 'react-router-dom';
 import { ResultGame } from './types';
-import { Word } from '../sprint/types';
+import { Word } from '../audio-games/types';
 import { AudioEventHandle } from '../../utils';
 import { useAppDispatch } from '../../app/hooks';
 import { fetchGetStatisticsAction } from './result.saga';

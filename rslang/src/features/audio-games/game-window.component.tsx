@@ -11,7 +11,7 @@ import {
 import { fetchAudioAction } from './audio-call.saga';
 import { audioGameActions } from './audio-call.slice';
 import { ResultGamePage } from '../result-game';
-import { getRandomNumber } from './utils';
+import { GameTypes } from '../../utils';
 
 const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = audioGameActions;
 const GameWindow = (props: { level: number }): React.ReactElement => {
@@ -26,6 +26,8 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const [currentWord, setCurrentWord] = useState('');
   const [count, setCount] = useState(0);
   const [idCurrentWord, setIdCurrentWord] = useState('');
+  const [longestSeries, setLongestSeries] = useState(0);
+  const [currentLongestSeries, setCurrentLongestSeries] = useState(0);
   //const [isDisableButton, setIsDisableButton] = useState(false);
   //const [wrongArray, setWrongArray] = useState([]);
   //const [fakeArray, setFakeArray] = useState([]);
@@ -61,7 +63,14 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   };
   if (currentWordIndex === 20) {
     console.log(currentWordIndex);
-    return <ResultGamePage errorAnswers={errorAnswersArr} rightAnswers={rightAnswersArr} />;
+    return (
+      <ResultGamePage
+        rightAnswers={rightAnswersArr}
+        errorAnswers={errorAnswersArr}
+        gameType={GameTypes.AudioCall}
+        longestSeries={longestSeries}
+      />
+    );
   }
   //логика игры при нажатии на правильный ответ
   const audioGameRightAnswerHandler = () => {
@@ -77,6 +86,9 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const addRightWordIdArray = () => {
     arrayWordRightId.push(idCurrentWord);
   };
+  const updateCurrentLongestSeries = () => {
+    setCurrentLongestSeries(currentLongestSeries + 1);
+  };
 
   return (
     <BlockGame>
@@ -88,6 +100,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       />
 
       <BlockButton
+        updateCurrentLongestSeries={updateCurrentLongestSeries}
         fakeArray={fakeWords}
         rightWord={currentWord}
         countChoice={setCount}

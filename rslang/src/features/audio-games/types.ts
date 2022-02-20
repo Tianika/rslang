@@ -44,6 +44,7 @@ export type AudioGameState = {
 };
 
 export type ButtonProps = {
+  updateCurrentLongestSeries: any;
   fakeArray: any;
   rightWord: string;
   countChoice: any;
