@@ -70,6 +70,7 @@ const BlockButton: React.FC<ButtonProps> = ({
             disabled={disable}
             key={index}
             value={el}
+            id={idCurrentWord}
             clickedButton={index === clickedButtonIndex}
             isAnswerCorrect={isAnswerCorrect}
             onClick={(event: any) => {
