@@ -184,8 +184,13 @@ export const ButtonNextQuestions = styled.button`
   }
 `;
 export const StyledButton = styled(InitialStateButtonAnswer)<{
-  correct?: boolean;
-  isAnswerChosen: boolean;
+  clickedButton: boolean;
+  isAnswerCorrect: boolean;
 }>`
-  background: ${(props) => !props.correct && props.isAnswerChosen && 'red'};
+  background: ${(props) => props.clickedButton && props.isAnswerCorrect && 'green'};
+  background: ${(props) => props.clickedButton && !props.isAnswerCorrect && 'red'};
+  &:hover {
+    background: ${(props) => props.clickedButton && props.isAnswerCorrect && 'green'};
+    background: ${(props) => props.clickedButton && !props.isAnswerCorrect && 'red'};
+  }
 `;

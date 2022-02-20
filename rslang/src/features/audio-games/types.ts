@@ -35,8 +35,23 @@ export type AudioWordsState = {
   words: Array<Word | undefined>;
   rightAnswers: Array<Word | undefined>;
   errorAnswers: Array<Word | undefined>;
+  fakeWords: Array<Word>;
 };
 
 export type AudioGameState = {
   words: Array<Word | undefined>;
+  fakeWords: Array<Word | undefined>;
+};
+
+export type ButtonProps = {
+  fakeArray: any;
+  rightWord: string;
+  countChoice: any;
+  changeCurrentWord: any;
+  setArrayWordRightId: any;
+  idCurrentWord: string;
+  count: number;
+  upCurrentWordIndex: any;
+  audioGameErrorAnswerHandler: any;
+  audioGameRightAnswerHandler: any;
 };

@@ -19,7 +19,6 @@ const StartPageAudioCall = (): React.ReactElement => {
   const levelChange: AccountProps['onLevelChange'] = (event) => {
     const value = event.target.options.selectedIndex;
     setLevel(value);
-    console.log(value);
   };
   //старт игры
   const [isGame, setIsGame] = useState(false);

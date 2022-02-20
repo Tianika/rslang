@@ -1,30 +1,84 @@
-import { BlockButtonAnswer, InitialStateButtonAnswer, WrongButtonAnswer } from './styles';
-import { ShuffleArray } from './utils';
-import { StyledButton } from './styles';
+import { BlockButtonAnswer, InitialStateButtonAnswer, StyledButton } from './styles';
 import React, { useState } from 'react';
+import { ButtonProps } from './types';
+import { getRandomNumber, shuffleArray } from './utils';
 
-const BlockButton = (props: {
-  arrayAnswer: string[];
-  rightWord: string;
-  countChoice: any;
-  function: any;
-  count: number;
-  functionWorn: any;
+const BlockButton: React.FC<ButtonProps> = ({
+  fakeArray,
+  rightWord,
+  countChoice,
+  changeCurrentWord,
+  setArrayWordRightId,
+  idCurrentWord,
+  count,
+  upCurrentWordIndex,
+  audioGameErrorAnswerHandler,
+  audioGameRightAnswerHandler
 }): React.ReactElement => {
-  const array = ShuffleArray(props.arrayAnswer);
-  const [isAnswerChosen, setIsAnswerChosen] = useState(false);
+  const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
+  const [clickedButtonIndex, setClickedButtonIndex] = useState(-1);
+  const [disable, setDisable] = useState(false);
+
+  const arrayConfusedResponses = (fW: any[] | undefined): string[] | [] => {
+    return fW !== undefined
+      ? [
+          fW[getRandomNumber(80)]?.wordTranslate,
+          fW[getRandomNumber(80)]?.wordTranslate,
+          fW[getRandomNumber(80)]?.wordTranslate,
+          fW[getRandomNumber(80)]?.wordTranslate
+        ]
+      : [];
+  };
+
+  let answerArray: any[] = [];
+  if (arrayConfusedResponses) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    answerArray = arrayConfusedResponses(fakeArray).concat(rightWord);
+  }
+
+  const responseCheck = (event: EventTarget) => {
+    switch ((event as HTMLButtonElement).value) {
+      case 'next':
+        setClickedButtonIndex(-1);
+        changeCurrentWord();
+        audioGameErrorAnswerHandler();
+        arrayConfusedResponses(fakeArray);
+        break;
+      case rightWord:
+        setDisable(true);
+        audioGameRightAnswerHandler();
+        // setArrayWordRightId.push(idCurrentWord);
+        break;
+      case 'nextWord':
+        setClickedButtonIndex(-1);
+        changeCurrentWord();
+        upCurrentWordIndex();
+        setDisable(false);
+        arrayConfusedResponses(fakeArray);
+        break;
+      default:
+        setDisable(true);
+        audioGameErrorAnswerHandler();
+        break;
+    }
+  };
+  console.log(rightWord);
   return (
     <BlockButtonAnswer>
-      {array.map((el, index) => {
+      {shuffleArray(answerArray).map((el, index) => {
         return (
           <StyledButton
+            disabled={disable}
             key={index}
             value={el}
-            correct={el === props.rightWord}
-            isAnswerChosen={isAnswerChosen}
-            onClick={() => {
-              setIsAnswerChosen(true);
-              props.countChoice(props.count + 1);
+            clickedButton={index === clickedButtonIndex}
+            isAnswerCorrect={isAnswerCorrect}
+            onClick={(event: any) => {
+              setClickedButtonIndex(index);
+              setIsAnswerCorrect(el === rightWord);
+              responseCheck(event.target);
+              countChoice(count + 1);
             }}
           >
             {el}
@@ -32,13 +86,13 @@ const BlockButton = (props: {
         );
       })}
       <InitialStateButtonAnswer
-        value="next"
-        onClick={() => {
-          props.function();
-          props.functionWorn();
+        value={clickedButtonIndex > -1 ? 'nextWord' : 'next'}
+        className="buttonNext"
+        onClick={(event) => {
+          responseCheck(event.target);
         }}
       >
-        {'не знаю'}
+        {clickedButtonIndex > -1 ? '→' : 'не знаю'}
       </InitialStateButtonAnswer>
     </BlockButtonAnswer>
   );

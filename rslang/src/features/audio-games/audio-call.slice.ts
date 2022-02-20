@@ -6,7 +6,8 @@ const initialState: AudioWordsState = {
   loadingState: LoadingState.Initial,
   words: [],
   rightAnswers: [],
-  errorAnswers: []
+  errorAnswers: [],
+  fakeWords: []
 };
 
 //создаем редюсеры
@@ -19,6 +20,9 @@ export const audioGameSlice = createSlice({
     },
     setWordsArray: (state, action) => {
       state.words = action.payload;
+    },
+    setFakeWordsArray: (state, action) => {
+      state.fakeWords = action.payload;
     },
     addRightAnswers: (state, action) => {
       state.rightAnswers.push(action.payload);

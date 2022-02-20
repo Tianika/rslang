@@ -9,6 +9,9 @@ export const loadingStatus = (state: RootState) => {
 export const wordsSelector = (state: RootState) => {
   return state.audioGame.words;
 };
+export const fakeWordsSelector = (state: RootState) => {
+  return state.audioGame.fakeWords;
+};
 
 //правильные ответы
 export const rightAnswersSelector = (state: RootState) => {
