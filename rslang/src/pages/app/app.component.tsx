@@ -12,7 +12,7 @@ import { GamesPage } from '../../components/games/startPageGames.component';
 import { GameAudio } from '../../components/games/audio-games/audio-game.component';
 import { SprintStartPage } from '../../features/sprint';
 import { Textbook } from '../../features/textbook/textbook.component';
-import { WordsPage } from '../../features/textbook/wordsPage/wordsPage.component';
+import { WordsPage } from '../../features/wordsPage/wordsPage.component';
 import { Login } from '../../features/login';
 
 const App: React.FC = () => {

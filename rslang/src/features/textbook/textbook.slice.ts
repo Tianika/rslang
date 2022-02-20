@@ -26,9 +26,5 @@ export const textBookSlice = createSlice({
 });
 
 export const textBookReducer = textBookSlice.reducer;
-//добавить loginReducer в reducer.ts
 
 export const textBookActions = textBookSlice.actions;
-
-// 1) описать типы
-// 2) слайс описать начальное состояние

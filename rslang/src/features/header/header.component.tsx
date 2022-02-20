@@ -27,28 +27,28 @@ const logoutHandle = () => {
 
 const menuHeaderData = [
   {
-    firstSectionLink: '0',
-    firstTitle: 'Раздел №1'
+    sectionLink: '0',
+    title: 'Раздел №1'
   },
   {
-    secondSectionLink: '1',
-    secondTitle: 'Раздел №2'
+    sectionLink: '1',
+    title: 'Раздел №2'
   },
   {
-    thirdSectionLink: '2',
-    thirdTitle: 'Раздел №3'
+    sectionLink: '2',
+    title: 'Раздел №3'
   },
   {
-    fourthSectionLink: '3',
-    fourthTitle: 'Раздел №4'
+    sectionLink: '3',
+    title: 'Раздел №4'
   },
   {
-    fifthSectionLink: '4',
-    fifthTitle: 'Раздел №5'
+    sectionLink: '4',
+    title: 'Раздел №5'
   },
   {
-    sixthSectionLink: '5',
-    sixthTitle: 'Раздел №5'
+    sectionLink: '5',
+    title: 'Раздел №6'
   }
 ];
 
@@ -65,26 +65,14 @@ const Header: FC = () => {
             <ListItem>
               <Link to="/textbook">Учебник</Link>
               <ul>
-                {menuHeaderData.map((item, index) => {
+                {menuHeaderData.map((item) => {
                   return (
-                    <li key={index}>
-                      <Link to={`textbook/wordspage?group=${item.firstSectionLink}&page=0`}>
-                        {item.firstTitle}
-                      </Link>
-                      <Link to={`textbook/wordspage?group=${item.secondSectionLink}&page=0`}>
-                        {item.secondTitle}
-                      </Link>
-                      <Link to={`textbook/wordspage?group=${item.thirdSectionLink}&page=0`}>
-                        {item.thirdTitle}
-                      </Link>
-                      <Link to={`textbook/wordspage?group=${item.fourthSectionLink}&page=0`}>
-                        {item.fourthTitle}
-                      </Link>
-                      <Link to={`textbook/wordspage?group=${item.fifthSectionLink}&page=0`}>
-                        {item.fifthTitle}
-                      </Link>
-                      <Link to={`textbook/wordspage?group=${item.sixthSectionLink}&page=0`}>
-                        {item.sixthTitle}
+                    <li>
+                      <Link
+                        key={item.title}
+                        to={`textbook/wordspage?group=${item.sectionLink}&page=0`}
+                      >
+                        {item.title}
                       </Link>
                     </li>
                   );

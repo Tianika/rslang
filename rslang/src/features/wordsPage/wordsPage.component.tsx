@@ -1,18 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { fetchTextBookAction } from '../textbook.saga';
-import { baseTheme } from '../../../utils';
-
-const {
-  firstBookColor,
-  secondBookColor,
-  thirdBookColor,
-  fourthBookColor,
-  fifthBookColor,
-  sixthBookColor
-} = baseTheme.colors;
-
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { fetchTextBookAction } from '../textbook/textbook.saga';
+import { baseTheme, LoadingState } from '../../utils';
 import {
   StyledCardSection,
   StyledWrapper,
@@ -24,17 +14,28 @@ import {
   StyledPagination,
   StyledGroupNumber
 } from './styles';
-
-import cardIconAudio from '../../../assets/svg/card-icon-audio.svg';
-import cardPlusIcon from '../../../assets/svg/card-plus-icon.svg';
-import { baseUrl } from '../textbook.api';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import { IWord } from '../types';
+import cardIconAudio from '../../assets/svg/card-icon-audio.svg';
+import cardPlusIcon from '../../assets/svg/card-plus-icon.svg';
+import { baseUrl } from '../textbook/textbook.api';
+import { Link, useLocation } from 'react-router-dom';
+import { IWord } from '../textbook/types';
 import { postUserWordAction } from './wordsPage.saga';
 import { deleteUserWordById, getAggregatedWords } from './wordsPage.api';
+import { LoadingPage } from '../../components/loading';
+import { statusSelector } from '../textbook/textbook.selectors';
+
+const {
+  firstBookColor,
+  secondBookColor,
+  thirdBookColor,
+  fourthBookColor,
+  fifthBookColor,
+  sixthBookColor
+} = baseTheme.colors;
 
 export const WordsPage: React.FC = () => {
   const dispatch = useAppDispatch();
+
   const words = useAppSelector((state) => {
     return state.textBook.words;
   });
@@ -139,6 +140,23 @@ export const WordsPage: React.FC = () => {
     const responseWords = await getAggregatedWords();
     const { paginatedResults } = await responseWords.data[0];
   };
+
+  //отслеживаем статус загрузки
+  const status = useAppSelector(statusSelector);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const disableIsLoading = () => {
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (status.status === LoadingState.Success) {
+      disableIsLoading();
+    }
+  }, [status]);
+
+  //пока не догрузились данные страница Loading
+  if (isLoading) return <LoadingPage />;
 
   return (
     <StyledCardSection group={`${checkNumberOfGroup()}`}>

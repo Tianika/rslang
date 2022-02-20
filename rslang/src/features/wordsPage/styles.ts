@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { baseTheme } from '../../../utils';
+import { baseTheme } from '../../utils';
 
 export const hex2rgba = (hex: string, alpha = 1): string => {
   const [r, g, b] = (hex.match(/\w\w/g) as Array<string>).map((x) => parseInt(x, 16));

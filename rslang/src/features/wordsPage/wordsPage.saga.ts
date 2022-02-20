@@ -1,9 +1,9 @@
 import { put, takeLatest } from 'redux-saga/effects';
-import { textBookActions } from '../textbook.slice';
+import { textBookActions } from '../textbook/textbook.slice';
 
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
 import * as Effects from 'redux-saga/effects';
-import { LoadingState } from '../../../utils';
+import { LoadingState } from '../../utils';
 import { postUserWord } from './wordsPage.api';
 import { Axios, AxiosResponse } from 'axios';
 import { getAggregatedWords } from './wordsPage.api';

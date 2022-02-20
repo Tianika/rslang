@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { TextbookStyled, BooksListStyled, ItemBookStyled } from './styles';
 import './styles';
 
