@@ -63,8 +63,12 @@ export const ListItem = styled.li`
     li:nth-child(5) {
       background-color: #6dc3ff;
     }
-    li:last-child {
+    li:nth-child(6) {
       background-color: #ba2dfc;
+    }
+    li:nth-child(7) {
+      background-color: #c4c4c4;
+      font-size: 18px;
     }
 
     li {

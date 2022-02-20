@@ -49,8 +49,13 @@ const menuHeaderData = [
   {
     sectionLink: '5',
     title: 'Раздел №6'
+  },
+  {
+    sectionLink: '6',
+    title: 'Сложные слова'
   }
 ];
+///users/{id}/aggregatedWords?wordsPerPage=3600&filter={"userWord.difficulty":"hard"}
 
 const Header: FC = () => {
   return (
@@ -65,9 +70,9 @@ const Header: FC = () => {
             <ListItem>
               <Link to="/textbook">Учебник</Link>
               <ul>
-                {menuHeaderData.map((item) => {
-                  return (
-                    <li>
+                {menuHeaderData.map((item, index) => {
+                  return index < 6 ? (
+                    <li key={item.sectionLink}>
                       <Link
                         key={item.title}
                         to={`textbook/wordspage?group=${item.sectionLink}&page=0`}
@@ -75,7 +80,16 @@ const Header: FC = () => {
                         {item.title}
                       </Link>
                     </li>
-                  );
+                  ) : localStorage.rslangUserId && index == 6 ? (
+                    <li key={item.sectionLink}>
+                      <Link
+                        key={item.title}
+                        to={`textbook/wordspage?group=${item.sectionLink}&page=0`}
+                      >
+                        {item.title}
+                      </Link>
+                    </li>
+                  ) : null;
                 })}
               </ul>
             </ListItem>

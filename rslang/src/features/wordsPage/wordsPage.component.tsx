@@ -192,8 +192,8 @@ export const WordsPage: React.FC = () => {
                 </div>
                 <hr />
                 <div>
-                  <p>{word.textExampleTranslate}</p>
                   <p>{word.textMeaningTranslate}</p>
+                  <p>{word.textExampleTranslate}</p>
                 </div>
               </StyledCardContent>
             </StyledCard>
