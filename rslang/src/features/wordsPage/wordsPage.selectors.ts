@@ -11,3 +11,14 @@ export const statusSelector = (state: RootState) => {
 export const wordsSelector = (state: RootState) => {
   return state.wordsPage.words;
 };
+
+//получаем сложные слова
+export const difficultWordsSelector = (state: RootState) => {
+  const userWordsIds: Array<string | undefined> = [];
+
+  state.wordsPage.aggregatedWords.forEach((word) => {
+    userWordsIds.push(word._id);
+  });
+
+  return userWordsIds;
+};

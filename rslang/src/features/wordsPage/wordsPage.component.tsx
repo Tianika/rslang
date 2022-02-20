@@ -19,10 +19,15 @@ import cardPlusIcon from '../../assets/svg/card-plus-icon.svg';
 import removeIcon from '../../assets/svg/remove.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { IWord } from '../textbook/types';
-import { deleteUserWordAction, fetchTextBookAction, postUserWordAction } from './wordsPage.saga';
+import {
+  deleteUserWordAction,
+  fetchTextBookAction,
+  getAggregatedWordsAction,
+  postUserWordAction
+} from './wordsPage.saga';
 
 import { LoadingPage } from '../../components/loading';
-import { statusSelector, wordsSelector } from './wordsPage.selectors';
+import { difficultWordsSelector, statusSelector, wordsSelector } from './wordsPage.selectors';
 import { baseUrl } from './wordsPage.api';
 
 const {
@@ -38,8 +43,13 @@ const {
 export const WordsPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(getAggregatedWordsAction());
+  }, []);
+
   //слова
   const words = useAppSelector(wordsSelector);
+  const difficultWords = useAppSelector(difficultWordsSelector);
 
   //роутинг
   const { search } = useLocation();
@@ -147,9 +157,7 @@ export const WordsPage: React.FC = () => {
   const handleUserWord = (event: React.MouseEvent, wordId: string) => {
     console.log(wordId);
     dispatch(postUserWordAction(wordId));
-
-    // const responseWords = await getAggregatedWords();
-    // const { paginatedResults } = await responseWords.data[0];
+    dispatch(getAggregatedWordsAction());
   };
 
   const removeUserWord = (wordId: string | undefined) => {
@@ -185,7 +193,11 @@ export const WordsPage: React.FC = () => {
           .sort((a, b) => a.word.localeCompare(b.word))
           .map((word: IWord) => {
             return (
-              <StyledCard key={word.word} imgUrl={`${baseUrl}/${word.image}`}>
+              <StyledCard
+                className={difficultWords.includes(word.id) ? 'difficult' : ''}
+                key={word.word}
+                imgUrl={`${baseUrl}/${word.image}`}
+              >
                 <StyledCardContent>
                   <div>
                     <p>{word.word}</p>

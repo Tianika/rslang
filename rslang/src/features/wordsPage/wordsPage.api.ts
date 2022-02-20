@@ -2,6 +2,12 @@ import axios, { AxiosPromise } from 'axios';
 
 export const baseUrl = 'https://learnwords-team17.herokuapp.com';
 
+const config = {
+  headers: {
+    Authorization: `Bearer ${localStorage.rslangUserToken}`
+  }
+};
+
 export const getUserId = () => {
   if (localStorage.length) {
     const userId = localStorage.getItem('rslangUserId');
@@ -13,12 +19,6 @@ export const getUserToken = () => {
   if (localStorage.length) {
     const userToken = localStorage.getItem('rslangUserToken');
     return userToken;
-  }
-};
-
-const config = {
-  headers: {
-    Authorization: `Bearer ${localStorage.rslangUserToken}`
   }
 };
 
@@ -53,5 +53,6 @@ export const requestDifficultWords = (): AxiosPromise<Response> => {
 
 export const deleteUserWord = (wordId: string): AxiosPromise<Response> => {
   const userId = getUserId();
+
   return axios.delete(`${baseUrl}/users/${userId}/words/${wordId}`, config);
 };

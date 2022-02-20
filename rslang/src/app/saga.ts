@@ -3,8 +3,8 @@ import loginSaga from '../features/login/login.saga';
 import signupSaga from '../features/signup/signup.saga';
 import statisticsSaga from '../features/result-game/result.saga';
 import sprintSaga from '../features/sprint/sprint.saga';
-import { textBookSaga } from '../features/wordsPage/wordsPage.saga';
+import { wordsPageSaga } from '../features/wordsPage/wordsPage.saga';
 
 export function* rootSaga() {
-  yield all([loginSaga(), signupSaga(), textBookSaga(), sprintSaga(), statisticsSaga()]);
+  yield all([loginSaga(), signupSaga(), wordsPageSaga(), sprintSaga(), statisticsSaga()]);
 }

@@ -21,7 +21,7 @@ export const wordsPageSlice = createSlice({
       state.loadingState = action.payload;
     },
     setAggregatedWords: (state, action) => {
-      //state.aggregatedWords.push(action.payload);
+      state.aggregatedWords = action.payload;
     }
   }
 });

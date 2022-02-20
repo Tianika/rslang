@@ -15,6 +15,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
   try {
     //запрос на получение статистики
     const { data } = yield call(getStatisticsRequest);
+    console.log(data);
 
     let newData;
     const today = new Date().toDateString();

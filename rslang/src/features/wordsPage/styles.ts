@@ -38,10 +38,7 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
   background-size: cover;
   object-fit: cover;
   padding: 10px;
-  outline: transparent;
-  border: none;
   font-size: 20px;
-  overflow: hidden;
   color: #fff;
   transition: all 0.2s;
   &:hover {
@@ -68,6 +65,13 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
     border-radius: 13px;
     z-index: -1;
     transition: all 0.2s;
+  }
+
+  &.difficult {
+    outline: 5px solid ${baseTheme.colors.sevenBookColor};
+    &:hover {
+      box-shadow: 5px 5px 15px 5px ${baseTheme.colors.sevenBookColor};
+    }
   }
 `;
 
