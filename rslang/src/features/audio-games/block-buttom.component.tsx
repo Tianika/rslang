@@ -6,6 +6,8 @@ import { getRandomNumber, shuffleArray } from './utils';
 const BlockButton: React.FC<ButtonProps> = ({
   updateCurrentLongestSeries,
   fakeArray,
+  showAnswer,
+  hideAnswer,
   rightWord,
   countChoice,
   changeCurrentWord,
@@ -35,7 +37,6 @@ const BlockButton: React.FC<ButtonProps> = ({
   if (arrayConfusedResponses) {
     answerArray = [...arrayConfusedResponses(fakeArray), rightWord];
   }
-
   const responseCheck = (event: EventTarget) => {
     switch ((event as HTMLButtonElement).value) {
       case 'next':
@@ -43,11 +44,16 @@ const BlockButton: React.FC<ButtonProps> = ({
         changeCurrentWord();
         audioGameErrorAnswerHandler();
         arrayConfusedResponses(fakeArray);
+        showAnswer(false);
+        setTimeout(() => {
+          showAnswer(false);
+        }, 500);
         break;
       case rightWord:
         setDisable(true);
         audioGameRightAnswerHandler();
         updateCurrentLongestSeries();
+        showAnswer(false);
         // setArrayWordRightId.push(idCurrentWord);
         break;
       case 'nextWord':
@@ -56,11 +62,13 @@ const BlockButton: React.FC<ButtonProps> = ({
         upCurrentWordIndex();
         setDisable(false);
         arrayConfusedResponses(fakeArray);
+        showAnswer(true);
         break;
       default:
         setDisable(true);
         audioGameErrorAnswerHandler();
         updateCurrentLongestSeries(0);
+        showAnswer(false);
         break;
     }
   };

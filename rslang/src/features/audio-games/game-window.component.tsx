@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { BlockGame, ButtonAudio } from './styles';
+import {
+  BlockGame,
+  ButtonAudio,
+  ButtonAudioMini,
+  ImageWindowAnswer,
+  WindowAnswer,
+  WindowAnswerWord,
+  WindowAnswerWordBlock
+} from './styles';
 import BlockButton from './block-buttom.component';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
@@ -24,10 +32,12 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const [currentAudio, setCurrentAudio] = useState('');
   const [englishWord, setEnglishWord] = useState('');
   const [currentWord, setCurrentWord] = useState('');
+  const [currentImage, setCurrentImage] = useState('');
   const [count, setCount] = useState(0);
   const [idCurrentWord, setIdCurrentWord] = useState('');
   const [longestSeries, setLongestSeries] = useState(0);
   const [currentLongestSeries, setCurrentLongestSeries] = useState(0);
+  const [getAnswerButtonClick, setGetAnswerButtonClick] = useState(true);
   //const [isDisableButton, setIsDisableButton] = useState(false);
   //const [wrongArray, setWrongArray] = useState([]);
   //const [fakeArray, setFakeArray] = useState([]);
@@ -46,6 +56,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       setCurrentAudio(word.audio);
       setCurrentWord(word.wordTranslate);
       setIdCurrentWord(word.id);
+      setCurrentImage('https://learnwords-team17.herokuapp.com/' + word.image);
     }
   }, [words]);
 
@@ -59,6 +70,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       setCurrentAudio(word.audio);
       setCurrentWord(word.wordTranslate);
       setIdCurrentWord(word.id);
+      setCurrentImage('https://learnwords-team17.herokuapp.com/' + word.image);
     }
   };
   if (currentWordIndex === 20) {
@@ -89,19 +101,33 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const updateCurrentLongestSeries = () => {
     setCurrentLongestSeries(currentLongestSeries + 1);
   };
-
   return (
     <BlockGame>
       <ButtonAudio
+        visible={getAnswerButtonClick}
         onClick={() => {
           new Audio(`https://learnwords-team17.herokuapp.com/${currentAudio}`).play();
           return false;
         }}
       />
+      <WindowAnswer visible={getAnswerButtonClick}>
+        <ImageWindowAnswer linkImage={currentImage} />
+        <WindowAnswerWordBlock>
+          <ButtonAudioMini
+            onClick={() => {
+              new Audio(`https://learnwords-team17.herokuapp.com/${currentAudio}`).play();
+              return false;
+            }}
+          />
+          <WindowAnswerWord>{englishWord}</WindowAnswerWord>
+        </WindowAnswerWordBlock>
+      </WindowAnswer>
 
       <BlockButton
         updateCurrentLongestSeries={updateCurrentLongestSeries}
         fakeArray={fakeWords}
+        showAnswer={setGetAnswerButtonClick}
+        hideAnswer={setGetAnswerButtonClick}
         rightWord={currentWord}
         countChoice={setCount}
         changeCurrentWord={changeCurrentWord}

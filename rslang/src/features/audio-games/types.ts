@@ -46,6 +46,8 @@ export type AudioGameState = {
 export type ButtonProps = {
   updateCurrentLongestSeries: any;
   fakeArray: any;
+  showAnswer: any;
+  hideAnswer: any;
   rightWord: string;
   countChoice: any;
   changeCurrentWord: any;
@@ -55,4 +57,10 @@ export type ButtonProps = {
   upCurrentWordIndex: any;
   audioGameErrorAnswerHandler: any;
   audioGameRightAnswerHandler: any;
+};
+export type ImageAnswer = {
+  linkImage: string;
+};
+export type BlockVisible = {
+  visible: boolean;
 };

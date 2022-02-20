@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../utils';
 import audioButton from '../../assets/svg/audioButton.svg';
+import audioButtonMini from '../../assets/svg/audioButtonMini.svg';
+import { BlockVisible, ImageAnswer } from './types';
 
 export const BlockInfo = styled.div`
   width: 50%;
@@ -129,17 +131,58 @@ export const InitialIndicatorAnswer = styled.span`
   border: none;
 `;
 
-export const ButtonAudio = styled.div`
+export const ButtonAudio = styled.div<BlockVisible>`
   background-image: url(${audioButton});
-  width: 250px;
-  height: 250px;
+  display: ${(props) => (props.visible ? 'flex' : 'none')};
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   transition: 1s;
-  margin-top: 40px;
+  margin: 40px;
   &:hover {
     box-shadow: 0 0 24px 0 ${baseTheme.colors.blue};
     transform: scale(1.1);
   }
+`;
+export const WindowAnswer = styled.div<BlockVisible>`
+  margin: 40px;
+  border: 1px solid ${baseTheme.colors.blue};
+  width: 500px;
+  height: 300px;
+  border-radius: 13px;
+  display: ${(props) => (props.visible ? 'none' : 'flex')};
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+export const ButtonAudioMini = styled.div`
+  background-image: url(${audioButtonMini});
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: 1s;
+  margin-right: 10px;
+  &:hover {
+    box-shadow: 0 0 24px 0 ${baseTheme.colors.blue};
+    transform: scale(1.1);
+  }
+`;
+export const ImageWindowAnswer = styled.img<ImageAnswer>`
+  background-image: url(${(props) => props.linkImage});
+  object-fit: cover;
+  border: 1px solid ${baseTheme.colors.blue};
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+`;
+export const WindowAnswerWord = styled.p`
+  font-size: 22px;
+`;
+export const WindowAnswerWordBlock = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 export const BlockButtonAnswer = styled.div`
   margin-top: 40px;
