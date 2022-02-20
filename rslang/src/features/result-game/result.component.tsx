@@ -10,16 +10,50 @@ import {
   SoundIcon,
   SubtitleGame,
   TitleGame,
+  TranslateItem,
+  TransriptionItem,
   WordContainer,
   WordItem,
   WordsTitle
 } from './styles';
-import audio from '../../assets/svg/soundIcon.svg';
+import audioIcon from '../../assets/svg/soundIcon.svg';
 import { Link } from 'react-router-dom';
 import { ResultGame } from './types';
+import { Word } from '../sprint/types';
+import { AudioEventHandle } from '../../utils';
+import { useAppDispatch } from '../../app/hooks';
+import { fetchGetStatisticsAction } from './result.saga';
 
 export const ResultGamePage = (props: ResultGame): React.ReactElement => {
-  console.log(props);
+  const dispatch = useAppDispatch();
+
+  setTimeout(() => {
+    dispatch(fetchGetStatisticsAction(props));
+  }, 0);
+
+  const playAudio: AudioEventHandle = (event) => {
+    const target = event.target as HTMLElement;
+    const url = target.dataset.url;
+    const audio = new Audio(`https://learnwords-team17.herokuapp.com/${url}`);
+
+    audio.play();
+  };
+
+  const renderWords = (answers: Array<Word | undefined>): (JSX.Element | undefined)[] => {
+    return answers.map((answer) => {
+      if (answer)
+        return (
+          <WordContainer key={answer.word}>
+            <SoundIcon onClick={playAudio}>
+              <img data-url={answer.audio} src={audioIcon} alt={answer.word} />
+            </SoundIcon>
+            <WordItem>{answer.word}</WordItem>
+            <TransriptionItem>{answer.transcription}</TransriptionItem>
+            <TranslateItem>{answer.wordTranslate}</TranslateItem>
+          </WordContainer>
+        );
+    });
+  };
 
   return (
     <BlockResult>
@@ -33,33 +67,13 @@ export const ResultGamePage = (props: ResultGame): React.ReactElement => {
             <WordsTitle>
               Я знаю <RightWordsResult>{props.rightAnswers.length}</RightWordsResult> слов
             </WordsTitle>
-            {props.rightAnswers.map((answer) => {
-              if (answer)
-                return (
-                  <WordContainer key={answer.word}>
-                    <SoundIcon>
-                      <img src={audio} alt={answer.word} />
-                    </SoundIcon>
-                    <WordItem>{answer.word}</WordItem>
-                  </WordContainer>
-                );
-            })}
+            {renderWords(props.rightAnswers)}
           </ResultBlock>
           <ResultBlock>
             <WordsTitle>
               Я не знаю <ErrorWordsResult>{props.errorAnswers.length}</ErrorWordsResult> слов
             </WordsTitle>
-            {props.errorAnswers.map((answer) => {
-              if (answer)
-                return (
-                  <WordContainer key={answer.word}>
-                    <SoundIcon>
-                      <img src={audio} alt={answer.word} />
-                    </SoundIcon>
-                    <WordItem>{answer.word}</WordItem>
-                  </WordContainer>
-                );
-            })}
+            {renderWords(props.errorAnswers)}
           </ResultBlock>
         </ResultWrapper>
         <Link to="/games">

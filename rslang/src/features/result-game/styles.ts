@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { baseTheme } from '../../utils';
+import { baseTheme } from '../../utils/theme';
 
 export const BlockResult = styled.div`
   width: 50%;
@@ -39,7 +39,7 @@ export const Result = styled.span`
 
 export const Content = styled.div`
   color: ${baseTheme.colors.font};
-  width: 480px;
+  width: 500px;
   padding-bottom: 20px;
 `;
 
@@ -47,11 +47,10 @@ export const ResultBlock = styled.div`
   display: flex;
   flex-direction: column;
   color: ${baseTheme.colors.font};
-  width: 480px;
-  padding-bottom: 10px;
+  width: 500px;
   font-size: 22px;
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 export const ResultWrapper = styled.div`
@@ -125,13 +124,28 @@ export const WordContainer = styled.div`
 export const SoundIcon = styled.button`
   width: 32px;
   height: 28px;
-  margin-right: 25px;
+  margin-right: 20px;
   background-color: ${baseTheme.colors.bg};
   border: none;
   cursor: pointer;
 `;
 
 export const WordItem = styled.div`
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 400;
+  color: ${baseTheme.colors.font};
+`;
+
+export const TransriptionItem = styled.div`
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 400;
+  color: #c4c4c4;
+  margin: 0 10px;
+`;
+
+export const TranslateItem = styled.div`
   font-size: 22px;
   line-height: 26px;
   font-weight: 400;
