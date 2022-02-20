@@ -154,14 +154,12 @@ export const WordsPage: React.FC = () => {
     }
   };
 
-  const handleUserWord = (event: React.MouseEvent, wordId: string) => {
-    console.log(wordId);
+  const handleUserWord = (wordId: string) => {
     dispatch(postUserWordAction(wordId));
     dispatch(getAggregatedWordsAction());
   };
 
   const removeUserWord = (wordId: string | undefined) => {
-    console.log(wordId);
     if (wordId) {
       dispatch(deleteUserWordAction(wordId));
       dispatch(fetchTextBookAction({ group, page }));
@@ -212,7 +210,7 @@ export const WordsPage: React.FC = () => {
                       {+group < 6 ? (
                         <StyledAddBtn
                           title={'Добавить в сложные слова'}
-                          onClick={(event) => handleUserWord(event, word.id)}
+                          onClick={() => handleUserWord(word.id)}
                         >
                           <img src={cardPlusIcon} width="32" height="28" alt="add word" />
                         </StyledAddBtn>

@@ -18,21 +18,17 @@ const { setAggregatedWords, changeLoadingState, setWords } = wordsPageActions;
 
 function* getAggregatedWordsSaga() {
   const { data } = yield call(requestDifficultWords) as Response;
-  console.log(data);
   yield put(setAggregatedWords(data[0].paginatedResults));
 }
 
 function* postUserWordSaga(action: PayloadAction<string>) {
   try {
-    const { data } = yield call(postUserWord, action.payload) as Response;
-    console.log(data);
+    yield call(postUserWord, action.payload) as Response;
   } catch (error: any) {}
 }
 
 function* deleteUserWordsSaga(action: PayloadAction<string>) {
-  console.log('delete', action);
-
-  yield call(deleteUserWord(action.payload));
+  yield call(deleteUserWord, action.payload);
 }
 
 //запрос слов для страницы
