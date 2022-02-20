@@ -157,6 +157,13 @@ export const StyledAddBtn = styled(StyledClearBtn)`
   }
 `;
 
+export const StyledRemoveBtn = styled(StyledClearBtn)`
+  display: ${localStorage.getItem('rslangUserName') ? '' : 'none'};
+  img {
+    pointer-events: none;
+  }
+`;
+
 export const StyledPagination = styled.div`
   max-width: 1534px;
   width: 100%;

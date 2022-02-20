@@ -12,10 +12,12 @@ import {
   StyledAddBtn,
   hex2rgba,
   StyledPagination,
-  StyledGroupNumber
+  StyledGroupNumber,
+  StyledRemoveBtn
 } from './styles';
 import cardIconAudio from '../../assets/svg/card-icon-audio.svg';
 import cardPlusIcon from '../../assets/svg/card-plus-icon.svg';
+import removeIcon from '../../assets/svg/remove.svg';
 import { baseUrl } from '../textbook/textbook.api';
 import { Link, useLocation } from 'react-router-dom';
 import { IWord } from '../textbook/types';
@@ -185,12 +187,23 @@ export const WordsPage: React.FC = () => {
                     >
                       <img src={cardIconAudio} width="32" height="28" alt="audioButton" />
                     </StyledAudioBtn>
-                    <StyledAddBtn
-                      title={'Добавить в сложные слова'}
-                      onClick={(event) => handleUserWord(event, word.id)}
-                    >
-                      <img src={cardPlusIcon} width="32" height="28" alt="add word" />
-                    </StyledAddBtn>
+
+                    {+group < 6 ? (
+                      <StyledAddBtn
+                        title={'Добавить в сложные слова'}
+                        onClick={(event) => handleUserWord(event, word.id)}
+                      >
+                        <img src={cardPlusIcon} width="32" height="28" alt="add word" />
+                      </StyledAddBtn>
+                    ) : (
+                      <StyledRemoveBtn
+                        title={'Удалить из сложных слов'}
+                        onClick={(event) => console.log('remove')}
+                      >
+                        <img src={removeIcon} width="32" height="28" alt="remove word" />
+                      </StyledRemoveBtn>
+                    )}
+
                     <span>{word.wordTranslate}</span>
                     <span>{word.transcription}</span>
                   </div>
@@ -212,13 +225,19 @@ export const WordsPage: React.FC = () => {
             <Link to={changePrevGroup()} title={group === '0' ? '' : 'следующий раздел'}>
               {'<<'}
             </Link>
-            <Link to={changePrevPage()} title={page === '0' ? '' : 'предыдущая страница'}>
-              {'<'}
-            </Link>
-            <span>{`${copyPrevPage}`}/30</span>
-            <Link to={changeNextPage()} title={page === '29' ? '' : 'следующая страница'}>
-              {'>'}
-            </Link>
+
+            {+group < 6 ? (
+              <>
+                <Link to={changePrevPage()} title={page === '0' ? '' : 'предыдущая страница'}>
+                  {'<'}
+                </Link>
+                <span>{`${copyPrevPage}`}/30</span>
+                <Link to={changeNextPage()} title={page === '29' ? '' : 'следующая страница'}>
+                  {'>'}
+                </Link>
+              </>
+            ) : null}
+
             <Link to={changeNextGroup()} title={group === '5' ? '' : 'следующий раздел'}>
               {'>>'}
             </Link>
