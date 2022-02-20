@@ -35,4 +35,7 @@ export const VALUE = [
   'initial',
   'initial'
 ];
-//export const FAKEARRAY = [];
+export const VALUENEXT = 'next';
+export const VALUENEXTWORD = 'nextWord';
+export const VALUEBUTTONNEXT = '→';
+export const VALUEBUTTONNOSAVVY = 'не знаю'; //no savvy

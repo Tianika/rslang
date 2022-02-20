@@ -23,6 +23,7 @@ import { GameTypes } from '../../utils';
 
 const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = audioGameActions;
 const GameWindow = (props: { level: number }): React.ReactElement => {
+  const urlQuery = 'https://learnwords-team17.herokuapp.com/';
   const dispatch = useAppDispatch();
   const words = useAppSelector(wordsSelector);
   const fakeWords = useAppSelector(fakeWordsSelector);
@@ -38,9 +39,6 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const [longestSeries, setLongestSeries] = useState(0);
   const [currentLongestSeries, setCurrentLongestSeries] = useState(0);
   const [getAnswerButtonClick, setGetAnswerButtonClick] = useState(true);
-  //const [isDisableButton, setIsDisableButton] = useState(false);
-  //const [wrongArray, setWrongArray] = useState([]);
-  //const [fakeArray, setFakeArray] = useState([]);
   const arrayWordRightId = [];
 
   useEffect(() => {
@@ -56,7 +54,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       setCurrentAudio(word.audio);
       setCurrentWord(word.wordTranslate);
       setIdCurrentWord(word.id);
-      setCurrentImage('https://learnwords-team17.herokuapp.com/' + word.image);
+      setCurrentImage(urlQuery + word.image);
     }
   }, [words]);
 
@@ -70,11 +68,10 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       setCurrentAudio(word.audio);
       setCurrentWord(word.wordTranslate);
       setIdCurrentWord(word.id);
-      setCurrentImage('https://learnwords-team17.herokuapp.com/' + word.image);
+      setCurrentImage(urlQuery + word.image);
     }
   };
   if (currentWordIndex === 20) {
-    console.log(currentWordIndex);
     return (
       <ResultGamePage
         rightAnswers={rightAnswersArr}
@@ -106,7 +103,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       <ButtonAudio
         visible={getAnswerButtonClick}
         onClick={() => {
-          new Audio(`https://learnwords-team17.herokuapp.com/${currentAudio}`).play();
+          new Audio(`${urlQuery}${currentAudio}`).play();
           return false;
         }}
       />
@@ -115,7 +112,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
         <WindowAnswerWordBlock>
           <ButtonAudioMini
             onClick={() => {
-              new Audio(`https://learnwords-team17.herokuapp.com/${currentAudio}`).play();
+              new Audio(`${urlQuery}${currentAudio}`).play();
               return false;
             }}
           />

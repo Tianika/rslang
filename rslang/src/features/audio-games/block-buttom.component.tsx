@@ -2,6 +2,7 @@ import { BlockButtonAnswer, InitialStateButtonAnswer, StyledButton } from './sty
 import React, { useState } from 'react';
 import { ButtonProps } from './types';
 import { getRandomNumber, shuffleArray } from './utils';
+import { VALUEBUTTONNEXT, VALUEBUTTONNOSAVVY, VALUENEXT, VALUENEXTWORD } from './constants';
 
 const BlockButton: React.FC<ButtonProps> = ({
   updateCurrentLongestSeries,
@@ -39,7 +40,7 @@ const BlockButton: React.FC<ButtonProps> = ({
   }
   const responseCheck = (event: EventTarget) => {
     switch ((event as HTMLButtonElement).value) {
-      case 'next':
+      case VALUENEXT:
         setClickedButtonIndex(-1);
         changeCurrentWord();
         audioGameErrorAnswerHandler();
@@ -54,9 +55,8 @@ const BlockButton: React.FC<ButtonProps> = ({
         audioGameRightAnswerHandler();
         updateCurrentLongestSeries();
         showAnswer(false);
-        // setArrayWordRightId.push(idCurrentWord);
         break;
-      case 'nextWord':
+      case VALUENEXTWORD:
         setClickedButtonIndex(-1);
         changeCurrentWord();
         upCurrentWordIndex();
@@ -72,7 +72,6 @@ const BlockButton: React.FC<ButtonProps> = ({
         break;
     }
   };
-  console.log(rightWord);
   return (
     <BlockButtonAnswer>
       {shuffleArray(answerArray).map((el, index) => {
@@ -96,13 +95,12 @@ const BlockButton: React.FC<ButtonProps> = ({
         );
       })}
       <InitialStateButtonAnswer
-        value={clickedButtonIndex > -1 ? 'nextWord' : 'next'}
-        className="buttonNext"
+        value={clickedButtonIndex > -1 ? VALUENEXTWORD : VALUENEXT}
         onClick={(event) => {
           responseCheck(event.target);
         }}
       >
-        {clickedButtonIndex > -1 ? '→' : 'не знаю'}
+        {clickedButtonIndex > -1 ? VALUEBUTTONNEXT : VALUEBUTTONNOSAVVY}
       </InitialStateButtonAnswer>
     </BlockButtonAnswer>
   );
