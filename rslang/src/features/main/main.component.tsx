@@ -6,7 +6,9 @@ import {
   StyledTeam,
   StyledInnerWrap,
   StyledTeamMember,
-  StyledDemo
+  StyledDemo,
+  ContributionDescriptionBlock,
+  ContributionDescriptionInfo
 } from './styles';
 
 import learnTogetherImg from '../../assets/jpegs/learn-together.jpg';
@@ -75,16 +77,24 @@ const Main: FC = () => {
           <StyledTeamMember>
             <img src={firstTeamMemberImg} alt="first-team-member" />
             <p>Roman Lickevich</p>
-            <a href="https://github.com/lickevich" target="_blank">
-              <img src={logor} alt="firstmember" />
-            </a>
+            <ContributionDescriptionBlock>
+              <a href="https://github.com/lickevich" target="_blank">
+                <img src={logor} alt="firstmember" />
+              </a>
+              <ContributionDescriptionInfo>Ментор</ContributionDescriptionInfo>
+            </ContributionDescriptionBlock>
           </StyledTeamMember>
           <StyledTeamMember>
             <img src={secondTeamMemberImg} alt="second-team-member" />
             <p>Татьяна Цыбина</p>
-            <a href="https://github.com/tianika" target="_blank">
-              <img src={logot} alt="secondmember" />
-            </a>
+            <ContributionDescriptionBlock>
+              <a href="https://github.com/tianika" target="_blank">
+                <img src={logot} alt="secondmember" />
+              </a>
+              <ContributionDescriptionInfo>
+                Реализовала: <br /> игра 'Спринт' Страница регистрации и логина
+              </ContributionDescriptionInfo>
+            </ContributionDescriptionBlock>
           </StyledTeamMember>
           <StyledTeamMember>
             <img src={thirdTeamMemberImg} alt="third-team-member" />

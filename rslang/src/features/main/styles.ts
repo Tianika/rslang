@@ -128,7 +128,14 @@ export const StyledTeamMember = styled.div`
     margin: 10px;
   }
 `;
-
+export const ContributionDescriptionBlock = styled.div`
+  display: flex;
+  align-items: center;
+  width: 360px;
+`;
+export const ContributionDescriptionInfo = styled.p`
+  font-size: ${baseTheme.fonts.mainParagraphSize};
+`;
 export const StyledDemo = styled.section`
   max-width: ${baseTheme.sizes.container};
   color: ${baseTheme.colors.font};
