@@ -25,8 +25,8 @@ export const LoadingText = styled.div`
   background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  -webkit-animation: rainbow 10s ease infinite;
-  animation: ${AnimationLoadingText} 10s ease infinite;
+  -webkit-animation: ${AnimationLoadingText} 5s ease infinite;
+  animation: ${AnimationLoadingText} 5s ease infinite;
   line-height: 25px;
 `;
 export const LoadingBlock = styled.div`
