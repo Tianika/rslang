@@ -3,7 +3,7 @@ import { IWord } from '../textbook/types';
 
 export type WordsPageState = {
   words: Array<IWord>;
-  aggregatedWords: Array<IWord>;
+  difficultWords: Array<IWord>;
   learnedWords: Array<IWord>;
   loadingState: LoadingState;
 };

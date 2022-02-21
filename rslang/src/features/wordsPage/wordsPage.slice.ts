@@ -4,7 +4,7 @@ import { WordsPageState } from './types';
 
 const initialState: WordsPageState = {
   words: [],
-  aggregatedWords: [],
+  difficultWords: [],
   learnedWords: [],
   loadingState: LoadingState.Initial
 };
@@ -21,8 +21,8 @@ export const wordsPageSlice = createSlice({
     changeLoadingState: (state, action) => {
       state.loadingState = action.payload;
     },
-    setAggregatedWords: (state, action) => {
-      state.aggregatedWords = action.payload;
+    setDifficultWords: (state, action) => {
+      state.difficultWords = action.payload;
     },
     setLearnedWords: (state, action) => {
       console.log(action.payload);

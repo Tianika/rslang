@@ -1,5 +1,4 @@
 import axios, { AxiosPromise } from 'axios';
-import { UserWord } from './types';
 
 export const baseUrl = 'https://learnwords-team17.herokuapp.com';
 
@@ -64,7 +63,7 @@ export const requestLearnedWords = (group: number, page: number): AxiosPromise<R
   const id = localStorage.rslangUserId;
 
   return axios.get(
-    `${baseUrl}/users/${id}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=20&filter={"userWord.difficulty":"learned"}`,
+    `${baseUrl}/users/${id}/aggregatedWords?group=${group}&wordsPerPage=600&filter={"userWord.difficulty":"learned"}`,
     config
   );
 };

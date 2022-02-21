@@ -2,7 +2,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
 import * as Effects from 'redux-saga/effects';
 import { LoadingState } from '../../utils';
-import { requestWordsFromGroup } from './sprint.api';
+import { requestSprintWordsFromGroup } from './sprint.api';
 import { getRandomNumber } from './utils';
 import { sprintGameActions } from './sprint.slice';
 import { Word } from './types';
@@ -40,7 +40,11 @@ function* sprintGameFetch(action: PayloadAction<number>) {
 
     for (let i = 0; i < numbers.length; i++) {
       //получаем данные из запроса
-      const { data } = yield call(requestWordsFromGroup, action.payload, numbers[i]) as Response;
+      const { data } = yield call(
+        requestSprintWordsFromGroup,
+        action.payload,
+        numbers[i]
+      ) as Response;
 
       words.push(...data);
     }
@@ -48,12 +52,8 @@ function* sprintGameFetch(action: PayloadAction<number>) {
     //обрабатываем полученный массив слов
     yield put(setWordsArray(words));
 
-    //TODO доделать loading
-
     yield put(changeLoadingState(LoadingState.Success));
   } catch (error: any) {
-    //TODO добавить обработку ошибок???
-
     yield put(changeLoadingState(LoadingState.Error));
   }
 }

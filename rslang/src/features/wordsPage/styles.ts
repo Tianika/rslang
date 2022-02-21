@@ -68,8 +68,6 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
   }
 
   &.difficult {
-    outline: 5px solid ${baseTheme.colors.sevenBookColor};
-
     &::before {
       background: linear-gradient(
         180deg,
@@ -127,7 +125,7 @@ export const StyledCardContent = styled.div`
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: center;
       min-width: 200px;
     }
   }
@@ -269,17 +267,18 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
   cursor: pointer;
   &:hover {
     ul {
+      display: block;
       opacity: 1;
       width: auto;
       height: auto;
-      transition: all 0.4s ease-in-out;
+      bottom: 35px;
     }
   }
   ul {
     margin: 0;
     position: absolute;
-    top: -400px;
-    opacity: 0;
+    bottom: -400px;
+    opacity: 1;
     width: 0;
     height: 0;
     padding-bottom: 30px;

@@ -17,7 +17,7 @@ import { UserWord } from './types';
 const call: any = Effects.call;
 
 export const postUserWordAction = createAction<UserWord, string>('userWord/post');
-export const getAggregatedWordsAction = createAction<undefined, string>('aggregatedWords/get');
+export const getDifficultWordsAction = createAction<undefined, string>('DifficultWords/get');
 export const deleteUserWordAction = createAction<string, string>('deleteUserWords/delete');
 export const fetchTextBookAction = createAction<{ group: string; page: string }, string>(
   'textbook/fetch'
@@ -27,11 +27,11 @@ export const getLearnedWordsAction = createAction<{ group: string; page: string 
   'learnedWords/get'
 );
 
-const { setAggregatedWords, changeLoadingState, setWords, setLearnedWords } = wordsPageActions;
+const { setDifficultWords, changeLoadingState, setWords, setLearnedWords } = wordsPageActions;
 
-function* getAggregatedWordsSaga() {
+function* getDifficultWordsSaga() {
   const { data } = yield call(requestDifficultWords);
-  yield put(setAggregatedWords(data[0].paginatedResults));
+  yield put(setDifficultWords(data[0].paginatedResults));
 }
 
 function* getLearnedWordsSaga(action: PayloadAction<{ group: string; page: string }>) {
@@ -67,7 +67,7 @@ function* getUserWordsSaga(action: PayloadAction<UserWord>) {
     }
 
     const { data } = yield call(requestDifficultWords);
-    yield put(setAggregatedWords(data[0].paginatedResults));
+    yield put(setDifficultWords(data[0].paginatedResults));
   } catch (error) {}
 }
 
@@ -100,7 +100,7 @@ function* fetchTextBookSaga(action: PayloadAction<{ group: string; page: string 
 function* wordsPageSaga() {
   yield takeLatest(fetchTextBookAction, fetchTextBookSaga);
   yield takeLatest(postUserWordAction, postUserWordSaga);
-  yield takeLatest(getAggregatedWordsAction, getAggregatedWordsSaga);
+  yield takeLatest(getDifficultWordsAction, getDifficultWordsSaga);
   yield takeLatest(deleteUserWordAction, deleteUserWordsSaga);
   yield takeLatest(getUserWordAction, getUserWordsSaga);
   yield takeLatest(getLearnedWordsAction, getLearnedWordsSaga);

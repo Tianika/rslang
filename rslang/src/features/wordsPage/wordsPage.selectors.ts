@@ -16,7 +16,7 @@ export const wordsSelector = (state: RootState) => {
 export const difficultWordsSelector = (state: RootState) => {
   const userWordsIds: Array<string | undefined> = [];
 
-  state.wordsPage.aggregatedWords.forEach((word) => {
+  state.wordsPage.difficultWords.forEach((word) => {
     userWordsIds.push(word._id);
   });
 
