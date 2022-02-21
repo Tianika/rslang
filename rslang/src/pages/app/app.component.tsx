@@ -8,13 +8,12 @@ import { Main } from '../../features/main';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Account } from '../account';
 import { Statistics } from '../statistics/statistics.component';
-import { GamesPage } from '../../components/games/startPageGames.component';
-import { GameAudio } from '../../components/games/audio-games/audio-game.component';
+import { GamesPage } from '../games/startPageGames.component';
 import { SprintStartPage } from '../../features/sprint';
 import { Textbook } from '../../features/textbook/textbook.component';
 import { WordsPage } from '../../features/textbook/wordsPage/wordsPage.component';
 import { Login } from '../../features/login';
- import StartPageAudioCall from '../../features/audio-games/audio-game.component';
+import StartPageAudioCall from '../../features/audio-games/audio-game.component';
 
 const App: React.FC = () => {
   return (
@@ -43,4 +42,3 @@ const App: React.FC = () => {
 };
 
 export default hot(App);
-

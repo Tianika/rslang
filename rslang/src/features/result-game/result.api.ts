@@ -31,4 +31,3 @@ export const putStatisticsRequest = (action: Statistics): AxiosPromise<Response>
 
   return axios.put(`https://learnwords-team17.herokuapp.com/users/${id}/statistics`, data, config);
 };
-

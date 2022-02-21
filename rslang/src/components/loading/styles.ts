@@ -8,4 +8,3 @@ export const LoadingMain = styled.div`
   height: 100%;
   font-size: 80px;
 `;
-

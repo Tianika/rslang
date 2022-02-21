@@ -13,4 +13,3 @@ export enum GameTypes {
   Sprint = 'Sprint',
   AudioCall = 'AudioCall'
 }
-
