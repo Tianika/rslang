@@ -9,3 +9,4 @@ export type AccountProps = {
   onPasswordChange: ChangeEventHandle;
   onLevelChange: ChangeSelectHandle;
 };
+

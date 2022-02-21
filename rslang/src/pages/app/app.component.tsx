@@ -14,6 +14,7 @@ import { SprintStartPage } from '../../features/sprint';
 import { Textbook } from '../../features/textbook/textbook.component';
 import { WordsPage } from '../../features/textbook/wordsPage/wordsPage.component';
 import { Login } from '../../features/login';
+ import StartPageAudioCall from '../../features/audio-games/audio-game.component';
 
 const App: React.FC = () => {
   return (
@@ -30,7 +31,7 @@ const App: React.FC = () => {
           <Route path="/account/login" element={<Login />} />
           <Route path="/account/signup" element={<Signup />} />
           <Route path="/games" element={<GamesPage />} />
-          <Route path="/games/audio" element={<GameAudio />} />
+          <Route path="/games/audio" element={<StartPageAudioCall />} />
           <Route path="/games/sprint" element={<SprintStartPage />} />
           <Route path="/textbook/wordspage" element={<WordsPage />} />
         </Routes>
@@ -42,3 +43,4 @@ const App: React.FC = () => {
 };
 
 export default hot(App);
+

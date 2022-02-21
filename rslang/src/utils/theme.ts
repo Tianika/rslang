@@ -15,7 +15,8 @@ export const baseTheme = {
     thirdBookColor: '#FFE320',
     fourthBookColor: '#00D715',
     fifthBookColor: '#5984E2',
-    sixthBookColor: '#BA2DFC'
+    sixthBookColor: '#BA2DFC',
+    gray: '#868686'
   },
 
   media: {

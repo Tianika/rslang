@@ -171,3 +171,4 @@ export const ExitButton = styled.button`
     background-color: ${baseTheme.colors.green};
   }
 `;
+
