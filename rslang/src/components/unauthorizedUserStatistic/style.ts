@@ -43,6 +43,24 @@ export const AnswerTextError = styled.p`
   line-height: 10vh;
   max-width: 600px;
   position: relative;
+  margin: 0;
+  &:after {
+    content: attr(data-p);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    color: transparent;
+    text-shadow: 1px 1px 2px transparentize(#fff, 0.5);
+  }
+`;
+export const TextDescription = styled.p`
+  color: #d6d6d6;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 10vh;
+  max-width: 600px;
+  position: relative;
   margin-top: 0;
   &:after {
     content: attr(data-p);
