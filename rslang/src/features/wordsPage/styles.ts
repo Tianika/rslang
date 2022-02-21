@@ -304,9 +304,6 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
     li:nth-child(3) {
       background-color: ${baseTheme.colors.green};
     }
-    li:nth-child(3) {
-      background-color: ${baseTheme.colors.green};
-    }
     li:nth-child(2) {
       background-color: ${baseTheme.colors.blue};
     }
