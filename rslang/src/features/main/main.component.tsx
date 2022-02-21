@@ -78,6 +78,7 @@ const Main: FC = () => {
             <a href="https://github.com/lickevich" target="_blank">
               <img src={logor} alt="firstmember" />
             </a>
+            <p>Team Lead проекта</p>
           </StyledTeamMember>
           <StyledTeamMember>
             <img src={secondTeamMemberImg} alt="second-team-member" />
@@ -85,6 +86,7 @@ const Main: FC = () => {
             <a href="https://github.com/tianika" target="_blank">
               <img src={logot} alt="secondmember" />
             </a>
+            <p>Разработчик. Создатель мини-игры Спринт, электронный учебник, авторизация.</p>
           </StyledTeamMember>
           <StyledTeamMember>
             <img src={thirdTeamMemberImg} alt="third-team-member" />
@@ -92,6 +94,7 @@ const Main: FC = () => {
             <a href="https://github.com/nobodynoticed" target="_blank">
               <img src={logoy} alt="thirdmember" />
             </a>
+            <p>Разработчик. Вёрстка главной страницы, электронный учебник.</p>
           </StyledTeamMember>
           <StyledTeamMember>
             <img src={fourthTeamMemberImg} alt="fourth-team-member" />
@@ -99,6 +102,7 @@ const Main: FC = () => {
             <a href="https://github.com/DariaMalina" target="_blank">
               <img src={logod} alt="fourthmember" />
             </a>
+            <p>Разработчик. Создатель мини-игры Аудиовызов, дизайн проекта, статистика.</p>
           </StyledTeamMember>
         </StyledInnerWrap>
       </StyledTeam>
