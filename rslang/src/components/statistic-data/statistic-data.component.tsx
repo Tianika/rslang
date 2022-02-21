@@ -35,37 +35,40 @@ const Table = (): React.ReactElement => {
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalLongSeries, setTotalLongSeries] = useState(0);
   useEffect(() => {
-    setAudioCallWrong(statistic.optional.gameStatistics.audiocall.errorAnswers);
-    setsprintWrong(statistic.optional.gameStatistics.sprint.errorAnswers);
     if (statistic.optional) {
-      setAudioCallWords(statistic.optional.gameStatistics.audiocall.learnedWords);
-      setAudioCallCorrect(
-        Math.floor(
-          (statistic.optional.gameStatistics.audiocall.correctAnswers /
-            (statistic.optional.gameStatistics.audiocall.correctAnswers +
-              statistic.optional.gameStatistics.audiocall.errorAnswers)) *
-            100
-        )
-      );
+      setAudioCallWrong(statistic.optional.gameStatistics.audiocall.errorAnswers);
+      setsprintWrong(statistic.optional.gameStatistics.sprint.errorAnswers);
+      if (statistic.optional) {
+        setAudioCallWords(statistic.optional.gameStatistics.audiocall.learnedWords);
+        setAudioCallCorrect(
+          Math.floor(
+            (statistic.optional.gameStatistics.audiocall.correctAnswers /
+              (statistic.optional.gameStatistics.audiocall.correctAnswers +
+                statistic.optional.gameStatistics.audiocall.errorAnswers)) *
+              100
+          )
+        );
 
-      setAudioCallLongSeries(statistic.optional.gameStatistics.audiocall.longestSeries);
-      setSprintWords(statistic.optional.gameStatistics.sprint.learnedWords);
-      setSprintCorrect(
-        Math.floor(
-          (statistic.optional.gameStatistics.sprint.correctAnswers /
-            (statistic.optional.gameStatistics.sprint.correctAnswers +
-              statistic.optional.gameStatistics.sprint.errorAnswers)) *
-            100
-        )
-      );
-      setASprintLongSeries(statistic.optional.gameStatistics.sprint.longestSeries);
-      setTotalWords(audioCallWords + sprintWords);
+        setAudioCallLongSeries(statistic.optional.gameStatistics.audiocall.longestSeries);
+        setSprintWords(statistic.optional.gameStatistics.sprint.learnedWords);
+        setSprintCorrect(
+          Math.floor(
+            (statistic.optional.gameStatistics.sprint.correctAnswers /
+              (statistic.optional.gameStatistics.sprint.correctAnswers +
+                statistic.optional.gameStatistics.sprint.errorAnswers)) *
+              100
+          )
+        );
+        setASprintLongSeries(statistic.optional.gameStatistics.sprint.longestSeries);
+        setTotalWords(audioCallWords + sprintWords);
 
-      setTotalLongSeries(
-        audioCallLongSeries > sprintLongSeries ? audioCallLongSeries : sprintLongSeries
-      );
+        setTotalLongSeries(
+          audioCallLongSeries > sprintLongSeries ? audioCallLongSeries : sprintLongSeries
+        );
+      }
     }
   }, [statistic]);
+
   return (
     <div>
       <TableStatistic>
