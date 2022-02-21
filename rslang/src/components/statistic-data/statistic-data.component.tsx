@@ -39,14 +39,23 @@ const Table = (): React.ReactElement => {
     setsprintWrong(statistic.optional.gameStatistics.sprint.errorAnswers);
     if (statistic.optional) {
       setAudioCallWords(statistic.optional.gameStatistics.audiocall.learnedWords);
-      if (sprintWords > 0 && audioCallWords > 0 && audioCallCorrect > 0 && sprintCorrect > 0) {
-        setAudioCallCorrect((audioCallWords * 0.1) / audioCallCorrect);
-      }
-
-      setAudioCallLongSeries(statistic.optional.gameStatistics.audiocall.longestSeries);
       setSprintWords(statistic.optional.gameStatistics.sprint.learnedWords);
+      if (sprintWords > 0 && audioCallWords > 0 && audioCallCorrect > 0 && sprintCorrect > 0) {
+        setAudioCallCorrect(
+          (statistic.optional.gameStatistics.audiocall.correctAnswers /
+            (statistic.optional.gameStatistics.audiocall.correctAnswers +
+              statistic.optional.gameStatistics.audiocall.errorAnswers)) *
+            100
+        );
+      }
+      setAudioCallLongSeries(statistic.optional.gameStatistics.audiocall.longestSeries);
       if (sprintWords > 0 && sprintWords > 0) {
-        setSprintCorrect((sprintWords * 0.1) / sprintCorrect);
+        setSprintCorrect(
+          (statistic.optional.gameStatistics.sprint.correctAnswers /
+            (statistic.optional.gameStatistics.sprint.correctAnswers +
+              statistic.optional.gameStatistics.sprint.errorAnswers)) *
+            100
+        );
       }
       setASprintLongSeries(statistic.optional.gameStatistics.sprint.longestSeries);
       setTotalWords(audioCallWords + sprintWords);
