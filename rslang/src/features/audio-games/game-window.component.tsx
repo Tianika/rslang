@@ -47,6 +47,10 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const disableIsLoading = () => {
     setIsLoading(false);
   };
+  const soundPlay = () => {
+    new Audio(`${urlQuery}${currentAudio}`).play();
+    return false;
+  };
 
   useEffect(() => {
     if (status === LoadingState.Success) {
@@ -60,10 +64,10 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
     dispatch(resetAnswerArrays());
     setCurrentWordIndex(0);
   }, []);
-
   useEffect(() => {
     const word = words[0];
     if (word) {
+      soundPlay();
       setEnglishWord(word.word);
       setCurrentAudio(word.audio);
       setCurrentWord(word.wordTranslate);
@@ -84,6 +88,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       setCurrentWord(word.wordTranslate);
       setIdCurrentWord(word.id);
       setCurrentImage(urlQuery + word.image);
+      soundPlay();
     }
   };
   if (currentWordIndex === 20) {
@@ -113,6 +118,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const updateCurrentLongestSeries = () => {
     setCurrentLongestSeries(currentLongestSeries + 1);
   };
+
   return (
     <BlockGame>
       <ButtonAudio

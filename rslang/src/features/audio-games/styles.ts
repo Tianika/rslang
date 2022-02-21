@@ -185,6 +185,7 @@ export const WindowAnswerWordBlock = styled.div`
   justify-content: center;
 `;
 export const BlockButtonAnswer = styled.div`
+  width: 80%;
   margin-top: 40px;
   display: flex;
   flex-wrap: wrap;
