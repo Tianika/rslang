@@ -52,8 +52,5 @@ export const AnswerTextError = styled.p`
     right: 0;
     color: transparent;
     text-shadow: 1px 1px 2px transparentize(#fff, 0.5);
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    background-clip: texts;
   }
 `;
