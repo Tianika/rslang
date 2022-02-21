@@ -57,6 +57,7 @@ export type ButtonProps = {
   upCurrentWordIndex: any;
   audioGameErrorAnswerHandler: any;
   audioGameRightAnswerHandler: any;
+  updateFakeWords(): void;
 };
 export type ImageAnswer = {
   linkImage: string;
