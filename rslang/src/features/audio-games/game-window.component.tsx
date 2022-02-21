@@ -188,6 +188,12 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
         upCurrentWordIndex={upCurrentWordIndex}
         audioGameErrorAnswerHandler={audioGameErrorAnswerHandler}
         audioGameRightAnswerHandler={audioGameRightAnswerHandler}
+        updateLongestSeries={() => {
+          setCurrentLongestSeries(currentLongestSeries + 1);
+        }}
+        resetLongestSeries={() => {
+          setCurrentLongestSeries(0);
+        }}
       />
     </BlockGame>
   );

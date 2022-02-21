@@ -1,7 +1,6 @@
 import { BlockButtonAnswer, InitialStateButtonAnswer, StyledButton } from './styles';
 import React, { useState } from 'react';
 import { ButtonProps } from './types';
-import { getRandomNumber, shuffleArray } from './utils';
 import { VALUEBUTTONNEXT, VALUEBUTTONNOSAVVY, VALUENEXT, VALUENEXTWORD } from './constants';
 
 const BlockButton: React.FC<ButtonProps> = ({
@@ -18,7 +17,9 @@ const BlockButton: React.FC<ButtonProps> = ({
   upCurrentWordIndex,
   audioGameErrorAnswerHandler,
   audioGameRightAnswerHandler,
-  updateFakeWords
+  updateFakeWords,
+  updateLongestSeries,
+  resetLongestSeries
 }): React.ReactElement => {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
   const [clickedButtonIndex, setClickedButtonIndex] = useState(-1);
@@ -36,12 +37,14 @@ const BlockButton: React.FC<ButtonProps> = ({
         setTimeout(() => {
           showAnswer(true);
         }, 1000);
+        resetLongestSeries();
         break;
       case rightWord:
         setDisable(true);
         audioGameRightAnswerHandler();
         updateCurrentLongestSeries();
         showAnswer(false);
+        updateLongestSeries();
         break;
       case VALUENEXTWORD:
         setClickedButtonIndex(-1);
@@ -52,6 +55,7 @@ const BlockButton: React.FC<ButtonProps> = ({
         showAnswer(true);
         break;
       default:
+        resetLongestSeries();
         setDisable(true);
         audioGameErrorAnswerHandler();
         updateCurrentLongestSeries(0);
