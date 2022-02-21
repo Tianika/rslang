@@ -19,19 +19,43 @@ import { getStatisticSelector } from './statistic-data.selectors';
 
 const Table = (): React.ReactElement => {
   const dispatch = useAppDispatch();
-  dispatch(fetchGettingStatisticsAction());
-  const statistic: object = useAppSelector(getStatisticSelector);
-  const [audioCallWords, setAudioCallWords] = useState('');
-  const [audioCallCorrect, setAudioCallCorrect] = useState('');
-  const [audioCallLongSeries, setAudioCallLongSeries] = useState('');
-  const [sprintWords, setSprintWords] = useState('');
-  const [sprintCorrect, setSprintCorrect] = useState('');
-  const [sprintLongSeries, setASprintongSeries] = useState('');
-  const [totalWords, setTotalWords] = useState('');
-  const [totalCorrect, setTotalCorrect] = useState('');
-  const [totalLongSeries, setTotalLongSeries] = useState('');
-  //setAudioCallWords(statistic.optional.gameStatistics.audiocall.correctAnswers);
-
+  useEffect(() => {
+    dispatch(fetchGettingStatisticsAction());
+  }, []);
+  const statistic: any = useAppSelector(getStatisticSelector);
+  const [audioCallWords, setAudioCallWords] = useState(0);
+  const [audioCallCorrect, setAudioCallCorrect] = useState(0);
+  const [audioCallLongSeries, setAudioCallLongSeries] = useState(0);
+  const [sprintWords, setSprintWords] = useState(0);
+  const [sprintCorrect, setSprintCorrect] = useState(0);
+  const [sprintLongSeries, setASprintLongSeries] = useState(0);
+  const [totalWords, setTotalWords] = useState(0);
+  const [totalCorrect, setTotalCorrect] = useState(0);
+  const [totalLongSeries, setTotalLongSeries] = useState(0);
+  // optional:
+  // gameStatistics:
+  // audiocall: {date: 'Mon Feb 21 2022', learnedWords: 18, correctAnswers: 18, errorAnswers: 2, longestSeries: 0}
+  // sprint: {date: 'Mon Feb 21 2022', learnedWords: 273, correctAnswers: 273, errorAnswers: 140, longestSeries: 28}
+  // [[Prototype]]: Object
+  // wordStatistics: {date: 'Mon Feb 21 2022', count: 291}
+  //const setOptionalGame = statistic.optional.gameStatistics;
+  //  setAudioCallWords(statistic.optional.gameStatistics.audiocall.correctAnswers);
+  useEffect(() => {
+    if (statistic) {
+      setAudioCallWords(statistic.optional.gameStatistics.audiocall.learnedWords);
+      setAudioCallCorrect(statistic.optional.gameStatistics.audiocall.correctAnswers);
+      setAudioCallLongSeries(statistic.optional.gameStatistics.audiocall.longestSeries);
+      setSprintWords(statistic.optional.gameStatistics.sprint.learnedWords);
+      setSprintCorrect(statistic.optional.gameStatistics.sprint.correctAnswers);
+      setASprintLongSeries(statistic.optional.gameStatistics.sprint.longestSeries);
+      setTotalWords(audioCallWords + sprintWords);
+      setTotalCorrect(audioCallCorrect + sprintCorrect);
+      setASprintLongSeries(
+        audioCallLongSeries > sprintLongSeries ? audioCallLongSeries : sprintLongSeries
+      );
+    }
+  }, [statistic]);
+  console.log(statistic);
   return (
     <div>
       <TableStatistic>
@@ -47,7 +71,7 @@ const Table = (): React.ReactElement => {
         <TableStatisticBody>
           <TableStatisticBodyTr>
             <TableStatisticBodyThName>Аудиовызов</TableStatisticBodyThName>
-            <TableStatisticBodyTh>audioCallWords</TableStatisticBodyTh>
+            <TableStatisticBodyTh>{audioCallWords}</TableStatisticBodyTh>
             <TableStatisticBodyTh>{audioCallCorrect}%</TableStatisticBodyTh>
             <TableStatisticBodyTh>{audioCallLongSeries}</TableStatisticBodyTh>
           </TableStatisticBodyTr>

@@ -82,7 +82,7 @@ export const TableStatisticBodyTrEnd = styled.tr`
   border-spacing: 0;
   border-collapse: collapse;
 `;
-export const TableStatisticBodyTh = styled.th`
+export const TableStatisticBodyTh = styled.td`
   padding: 6px 24px 6px 16px;
   color: rgba(0, 0, 0, 0.87);
   display: table-cell;
@@ -95,7 +95,7 @@ export const TableStatisticBodyTh = styled.th`
   vertical-align: inherit;
   text-align: center;
 `;
-export const TableStatisticBodyThName = styled.th`
+export const TableStatisticBodyThName = styled.td`
   border-radius: 8px 0 0 8px;
   padding: 6px 24px 6px 16px;
   color: rgba(0, 0, 0, 0.87);
