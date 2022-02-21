@@ -14,8 +14,13 @@ import { Textbook } from '../../features/textbook/textbook.component';
 import { WordsPage } from '../../features/wordsPage/wordsPage.component';
 import { Login } from '../../features/login';
 import StartPageAudioCall from '../../features/audio-games/audio-game.component';
+import { checkVerification } from '../../features/login/verification';
 
 const App: React.FC = () => {
+  if (localStorage.userId) {
+    checkVerification();
+  }
+
   return (
     <BrowserRouter>
       <GlobalStyle />

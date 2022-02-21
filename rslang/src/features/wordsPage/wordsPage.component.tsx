@@ -105,8 +105,6 @@ export const WordsPage: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(group, page);
-
     if (localStorage.rslangUserId) {
       dispatch(getDifficultWordsAction());
       dispatch(getLearnedWordsAction({ group, page }));
@@ -211,8 +209,6 @@ export const WordsPage: React.FC = () => {
     if (difficultWords.includes(id)) {
       typeClassForWord = UserWordsClass.Difficult;
     }
-
-    console.log(typeClassForWord);
 
     return typeClassForWord;
   };
