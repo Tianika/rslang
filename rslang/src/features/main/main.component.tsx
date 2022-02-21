@@ -22,7 +22,6 @@ import logor from '../../assets/svg/logo-r.svg';
 import logot from '../../assets/svg/logo-t.svg';
 import logoy from '../../assets/svg/logo-y.svg';
 import logod from '../../assets/svg/logo-d.svg';
-import demo from '../../assets/jpegs/demo.jpg';
 import { checkVerification } from '../login/verification';
 import { Video } from '../../pages/app/styles';
 
