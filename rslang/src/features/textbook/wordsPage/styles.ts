@@ -227,7 +227,6 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
   right: 65px;
   top: -55px;
   color: #000;
-
   cursor: pointer;
 
   &:hover {
@@ -248,7 +247,6 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
     width: 0;
     height: 0;
     padding-bottom: 30px;
-    /* transition: all 0.3s; */
 
     li {
       display: flex;
