@@ -226,6 +226,68 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
   position: absolute;
   right: 65px;
   top: -55px;
+  color: #000;
+
+  cursor: pointer;
+
+  &:hover {
+    ul {
+      opacity: 1;
+      width: auto;
+      height: auto;
+
+      transition: all 0.4s ease-in-out;
+    }
+  }
+
+  ul {
+    margin: 0;
+    position: absolute;
+    top: -400px;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    padding-bottom: 30px;
+    /* transition: all 0.3s; */
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      border: 3px solid ${bg};
+      border-radius: 50%;
+    }
+
+    li:last-child {
+      background-color: ${baseTheme.colors.red};
+    }
+
+    li:nth-child(5) {
+      background-color: ${baseTheme.colors.orange};
+    }
+
+    li:nth-child(4) {
+      background-color: ${baseTheme.colors.yellow};
+    }
+
+    li:nth-child(3) {
+      background-color: ${baseTheme.colors.green};
+    }
+
+    li:nth-child(3) {
+      background-color: ${baseTheme.colors.green};
+    }
+
+    li:nth-child(2) {
+      background-color: ${baseTheme.colors.blue};
+    }
+
+    li:first-child {
+      background-color: ${baseTheme.colors.purple};
+    }
+  }
 `;
 
 export const StyledPrevGroupBtn = styled(StyledClearPaginationBtn)``;

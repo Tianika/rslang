@@ -33,6 +33,38 @@ import { IWord } from '../types';
 import { postUserWordAction } from './wordsPage.saga';
 import { deleteUserWordById, getAggregatedWords } from './wordsPage.api';
 
+const dropDownMenu = [
+  {
+    groupNum: '5',
+    text: '6'
+  },
+
+  {
+    groupNum: '4',
+    text: '5'
+  },
+
+  {
+    groupNum: '3',
+    text: '4'
+  },
+
+  {
+    groupNum: '2',
+    text: '3'
+  },
+
+  {
+    groupNum: '1',
+    text: '2'
+  },
+
+  {
+    groupNum: '0',
+    text: '1'
+  }
+];
+
 export const WordsPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const words = useAppSelector((state) => {
@@ -197,9 +229,23 @@ export const WordsPage: React.FC = () => {
             </Link>
           </div>
           <div>
-            <StyledGroupNumber
-              group={`${checkNumberOfGroup()}`}
-            >{`${copyPrevGroup}`}</StyledGroupNumber>
+            <StyledGroupNumber group={`${checkNumberOfGroup()}`}>
+              {`${copyPrevGroup}`}
+              <ul>
+                {dropDownMenu.map((linkElem, index) => {
+                  return (
+                    <li key={index}>
+                      <Link
+                        to={`?group=${linkElem.groupNum}&page=0`}
+                        style={{ padding: '15px', display: 'inline-block' }}
+                      >
+                        {linkElem.text}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </StyledGroupNumber>
           </div>
         </StyledPagination>
       </StyledWrapper>
