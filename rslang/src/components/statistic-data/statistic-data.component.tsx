@@ -32,14 +32,6 @@ const Table = (): React.ReactElement => {
   const [totalWords, setTotalWords] = useState(0);
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalLongSeries, setTotalLongSeries] = useState(0);
-  // optional:
-  // gameStatistics:
-  // audiocall: {date: 'Mon Feb 21 2022', learnedWords: 18, correctAnswers: 18, errorAnswers: 2, longestSeries: 0}
-  // sprint: {date: 'Mon Feb 21 2022', learnedWords: 273, correctAnswers: 273, errorAnswers: 140, longestSeries: 28}
-  // [[Prototype]]: Object
-  // wordStatistics: {date: 'Mon Feb 21 2022', count: 291}
-  //const setOptionalGame = statistic.optional.gameStatistics;
-  //  setAudioCallWords(statistic.optional.gameStatistics.audiocall.correctAnswers);
   useEffect(() => {
     if (statistic) {
       setAudioCallWords(statistic.optional.gameStatistics.audiocall.learnedWords);
@@ -50,7 +42,7 @@ const Table = (): React.ReactElement => {
       setASprintLongSeries(statistic.optional.gameStatistics.sprint.longestSeries);
       setTotalWords(audioCallWords + sprintWords);
       setTotalCorrect(audioCallCorrect + sprintCorrect);
-      setASprintLongSeries(
+      setTotalLongSeries(
         audioCallLongSeries > sprintLongSeries ? audioCallLongSeries : sprintLongSeries
       );
     }
