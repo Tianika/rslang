@@ -17,7 +17,9 @@ import StartPageAudioCall from '../../features/audio-games/audio-game.component'
 import { checkVerification } from '../../features/login/verification';
 
 const App: React.FC = () => {
-  checkVerification();
+  if (localStorage.userId) {
+    checkVerification();
+  }
 
   return (
     <BrowserRouter>
