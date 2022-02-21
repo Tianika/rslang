@@ -4,11 +4,10 @@ import { WordsPageState } from './types';
 
 const initialState: WordsPageState = {
   words: [],
-  aggregatedWords: [],
+  difficultWords: [],
   learnedWords: [],
   loadingState: LoadingState.Initial
 };
-//TODO добавить тип
 
 //создаем редюсеры
 export const wordsPageSlice = createSlice({
@@ -21,11 +20,10 @@ export const wordsPageSlice = createSlice({
     changeLoadingState: (state, action) => {
       state.loadingState = action.payload;
     },
-    setAggregatedWords: (state, action) => {
-      state.aggregatedWords = action.payload;
+    setDifficultWords: (state, action) => {
+      state.difficultWords = action.payload;
     },
     setLearnedWords: (state, action) => {
-      console.log(action.payload);
       state.learnedWords = action.payload;
     }
   }

@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 import * as Effects from 'redux-saga/effects';
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
 import {
@@ -13,11 +13,12 @@ import {
 import { LoadingState, TypeUserWords } from '../../utils';
 import { wordsPageActions } from './wordsPage.slice';
 import { UserWord } from './types';
+import { AxiosResponse } from 'axios';
 
 const call: any = Effects.call;
 
 export const postUserWordAction = createAction<UserWord, string>('userWord/post');
-export const getAggregatedWordsAction = createAction<undefined, string>('aggregatedWords/get');
+export const getDifficultWordsAction = createAction<undefined, string>('DifficultWords/get');
 export const deleteUserWordAction = createAction<string, string>('deleteUserWords/delete');
 export const fetchTextBookAction = createAction<{ group: string; page: string }, string>(
   'textbook/fetch'
@@ -27,16 +28,15 @@ export const getLearnedWordsAction = createAction<{ group: string; page: string 
   'learnedWords/get'
 );
 
-const { setAggregatedWords, changeLoadingState, setWords, setLearnedWords } = wordsPageActions;
+const { setDifficultWords, changeLoadingState, setWords, setLearnedWords } = wordsPageActions;
 
-function* getAggregatedWordsSaga() {
+function* getDifficultWordsSaga() {
   const { data } = yield call(requestDifficultWords);
-  yield put(setAggregatedWords(data[0].paginatedResults));
+  yield put(setDifficultWords(data[0].paginatedResults));
 }
 
 function* getLearnedWordsSaga(action: PayloadAction<{ group: string; page: string }>) {
   const { data } = yield call(requestLearnedWords, action.payload.group, action.payload.page);
-  console.log(data[0].paginatedResults);
   yield put(setLearnedWords(data[0].paginatedResults));
 }
 
@@ -66,8 +66,15 @@ function* getUserWordsSaga(action: PayloadAction<UserWord>) {
       yield call(postUserWord, wordId, type);
     }
 
-    const { data } = yield call(requestDifficultWords);
-    yield put(setAggregatedWords(data[0].paginatedResults));
+    const difficult: AxiosResponse = yield call(requestDifficultWords);
+    yield put(setDifficultWords(difficult.data[0].paginatedResults));
+
+    const words: AxiosResponse = yield call(
+      requestLearnedWords,
+      action.payload.group,
+      action.payload.page
+    );
+    yield put(setLearnedWords(words.data[0].paginatedResults));
   } catch (error) {}
 }
 
@@ -100,10 +107,10 @@ function* fetchTextBookSaga(action: PayloadAction<{ group: string; page: string 
 function* wordsPageSaga() {
   yield takeLatest(fetchTextBookAction, fetchTextBookSaga);
   yield takeLatest(postUserWordAction, postUserWordSaga);
-  yield takeLatest(getAggregatedWordsAction, getAggregatedWordsSaga);
+  yield takeLatest(getDifficultWordsAction, getDifficultWordsSaga);
   yield takeLatest(deleteUserWordAction, deleteUserWordsSaga);
   yield takeLatest(getUserWordAction, getUserWordsSaga);
-  yield takeLatest(getLearnedWordsAction, getLearnedWordsSaga);
+  yield takeEvery(getLearnedWordsAction, getLearnedWordsSaga);
 }
 
 export { wordsPageSaga };

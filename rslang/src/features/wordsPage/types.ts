@@ -3,7 +3,7 @@ import { IWord } from '../textbook/types';
 
 export type WordsPageState = {
   words: Array<IWord>;
-  aggregatedWords: Array<IWord>;
+  difficultWords: Array<IWord>;
   learnedWords: Array<IWord>;
   loadingState: LoadingState;
 };
@@ -11,4 +11,12 @@ export type WordsPageState = {
 export type UserWord = {
   wordId: string;
   type: TypeUserWords;
+  group: string;
+  page: string;
 };
+
+export enum UserWordsClass {
+  Default = '',
+  Learned = 'learned',
+  Difficult = 'difficult'
+}

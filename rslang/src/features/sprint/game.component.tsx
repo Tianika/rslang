@@ -74,9 +74,11 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //при включении игры
   useEffect(() => {
-    dispatch(fetchSprintAction(props.level));
     dispatch(resetAnswerArrays());
-    setCurrentWordIndex(0);
+    setTimeout(() => {
+      dispatch(fetchSprintAction(props.level));
+      setCurrentWordIndex(0);
+    });
   }, []);
 
   useEffect(() => {

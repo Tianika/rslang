@@ -18,15 +18,15 @@ import cardIconAudio from '../../assets/svg/card-icon-audio.svg';
 import cardPlusIcon from '../../assets/svg/card-plus-icon.svg';
 import removeIcon from '../../assets/svg/remove.svg';
 import learnedIcon from '../../assets/svg/learned-word-icon.svg';
+import removeLearned from '../../assets/svg/remove-learned.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { IWord } from '../textbook/types';
 import {
   deleteUserWordAction,
   fetchTextBookAction,
-  getAggregatedWordsAction,
+  getDifficultWordsAction,
   getLearnedWordsAction,
-  getUserWordAction,
-  postUserWordAction
+  getUserWordAction
 } from './wordsPage.saga';
 
 import { LoadingPage } from '../../components/loading';
@@ -38,6 +38,7 @@ import {
 } from './wordsPage.selectors';
 import { baseUrl } from './wordsPage.api';
 import { dropDownMenu } from './wordsPage.constants';
+import { UserWordsClass } from './types';
 
 const {
   firstBookColor,
@@ -104,12 +105,21 @@ export const WordsPage: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getAggregatedWordsAction());
-    dispatch(getLearnedWordsAction({ group, page }));
+    console.log(group, page);
+
+    if (localStorage.rslangUserId) {
+      dispatch(getDifficultWordsAction());
+      dispatch(getLearnedWordsAction({ group, page }));
+    }
   }, []);
 
   useEffect(() => {
     dispatch(fetchTextBookAction({ group, page }));
+
+    if (localStorage.rslangUserId) {
+      dispatch(getDifficultWordsAction());
+      dispatch(getLearnedWordsAction({ group, page }));
+    }
   }, [group, page]);
 
   const checkNumberOfGroup = () => {
@@ -168,8 +178,7 @@ export const WordsPage: React.FC = () => {
   const handleUserWord = (wordId: string) => {
     const type = TypeUserWords.Hard;
 
-    dispatch(getUserWordAction({ wordId, type }));
-    dispatch(getAggregatedWordsAction());
+    dispatch(getUserWordAction({ wordId, type, group, page }));
   };
 
   const removeUserWord = (wordId: string | undefined) => {
@@ -182,18 +191,33 @@ export const WordsPage: React.FC = () => {
   const addLearnedWord = (wordId: string) => {
     const type = TypeUserWords.Learned;
 
-    dispatch(getUserWordAction({ wordId, type }));
-    dispatch(getAggregatedWordsAction());
+    dispatch(getUserWordAction({ wordId, type, group, page }));
     dispatch(getLearnedWordsAction({ group, page }));
   };
 
-  const removeLearnedWord = (wordId: string | undefined) => {
-    if (wordId) {
-      dispatch(deleteUserWordAction(wordId));
-      dispatch(fetchTextBookAction({ group, page }));
-    }
+  const removeLearnedWord = (wordId: string) => {
+    dispatch(deleteUserWordAction(wordId));
+    dispatch(getLearnedWordsAction({ group, page }));
+    dispatch(getDifficultWordsAction());
   };
 
+  const toggleClassType = (id: string) => {
+    let typeClassForWord = UserWordsClass.Default;
+
+    if (learnedWords.includes(id)) {
+      typeClassForWord = UserWordsClass.Learned;
+    }
+
+    if (difficultWords.includes(id)) {
+      typeClassForWord = UserWordsClass.Difficult;
+    }
+
+    console.log(typeClassForWord);
+
+    return typeClassForWord;
+  };
+
+  //загрузка
   const status = useAppSelector(statusSelector);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -216,14 +240,12 @@ export const WordsPage: React.FC = () => {
           .slice()
           .sort((a, b) => a.word.localeCompare(b.word))
           .map((word: IWord) => {
-            const classType = difficultWords.includes(word.id)
-              ? 'difficult'
-              : learnedWords.includes(word.id)
-              ? 'learned'
-              : '';
-
             return (
-              <StyledCard className={classType} key={word.word} imgUrl={`${baseUrl}/${word.image}`}>
+              <StyledCard
+                className={toggleClassType(word.id)}
+                key={word.word}
+                imgUrl={`${baseUrl}/${word.image}`}
+              >
                 <StyledCardContent>
                   <div>
                     <p>{word.word}</p>
@@ -251,12 +273,22 @@ export const WordsPage: React.FC = () => {
                         </StyledRemoveBtn>
                       )}
 
-                      <StyledAddBtn
-                        title={'Добавить в изученные слова'}
-                        onClick={() => addLearnedWord(word.id)}
-                      >
-                        <img src={learnedIcon} width="32" height="28" alt="add word" />
-                      </StyledAddBtn>
+                      {learnedWords.includes(word.id) ? (
+                        <StyledRemoveBtn
+                          title={'Удалить из изученных слов'}
+                          onClick={() => removeLearnedWord(word.id)}
+                        >
+                          <img src={removeLearned} width="32" height="28" alt="remove word" />
+                        </StyledRemoveBtn>
+                      ) : +group !== 6 ? (
+                        <StyledAddBtn
+                          title={'Добавить в изученные слова'}
+                          onClick={() => addLearnedWord(word.id)}
+                        >
+                          <img src={learnedIcon} width="32" height="28" alt="add word" />
+                        </StyledAddBtn>
+                      ) : null}
+
                       <span>{word.wordTranslate}</span>
                       <span>{word.transcription}</span>
                     </div>
