@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   login: loginReducer,
   signup: signupReducer,
   sprintGame: sprintGameReducer,
-  textBook: textBookReducer
+  textBook: textBookReducer,
   audioGame: audioGameReducer
 });
 

@@ -1,4 +1,3 @@
-
 import {
   BlockResult,
   Content,
@@ -84,4 +83,3 @@ export const ResultGamePage = (props: ResultGame): React.ReactElement => {
     </BlockResult>
   );
 };
-
