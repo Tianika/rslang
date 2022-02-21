@@ -1,18 +1,9 @@
 import React from 'react';
-import { AnswerText, BlockAnswer, Rainbow, RainbowBlock } from './style';
+import { AnswerText, AnswerTextError, BlockAnswer } from './style';
 
 export const UnauthorizedUserStatistic: React.FC = () => (
   <BlockAnswer>
-    <AnswerText>Чтобы получить статистику, зарегайся!</AnswerText>
-    <RainbowBlock>
-      <Rainbow />
-      <Rainbow />
-      <Rainbow />
-      <Rainbow />
-      <Rainbow />
-      <Rainbow />
-      <Rainbow />
-      <Rainbow />
-    </RainbowBlock>
+    <AnswerText>404</AnswerText>
+    <AnswerTextError>NOT FOUND</AnswerTextError>
   </BlockAnswer>
 );
