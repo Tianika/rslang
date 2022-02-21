@@ -36,12 +36,12 @@ const Table = (): React.ReactElement => {
     if (statistic.optional) {
       setAudioCallWords(statistic.optional.gameStatistics.audiocall.learnedWords);
       setAudioCallCorrect(
-        (audioCallWords / statistic.optional.gameStatistics.audiocall.correctAnswers) * 100
+        (statistic.optional.gameStatistics.audiocall.correctAnswers / audioCallWords) * 100
       );
       setAudioCallLongSeries(statistic.optional.gameStatistics.audiocall.longestSeries);
       setSprintWords(statistic.optional.gameStatistics.sprint.learnedWords);
       setSprintCorrect(
-        (sprintWords / statistic.optional.gameStatistics.sprint.correctAnswers) * 100
+        (statistic.optional.gameStatistics.sprint.correctAnswers / sprintWords) * 100
       );
       setASprintLongSeries(statistic.optional.gameStatistics.sprint.longestSeries);
       setTotalWords(audioCallWords + sprintWords);
