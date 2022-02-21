@@ -78,8 +78,6 @@ export const getUserWord = async (wordId: string): Promise<Response> => {
   });
 
   return response;
-
-  //return axios.get(`${baseUrl}/users/${userId}/words/${wordId}`, config);
 };
 
 //удалить пользовательское слово

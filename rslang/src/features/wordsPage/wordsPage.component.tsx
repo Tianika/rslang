@@ -179,7 +179,6 @@ export const WordsPage: React.FC = () => {
     const type = TypeUserWords.Hard;
 
     dispatch(getUserWordAction({ wordId, type, group, page }));
-    //dispatch(getDifficultWordsAction());
   };
 
   const removeUserWord = (wordId: string | undefined) => {
