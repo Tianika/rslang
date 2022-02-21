@@ -18,27 +18,29 @@ export const LoadingText = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 200px;
   font-size: 80px;
   color: gold;
-  height: 50%;
   background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, violet);
   background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  -webkit-animation: rainbow 20s ease infinite;
-  animation: ${AnimationLoadingText} 20s ease infinite;
+  -webkit-animation: rainbow 10s ease infinite;
+  animation: ${AnimationLoadingText} 10s ease infinite;
   line-height: 25px;
 `;
 export const LoadingBlock = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 800px;
   margin-top: 60px;
 `;
 export const LoadingImage = styled.div`
-  height: 50%;
+  width: 207px;
+  height: 231px;
   background-image: url('${loadingLogo}');
-  animation: 1s linear 0s normal none infinite running ${AnimationImage};
+  animation: ${AnimationImage} 10s ease infinite;
 `;
