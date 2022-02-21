@@ -11,4 +11,12 @@ export type WordsPageState = {
 export type UserWord = {
   wordId: string;
   type: TypeUserWords;
+  group: string;
+  page: string;
 };
+
+export enum UserWordsClass {
+  Default = '',
+  Learned = 'learned',
+  Difficult = 'difficult'
+}

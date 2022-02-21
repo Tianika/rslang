@@ -14,22 +14,22 @@ export const wordsSelector = (state: RootState) => {
 
 //получаем сложные слова
 export const difficultWordsSelector = (state: RootState) => {
-  const userWordsIds: Array<string | undefined> = [];
+  const difficultWordsIds: Array<string | undefined> = [];
 
   state.wordsPage.difficultWords.forEach((word) => {
-    userWordsIds.push(word._id);
+    difficultWordsIds.push(word._id);
   });
 
-  return userWordsIds;
+  return difficultWordsIds;
 };
 
 //получаем изученные слова
 export const learnedWordsSelector = (state: RootState) => {
-  const userWordsIds: Array<string | undefined> = [];
+  const learnedWordsIds: Array<string | undefined> = [];
 
   state.wordsPage.learnedWords.forEach((word) => {
-    userWordsIds.push(word._id);
+    learnedWordsIds.push(word._id);
   });
 
-  return userWordsIds;
+  return learnedWordsIds;
 };

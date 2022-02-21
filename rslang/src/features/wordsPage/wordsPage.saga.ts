@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 import * as Effects from 'redux-saga/effects';
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
 import {
@@ -13,6 +13,7 @@ import {
 import { LoadingState, TypeUserWords } from '../../utils';
 import { wordsPageActions } from './wordsPage.slice';
 import { UserWord } from './types';
+import { AxiosResponse } from 'axios';
 
 const call: any = Effects.call;
 
@@ -36,7 +37,6 @@ function* getDifficultWordsSaga() {
 
 function* getLearnedWordsSaga(action: PayloadAction<{ group: string; page: string }>) {
   const { data } = yield call(requestLearnedWords, action.payload.group, action.payload.page);
-  console.log(data[0].paginatedResults);
   yield put(setLearnedWords(data[0].paginatedResults));
 }
 
@@ -66,8 +66,15 @@ function* getUserWordsSaga(action: PayloadAction<UserWord>) {
       yield call(postUserWord, wordId, type);
     }
 
-    const { data } = yield call(requestDifficultWords);
-    yield put(setDifficultWords(data[0].paginatedResults));
+    const difficult: AxiosResponse = yield call(requestDifficultWords);
+    yield put(setDifficultWords(difficult.data[0].paginatedResults));
+
+    const words: AxiosResponse = yield call(
+      requestLearnedWords,
+      action.payload.group,
+      action.payload.page
+    );
+    yield put(setLearnedWords(words.data[0].paginatedResults));
   } catch (error) {}
 }
 
@@ -103,7 +110,7 @@ function* wordsPageSaga() {
   yield takeLatest(getDifficultWordsAction, getDifficultWordsSaga);
   yield takeLatest(deleteUserWordAction, deleteUserWordsSaga);
   yield takeLatest(getUserWordAction, getUserWordsSaga);
-  yield takeLatest(getLearnedWordsAction, getLearnedWordsSaga);
+  yield takeEvery(getLearnedWordsAction, getLearnedWordsSaga);
 }
 
 export { wordsPageSaga };

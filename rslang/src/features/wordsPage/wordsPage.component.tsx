@@ -38,6 +38,7 @@ import {
 } from './wordsPage.selectors';
 import { baseUrl } from './wordsPage.api';
 import { dropDownMenu } from './wordsPage.constants';
+import { UserWordsClass } from './types';
 
 const {
   firstBookColor,
@@ -105,15 +106,20 @@ export const WordsPage: React.FC = () => {
 
   useEffect(() => {
     console.log(group, page);
-    dispatch(getDifficultWordsAction());
-    dispatch(getLearnedWordsAction({ group, page }));
+
+    if (localStorage.rslangUserId) {
+      dispatch(getDifficultWordsAction());
+      dispatch(getLearnedWordsAction({ group, page }));
+    }
   }, []);
 
   useEffect(() => {
     dispatch(fetchTextBookAction({ group, page }));
 
-    dispatch(getDifficultWordsAction());
-    dispatch(getLearnedWordsAction({ group, page }));
+    if (localStorage.rslangUserId) {
+      dispatch(getDifficultWordsAction());
+      dispatch(getLearnedWordsAction({ group, page }));
+    }
   }, [group, page]);
 
   const checkNumberOfGroup = () => {
@@ -172,8 +178,8 @@ export const WordsPage: React.FC = () => {
   const handleUserWord = (wordId: string) => {
     const type = TypeUserWords.Hard;
 
-    dispatch(getUserWordAction({ wordId, type }));
-    dispatch(getDifficultWordsAction());
+    dispatch(getUserWordAction({ wordId, type, group, page }));
+    //dispatch(getDifficultWordsAction());
   };
 
   const removeUserWord = (wordId: string | undefined) => {
@@ -186,22 +192,28 @@ export const WordsPage: React.FC = () => {
   const addLearnedWord = (wordId: string) => {
     const type = TypeUserWords.Learned;
 
-    dispatch(getUserWordAction({ wordId, type }));
-    dispatch(getDifficultWordsAction());
+    dispatch(getUserWordAction({ wordId, type, group, page }));
     dispatch(getLearnedWordsAction({ group, page }));
   };
 
   const removeLearnedWord = (wordId: string) => {
     dispatch(deleteUserWordAction(wordId));
     dispatch(getLearnedWordsAction({ group, page }));
+    dispatch(getDifficultWordsAction());
   };
 
   const toggleClassType = (id: string) => {
-    const typeClassForWord = difficultWords.includes(id)
-      ? 'difficult'
-      : learnedWords.includes(id)
-      ? 'learned'
-      : '';
+    let typeClassForWord = UserWordsClass.Default;
+
+    if (learnedWords.includes(id)) {
+      typeClassForWord = UserWordsClass.Learned;
+    }
+
+    if (difficultWords.includes(id)) {
+      typeClassForWord = UserWordsClass.Difficult;
+    }
+
+    console.log(typeClassForWord);
 
     return typeClassForWord;
   };

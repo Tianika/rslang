@@ -8,7 +8,6 @@ const initialState: WordsPageState = {
   learnedWords: [],
   loadingState: LoadingState.Initial
 };
-//TODO добавить тип
 
 //создаем редюсеры
 export const wordsPageSlice = createSlice({
@@ -25,7 +24,6 @@ export const wordsPageSlice = createSlice({
       state.difficultWords = action.payload;
     },
     setLearnedWords: (state, action) => {
-      console.log(action.payload);
       state.learnedWords = action.payload;
     }
   }
