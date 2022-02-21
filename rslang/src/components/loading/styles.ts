@@ -20,7 +20,7 @@ export const LoadingText = styled.div`
   width: 100%;
   font-size: 80px;
   color: gold;
-  height: 30%;
+  height: 50%;
   background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, violet);
   background-size: 400% 400%;
   -webkit-background-clip: text;
@@ -38,7 +38,7 @@ export const LoadingBlock = styled.div`
   margin-top: 60px;
 `;
 export const LoadingImage = styled.div`
-  background-image: url('${loadingLogo}');
   height: 50%;
+  background-image: url('${loadingLogo}');
   animation: 1s linear 0s normal none infinite running ${AnimationImage};
 `;
