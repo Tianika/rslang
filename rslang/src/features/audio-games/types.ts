@@ -58,6 +58,8 @@ export type ButtonProps = {
   audioGameErrorAnswerHandler: any;
   audioGameRightAnswerHandler: any;
   updateFakeWords(): void;
+  updateLongestSeries(): void;
+  resetLongestSeries(): void;
 };
 export type ImageAnswer = {
   linkImage: string;
