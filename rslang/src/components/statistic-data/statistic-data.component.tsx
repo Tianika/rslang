@@ -25,24 +25,29 @@ const Table = (): React.ReactElement => {
   const statistic: any = useAppSelector(getStatisticSelector);
   const [audioCallWords, setAudioCallWords] = useState(0);
   const [audioCallCorrect, setAudioCallCorrect] = useState(0);
+  const [audioCallWrong, setAudioCallWrong] = useState(0);
   const [audioCallLongSeries, setAudioCallLongSeries] = useState(0);
   const [sprintWords, setSprintWords] = useState(0);
+  const [sprintWrong, setsprintWrong] = useState(0);
   const [sprintCorrect, setSprintCorrect] = useState(0);
   const [sprintLongSeries, setASprintLongSeries] = useState(0);
   const [totalWords, setTotalWords] = useState(0);
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalLongSeries, setTotalLongSeries] = useState(0);
   useEffect(() => {
+    setAudioCallWrong(statistic.optional.gameStatistics.audiocall.errorAnswers);
+    setsprintWrong(statistic.optional.gameStatistics.sprint.errorAnswers);
     if (statistic.optional) {
       setAudioCallWords(statistic.optional.gameStatistics.audiocall.learnedWords);
-      setAudioCallCorrect(
-        (statistic.optional.gameStatistics.audiocall.correctAnswers / audioCallWords) * 100
-      );
+      if (sprintWords > 0 && audioCallWords > 0 && audioCallCorrect > 0 && sprintCorrect > 0) {
+        setAudioCallCorrect((audioCallWords * 0.1) / audioCallCorrect);
+      }
+
       setAudioCallLongSeries(statistic.optional.gameStatistics.audiocall.longestSeries);
       setSprintWords(statistic.optional.gameStatistics.sprint.learnedWords);
-      setSprintCorrect(
-        (statistic.optional.gameStatistics.sprint.correctAnswers / sprintWords) * 100
-      );
+      if (sprintWords > 0 && sprintWords > 0) {
+        setSprintCorrect((sprintWords * 0.1) / sprintCorrect);
+      }
       setASprintLongSeries(statistic.optional.gameStatistics.sprint.longestSeries);
       setTotalWords(audioCallWords + sprintWords);
       setTotalCorrect(audioCallCorrect + sprintCorrect);
