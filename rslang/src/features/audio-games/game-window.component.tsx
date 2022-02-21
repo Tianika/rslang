@@ -69,6 +69,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       setCurrentWord(word.wordTranslate);
       setIdCurrentWord(word.id);
       setCurrentImage(urlQuery + word.image);
+      disableIsLoading();
     }
   }, [words]);
   if (isLoading) return <LoadingPage />;
