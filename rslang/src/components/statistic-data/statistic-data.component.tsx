@@ -33,7 +33,7 @@ const Table = (): React.ReactElement => {
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalLongSeries, setTotalLongSeries] = useState(0);
   useEffect(() => {
-    if (statistic) {
+    if (statistic.optional) {
       setAudioCallWords(statistic.optional.gameStatistics.audiocall.learnedWords);
       setAudioCallCorrect(
         (audioCallWords / statistic.optional.gameStatistics.audiocall.correctAnswers) * 100
