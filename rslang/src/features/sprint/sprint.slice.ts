@@ -9,7 +9,6 @@ const initialState: SprintWordsState = {
   errorAnswers: []
 };
 
-//создаем редюсеры
 export const sprintGameSlice = createSlice({
   name: 'sprint/game',
   initialState,
@@ -34,6 +33,4 @@ export const sprintGameSlice = createSlice({
 });
 
 export const sprintGameReducer = sprintGameSlice.reducer;
-//добавить sprintGameSlice в reducer.ts
-
 export const sprintGameActions = sprintGameSlice.actions;

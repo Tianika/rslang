@@ -46,6 +46,7 @@ import { LoadingPage } from '../../components/loading';
 import { sprintGameActions } from './sprint.slice';
 import { ResultGamePage } from '../result-game';
 import { getRandomNumber } from './utils';
+import { getStatisticActions } from '../../components/statistic-data/statistic-data.slice';
 
 const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = sprintGameActions;
 
