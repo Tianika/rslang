@@ -17,35 +17,22 @@ const BlockButton: React.FC<ButtonProps> = ({
   count,
   upCurrentWordIndex,
   audioGameErrorAnswerHandler,
-  audioGameRightAnswerHandler
+  audioGameRightAnswerHandler,
+  updateFakeWords
 }): React.ReactElement => {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
   const [clickedButtonIndex, setClickedButtonIndex] = useState(-1);
   const [disable, setDisable] = useState(false);
 
-  const arrayConfusedResponses = (fakeWords: any[] | undefined): string[] | [] => {
-    return fakeWords !== undefined
-      ? [
-          fakeWords[getRandomNumber(80)]?.wordTranslate,
-          fakeWords[getRandomNumber(80)]?.wordTranslate,
-          fakeWords[getRandomNumber(80)]?.wordTranslate,
-          fakeWords[getRandomNumber(80)]?.wordTranslate
-        ]
-      : [];
-  };
-
-  let answerArray: any[] = [];
-  if (arrayConfusedResponses) {
-    answerArray = [...arrayConfusedResponses(fakeArray), rightWord];
-  }
   const responseCheck = (event: EventTarget) => {
     switch ((event as HTMLButtonElement).value) {
       case VALUENEXT:
         setClickedButtonIndex(-1);
         changeCurrentWord();
+        upCurrentWordIndex();
         audioGameErrorAnswerHandler();
-        arrayConfusedResponses(fakeArray);
         showAnswer(false);
+        updateFakeWords();
         setTimeout(() => {
           showAnswer(true);
         }, 1000);
@@ -60,8 +47,8 @@ const BlockButton: React.FC<ButtonProps> = ({
         setClickedButtonIndex(-1);
         changeCurrentWord();
         upCurrentWordIndex();
+        updateFakeWords();
         setDisable(false);
-        arrayConfusedResponses(fakeArray);
         showAnswer(true);
         break;
       default:
@@ -69,12 +56,13 @@ const BlockButton: React.FC<ButtonProps> = ({
         audioGameErrorAnswerHandler();
         updateCurrentLongestSeries(0);
         showAnswer(false);
+
         break;
     }
   };
   return (
     <BlockButtonAnswer>
-      {shuffleArray(answerArray).map((el, index) => {
+      {fakeArray.map((el: any, index: number) => {
         return (
           <StyledButton
             disabled={disable}

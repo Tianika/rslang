@@ -22,6 +22,7 @@ import { ResultGamePage } from '../result-game';
 import { GameTypes, LoadingState } from '../../utils';
 import { LoadingPage } from '../../components/loading';
 import { loadingStatus } from '../sprint/sprint.selectors';
+import { getRandomNumber, shuffleArray } from './utils';
 
 const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = audioGameActions;
 const GameWindow = (props: { level: number }): React.ReactElement => {
@@ -44,9 +45,48 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const [getAnswerButtonClick, setGetAnswerButtonClick] = useState(true);
   const arrayWordRightId = [];
   const [isLoading, setIsLoading] = useState(true);
+  const [fakeWordsSection, setFakeWordsSection] = useState<string[]>([]);
+
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const getWordsSectionArray = (currentWord: string) => {
+    return shuffleArray([
+      currentWord,
+      fakeWords[getRandomNumber(80)]?.wordTranslate,
+      fakeWords[getRandomNumber(80)]?.wordTranslate,
+      fakeWords[getRandomNumber(80)]?.wordTranslate,
+      fakeWords[getRandomNumber(80)]?.wordTranslate
+    ]);
+  };
+
   const disableIsLoading = () => {
     setIsLoading(false);
   };
+
+  const soundPlay = (wordAudio: string) => {
+    new Audio(`${urlQuery}${wordAudio}`).play();
+    return false;
+  };
+
+  useEffect(() => {
+    const word = words[0];
+    if (word && !englishWord) {
+      setEnglishWord(word.word);
+      setCurrentAudio(word.audio);
+      setCurrentWord(word.wordTranslate);
+      setIdCurrentWord(word.id);
+      setCurrentImage(urlQuery + word.image);
+      disableIsLoading();
+      soundPlay(word.audio);
+    }
+  }, [words]);
+
+  useEffect(() => {
+    if (!fakeWordsSection.length && fakeWords.length && currentWord) {
+      setFakeWordsSection(getWordsSectionArray(currentWord));
+    }
+  }, [fakeWords, fakeWordsSection.length]);
+
+  console.log(fakeWordsSection);
 
   useEffect(() => {
     if (status === LoadingState.Success) {
@@ -60,35 +100,22 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
     dispatch(resetAnswerArrays());
     setCurrentWordIndex(0);
   }, []);
-  const soundPlay = () => {
-    new Audio(`${urlQuery}${currentAudio}`).play();
-    return false;
-  };
-  useEffect(() => {
-    const word = words[0];
-    if (word) {
-      setEnglishWord(word.word);
-      setCurrentAudio(word.audio);
-      setCurrentWord(word.wordTranslate);
-      setIdCurrentWord(word.id);
-      setCurrentImage(urlQuery + word.image);
-      disableIsLoading();
-      soundPlay();
-    }
-  }, [words]);
+
   if (isLoading) return <LoadingPage />;
   const upCurrentWordIndex = () => {
     setCurrentWordIndex(currentWordIndex + 1);
   };
+
+  console.log(words, currentWordIndex, currentWord);
   const changeCurrentWord = () => {
-    const word = words[currentWordIndex];
+    const word = words[currentWordIndex + 1];
     if (word) {
       setEnglishWord(word.word);
       setCurrentAudio(word.audio);
       setCurrentWord(word.wordTranslate);
       setIdCurrentWord(word.id);
       setCurrentImage(urlQuery + word.image);
-      soundPlay();
+      soundPlay(word.audio);
     }
   };
   if (currentWordIndex === 20) {
@@ -145,7 +172,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
 
       <BlockButton
         updateCurrentLongestSeries={updateCurrentLongestSeries}
-        fakeArray={fakeWords}
+        fakeArray={fakeWordsSection}
         showAnswer={setGetAnswerButtonClick}
         hideAnswer={setGetAnswerButtonClick}
         rightWord={currentWord}
@@ -154,6 +181,10 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
         setArrayWordRightId={addRightWordIdArray}
         idCurrentWord={idCurrentWord}
         count={count}
+        updateFakeWords={() => {
+          const word = words[currentWordIndex + 1]?.wordTranslate as string;
+          setFakeWordsSection(getWordsSectionArray(word));
+        }}
         upCurrentWordIndex={upCurrentWordIndex}
         audioGameErrorAnswerHandler={audioGameErrorAnswerHandler}
         audioGameRightAnswerHandler={audioGameRightAnswerHandler}
