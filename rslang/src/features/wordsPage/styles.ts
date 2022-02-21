@@ -69,8 +69,35 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
 
   &.difficult {
     outline: 5px solid ${baseTheme.colors.sevenBookColor};
+
+    &::before {
+      background: linear-gradient(
+        180deg,
+        rgba(196, 196, 196, 0) 0%,
+        rgba(196, 196, 196, 0.0753941) -7.85%,
+        rgba(196, 196, 196, 0.4) -40.67%,
+        ${baseTheme.colors.sevenBookColor} 100%
+      );
+    }
+
     &:hover {
       box-shadow: 5px 5px 15px 5px ${baseTheme.colors.sevenBookColor};
+    }
+  }
+
+  &.learned {
+    &::before {
+      background: linear-gradient(
+        180deg,
+        rgba(196, 196, 196, 0) 0%,
+        rgba(196, 196, 196, 0.0753941) -7.85%,
+        rgba(196, 196, 196, 0.4) -40.67%,
+        ${baseTheme.colors.learned} 100%
+      );
+    }
+
+    &:hover {
+      box-shadow: 5px 5px 15px 5px ${baseTheme.colors.learned};
     }
   }
 `;

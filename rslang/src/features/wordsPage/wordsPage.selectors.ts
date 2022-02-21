@@ -22,3 +22,14 @@ export const difficultWordsSelector = (state: RootState) => {
 
   return userWordsIds;
 };
+
+//получаем изученные слова
+export const learnedWordsSelector = (state: RootState) => {
+  const userWordsIds: Array<string | undefined> = [];
+
+  state.wordsPage.learnedWords.forEach((word) => {
+    userWordsIds.push(word._id);
+  });
+
+  return userWordsIds;
+};

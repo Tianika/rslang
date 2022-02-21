@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { baseTheme, LoadingState } from '../../utils';
+import { baseTheme, LoadingState, TypeUserWords } from '../../utils';
 import {
   StyledCardSection,
   StyledWrapper,
@@ -17,17 +17,25 @@ import {
 import cardIconAudio from '../../assets/svg/card-icon-audio.svg';
 import cardPlusIcon from '../../assets/svg/card-plus-icon.svg';
 import removeIcon from '../../assets/svg/remove.svg';
+import learnedIcon from '../../assets/svg/learned-word-icon.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { IWord } from '../textbook/types';
 import {
   deleteUserWordAction,
   fetchTextBookAction,
   getAggregatedWordsAction,
+  getLearnedWordsAction,
+  getUserWordAction,
   postUserWordAction
 } from './wordsPage.saga';
 
 import { LoadingPage } from '../../components/loading';
-import { difficultWordsSelector, statusSelector, wordsSelector } from './wordsPage.selectors';
+import {
+  difficultWordsSelector,
+  learnedWordsSelector,
+  statusSelector,
+  wordsSelector
+} from './wordsPage.selectors';
 import { baseUrl } from './wordsPage.api';
 
 const {
@@ -43,13 +51,10 @@ const {
 export const WordsPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(getAggregatedWordsAction());
-  }, []);
-
   //слова
   const words = useAppSelector(wordsSelector);
   const difficultWords = useAppSelector(difficultWordsSelector);
+  const learnedWords = useAppSelector(learnedWordsSelector);
 
   //роутинг
   const { search } = useLocation();
@@ -96,6 +101,11 @@ export const WordsPage: React.FC = () => {
     pageNumber === 29 ? 29 : (pageNumber += 1);
     return `?group=${group}&page=${pageNumber}`;
   };
+
+  useEffect(() => {
+    dispatch(getAggregatedWordsAction());
+    dispatch(getLearnedWordsAction({ group, page }));
+  }, []);
 
   useEffect(() => {
     dispatch(fetchTextBookAction({ group, page }));
@@ -154,12 +164,33 @@ export const WordsPage: React.FC = () => {
     }
   };
 
+  //добавить в сложные
   const handleUserWord = (wordId: string) => {
-    dispatch(postUserWordAction(wordId));
+    const type = TypeUserWords.Hard;
+
+    dispatch(getUserWordAction({ wordId, type }));
     dispatch(getAggregatedWordsAction());
   };
 
+  //удалить из сложных
   const removeUserWord = (wordId: string | undefined) => {
+    if (wordId) {
+      dispatch(deleteUserWordAction(wordId));
+      dispatch(fetchTextBookAction({ group, page }));
+    }
+  };
+
+  //добавить в изученные
+  const addLearnedWord = (wordId: string) => {
+    const type = TypeUserWords.Learned;
+
+    dispatch(getUserWordAction({ wordId, type }));
+    dispatch(getAggregatedWordsAction());
+    dispatch(getLearnedWordsAction({ group, page }));
+  };
+
+  //удалить из изученных
+  const removeLearnedWord = (wordId: string | undefined) => {
     if (wordId) {
       dispatch(deleteUserWordAction(wordId));
       dispatch(fetchTextBookAction({ group, page }));
@@ -190,12 +221,14 @@ export const WordsPage: React.FC = () => {
           .slice()
           .sort((a, b) => a.word.localeCompare(b.word))
           .map((word: IWord) => {
+            const classType = difficultWords.includes(word.id)
+              ? 'difficult'
+              : learnedWords.includes(word.id)
+              ? 'learned'
+              : '';
+
             return (
-              <StyledCard
-                className={difficultWords.includes(word.id) ? 'difficult' : ''}
-                key={word.word}
-                imgUrl={`${baseUrl}/${word.image}`}
-              >
+              <StyledCard className={classType} key={word.word} imgUrl={`${baseUrl}/${word.image}`}>
                 <StyledCardContent>
                   <div>
                     <p>{word.word}</p>
@@ -223,6 +256,12 @@ export const WordsPage: React.FC = () => {
                         </StyledRemoveBtn>
                       )}
 
+                      <StyledAddBtn
+                        title={'Добавить в изученные слова'}
+                        onClick={() => addLearnedWord(word.id)}
+                      >
+                        <img src={learnedIcon} width="32" height="28" alt="add word" />
+                      </StyledAddBtn>
                       <span>{word.wordTranslate}</span>
                       <span>{word.transcription}</span>
                     </div>

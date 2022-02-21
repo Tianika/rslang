@@ -5,6 +5,7 @@ import { WordsPageState } from './types';
 const initialState: WordsPageState = {
   words: [],
   aggregatedWords: [],
+  learnedWords: [],
   loadingState: LoadingState.Initial
 };
 //TODO добавить тип
@@ -22,6 +23,10 @@ export const wordsPageSlice = createSlice({
     },
     setAggregatedWords: (state, action) => {
       state.aggregatedWords = action.payload;
+    },
+    setLearnedWords: (state, action) => {
+      console.log(action.payload);
+      state.learnedWords = action.payload;
     }
   }
 });

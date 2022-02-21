@@ -13,3 +13,8 @@ export enum GameTypes {
   Sprint = 'Sprint',
   AudioCall = 'AudioCall'
 }
+
+export enum TypeUserWords {
+  Hard = 'hard',
+  Learned = 'learned'
+}

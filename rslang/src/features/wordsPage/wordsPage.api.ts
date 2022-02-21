@@ -1,4 +1,5 @@
 import axios, { AxiosPromise } from 'axios';
+import { UserWord } from './types';
 
 export const baseUrl = 'https://learnwords-team17.herokuapp.com';
 
@@ -22,26 +23,33 @@ export const getUserToken = () => {
   }
 };
 
-export const postUserWord = (wordId: string) => {
+//добавить выбранный пользователем тип для слова
+export const postUserWord = (wordId: string, type: string) => {
   const userId = getUserId();
   const data = {
-    difficulty: 'hard',
+    difficulty: type,
     optional: {}
   };
+  console.log(data);
   return axios.post(`${baseUrl}/users/${userId}/words/${wordId}`, data, config);
 };
 
-// export const getAggregatedWords = () => {
-//   const userId = getUserId();
-//   return axios.get(
-//     `${baseUrl}/users/${userId}/aggregatedWords?wordsPerPage=3600&filter=%7B%22userWord.difficulty%22%3A%22hard%22%7D`,
-//     config
-//   );
-// };
+//обновить выбранный пользователем тип для слова
+export const updateUserWord = (wordId: string, type: string) => {
+  const userId = getUserId();
+  const data = {
+    difficulty: type,
+    optional: {}
+  };
+  console.log(data);
+  return axios.put(`${baseUrl}/users/${userId}/words/${wordId}`, data, config);
+};
 
+//получить слова по группе и странице
 export const requestWords = (group = 0, page = 0): AxiosPromise =>
   axios.get(`${baseUrl}/words?group=${group}&page=${page}`);
 
+//получить все сложные слова
 export const requestDifficultWords = (): AxiosPromise<Response> => {
   const id = localStorage.rslangUserId;
 
@@ -51,6 +59,31 @@ export const requestDifficultWords = (): AxiosPromise<Response> => {
   );
 };
 
+//получить изученные слова на странице
+export const requestLearnedWords = (group: number, page: number): AxiosPromise<Response> => {
+  const id = localStorage.rslangUserId;
+
+  return axios.get(
+    `${baseUrl}/users/${id}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=20&filter={"userWord.difficulty":"learned"}`,
+    config
+  );
+};
+
+//получить пользовательское слово
+export const getUserWord = async (wordId: string): Promise<Response> => {
+  const userId = getUserId();
+
+  const response = await fetch(`${baseUrl}/users/${userId}/words/${wordId}`, {
+    method: 'GET',
+    headers: config.headers
+  });
+
+  return response;
+
+  //return axios.get(`${baseUrl}/users/${userId}/words/${wordId}`, config);
+};
+
+//удалить пользовательское слово
 export const deleteUserWord = (wordId: string): AxiosPromise<Response> => {
   const userId = getUserId();
 
