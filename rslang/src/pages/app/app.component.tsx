@@ -11,7 +11,7 @@ import { Statistics } from '../statistics/statistics.component';
 import { GamesPage } from '../games/startPageGames.component';
 import { SprintStartPage } from '../../features/sprint';
 import { Textbook } from '../../features/textbook/textbook.component';
-import { WordsPage } from '../../features/textbook/wordsPage/wordsPage.component';
+import { WordsPage } from '../../features/wordsPage/wordsPage.component';
 import { Login } from '../../features/login';
 import StartPageAudioCall from '../../features/audio-games/audio-game.component';
 

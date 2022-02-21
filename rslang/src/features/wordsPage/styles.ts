@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { baseTheme } from '../../../utils';
+import { baseTheme } from '../../utils';
 
 export const hex2rgba = (hex: string, alpha = 1): string => {
   const [r, g, b] = (hex.match(/\w\w/g) as Array<string>).map((x) => parseInt(x, 16));
@@ -38,10 +38,7 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
   background-size: cover;
   object-fit: cover;
   padding: 10px;
-  outline: transparent;
-  border: none;
   font-size: 20px;
-  overflow: hidden;
   color: #fff;
   transition: all 0.2s;
   &:hover {
@@ -68,6 +65,40 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
     border-radius: 13px;
     z-index: -1;
     transition: all 0.2s;
+  }
+
+  &.difficult {
+    outline: 5px solid ${baseTheme.colors.sevenBookColor};
+
+    &::before {
+      background: linear-gradient(
+        180deg,
+        rgba(196, 196, 196, 0) 0%,
+        rgba(196, 196, 196, 0.0753941) -7.85%,
+        rgba(196, 196, 196, 0.4) -40.67%,
+        ${baseTheme.colors.sevenBookColor} 100%
+      );
+    }
+
+    &:hover {
+      box-shadow: 5px 5px 15px 5px ${baseTheme.colors.sevenBookColor};
+    }
+  }
+
+  &.learned {
+    &::before {
+      background: linear-gradient(
+        180deg,
+        rgba(196, 196, 196, 0) 0%,
+        rgba(196, 196, 196, 0.0753941) -7.85%,
+        rgba(196, 196, 196, 0.4) -40.67%,
+        ${baseTheme.colors.learned} 100%
+      );
+    }
+
+    &:hover {
+      box-shadow: 5px 5px 15px 5px ${baseTheme.colors.learned};
+    }
   }
 `;
 
@@ -151,6 +182,13 @@ const StyledClearBtn = styled.button`
 export const StyledAudioBtn = styled(StyledClearBtn)``;
 
 export const StyledAddBtn = styled(StyledClearBtn)`
+  display: ${localStorage.getItem('rslangUserName') ? '' : 'none'};
+  img {
+    pointer-events: none;
+  }
+`;
+
+export const StyledRemoveBtn = styled(StyledClearBtn)`
   display: ${localStorage.getItem('rslangUserName') ? '' : 'none'};
   img {
     pointer-events: none;
