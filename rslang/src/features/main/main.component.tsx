@@ -24,6 +24,7 @@ import logoy from '../../assets/svg/logo-y.svg';
 import logod from '../../assets/svg/logo-d.svg';
 import demo from '../../assets/jpegs/demo.jpg';
 import { checkVerification } from '../login/verification';
+import { Video } from '../../pages/app/styles';
 
 const Main: FC = () => {
   checkVerification();
@@ -111,7 +112,13 @@ const Main: FC = () => {
       </StyledTeam>
       <StyledDemo>
         <h3>Демо</h3>
-        <img src={demo} alt="demo" />
+        <Video
+          src="https://www.youtube.com/embed/jdH9isOxDTs"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
         <p>
           Приложение для изучения иностранных слов с техникой интервального повторения, отслеживания
           индивидуального прогресса и мини-игр.

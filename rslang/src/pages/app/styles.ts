@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -32,5 +32,11 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 `;
-
+export const Video = styled.iframe`
+  width: 902px;
+  height: 545px;
+  border: 1px solid #5984e2;
+  box-sizing: border-box;
+  border-radius: 13px;
+`;
 export default GlobalStyle;
