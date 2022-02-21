@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { userSelector } from './login.selectors';
+import { statusSelector, userSelector } from './login.selectors';
 import { fetchLoginAction } from './login.saga';
 import { loginActions } from './login.slice';
 import {
@@ -12,20 +12,24 @@ import {
   EmailTitle,
   PreloadLine
 } from './styles';
-import { AccountProps } from '../../utils';
+import { AccountProps, LoadingState } from '../../utils';
+import { Link } from 'react-router-dom';
+import { ContainerButton, TabEntrance, TabRecord } from '../../features/login/styles';
 
 const { changeEmail, changePassword } = loginActions;
 
-export const Login: React.FC = (props) => {
+export const Login: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const login = useAppSelector(userSelector);
+  const status = useAppSelector(statusSelector);
 
   //вкл-выкл кнопку при отправке запроса
   const [disable, setDisable] = useState(false);
-  const toggleDisable = () => {
+
+  const toggleDisable = useCallback(() => {
     setDisable(!disable);
-  };
+  }, [disable]);
 
   //отслеживаем изменение полей ввода
   const onEmailChange: AccountProps['onEmailChange'] = (event) => {
@@ -38,12 +42,17 @@ export const Login: React.FC = (props) => {
     dispatch(changePassword(value));
   };
 
+  //включаем кнопку при ошибке логина
+  useEffect(() => {
+    if (disable && status.status === LoadingState.Error) {
+      toggleDisable();
+    }
+  }, [status, disable, toggleDisable]);
+
   //запрос
   const fetchLogin = () => {
     toggleDisable();
     dispatch(fetchLoginAction(login));
-
-    // доработать включение-отключение кнопки
   };
 
   const PreloadDiv: React.FC = () => {
@@ -58,6 +67,14 @@ export const Login: React.FC = (props) => {
 
   return (
     <div>
+      <ContainerButton>
+        <Link to={'/account/login'}>
+          <TabEntrance type={'button'}>ВХОД</TabEntrance>
+        </Link>
+        <Link to={'/account/signup'}>
+          <TabRecord type={'button'}>РЕГИСТРАЦИЯ</TabRecord>
+        </Link>
+      </ContainerButton>
       <WindowAuthorizationAccount>
         <EmailTitle>ЭЛЕКТРОННАЯ ПОЧТА</EmailTitle>
         <EntryFieldEmail onChange={onEmailChange} type={'email'} autoComplete="on" />

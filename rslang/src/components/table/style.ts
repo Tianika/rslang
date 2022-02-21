@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { baseTheme } from '../../utils';
 
 export const TableStatistic = styled.table`
   width: 80%;
