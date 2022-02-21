@@ -47,10 +47,6 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const disableIsLoading = () => {
     setIsLoading(false);
   };
-  const soundPlay = () => {
-    new Audio(`${urlQuery}${currentAudio}`).play();
-    return false;
-  };
 
   useEffect(() => {
     if (status === LoadingState.Success) {
@@ -64,16 +60,20 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
     dispatch(resetAnswerArrays());
     setCurrentWordIndex(0);
   }, []);
+  const soundPlay = () => {
+    new Audio(`${urlQuery}${currentAudio}`).play();
+    return false;
+  };
   useEffect(() => {
     const word = words[0];
     if (word) {
-      soundPlay();
       setEnglishWord(word.word);
       setCurrentAudio(word.audio);
       setCurrentWord(word.wordTranslate);
       setIdCurrentWord(word.id);
       setCurrentImage(urlQuery + word.image);
       disableIsLoading();
+      soundPlay();
     }
   }, [words]);
   if (isLoading) return <LoadingPage />;
@@ -137,7 +137,9 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
               return false;
             }}
           />
-          <WindowAnswerWord>{englishWord}</WindowAnswerWord>
+          <WindowAnswerWord>
+            {englishWord} [ {currentWord} ]
+          </WindowAnswerWord>
         </WindowAnswerWordBlock>
       </WindowAnswer>
 

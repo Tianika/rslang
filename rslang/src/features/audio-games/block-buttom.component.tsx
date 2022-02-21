@@ -47,8 +47,8 @@ const BlockButton: React.FC<ButtonProps> = ({
         arrayConfusedResponses(fakeArray);
         showAnswer(false);
         setTimeout(() => {
-          showAnswer(false);
-        }, 500);
+          showAnswer(true);
+        }, 1000);
         break;
       case rightWord:
         setDisable(true);
