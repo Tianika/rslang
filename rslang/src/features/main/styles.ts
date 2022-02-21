@@ -94,7 +94,7 @@ export const StyledTeam = styled.section`
 
 export const StyledInnerWrap = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
 
@@ -126,6 +126,7 @@ export const StyledTeamMember = styled.div`
 
   p {
     margin: 10px;
+    font-size: 20px;
   }
 `;
 

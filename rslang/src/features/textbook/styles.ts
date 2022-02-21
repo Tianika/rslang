@@ -11,9 +11,9 @@ export const TextbookStyled = styled.section`
 `;
 
 export const BooksListStyled = styled.ul`
-  padding: 0;
+  padding: 20px;
   margin: 0;
-  width: 100%;
+  width: 90%;
   align-items: center;
   justify-items: center;
   display: grid;
