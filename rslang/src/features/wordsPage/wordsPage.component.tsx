@@ -37,6 +37,7 @@ import {
   wordsSelector
 } from './wordsPage.selectors';
 import { baseUrl } from './wordsPage.api';
+import { dropDownMenu } from './wordsPage.constants';
 
 const {
   firstBookColor,
@@ -164,7 +165,6 @@ export const WordsPage: React.FC = () => {
     }
   };
 
-  //добавить в сложные
   const handleUserWord = (wordId: string) => {
     const type = TypeUserWords.Hard;
 
@@ -172,7 +172,6 @@ export const WordsPage: React.FC = () => {
     dispatch(getAggregatedWordsAction());
   };
 
-  //удалить из сложных
   const removeUserWord = (wordId: string | undefined) => {
     if (wordId) {
       dispatch(deleteUserWordAction(wordId));
@@ -180,7 +179,6 @@ export const WordsPage: React.FC = () => {
     }
   };
 
-  //добавить в изученные
   const addLearnedWord = (wordId: string) => {
     const type = TypeUserWords.Learned;
 
@@ -189,7 +187,6 @@ export const WordsPage: React.FC = () => {
     dispatch(getLearnedWordsAction({ group, page }));
   };
 
-  //удалить из изученных
   const removeLearnedWord = (wordId: string | undefined) => {
     if (wordId) {
       dispatch(deleteUserWordAction(wordId));
@@ -197,7 +194,6 @@ export const WordsPage: React.FC = () => {
     }
   };
 
-  //отслеживаем статус загрузки
   const status = useAppSelector(statusSelector);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -211,7 +207,6 @@ export const WordsPage: React.FC = () => {
     }
   }, [status]);
 
-  //пока не догрузились данные страница Loading
   if (isLoading) return <LoadingPage />;
 
   return (
@@ -306,9 +301,23 @@ export const WordsPage: React.FC = () => {
             </Link>
           </div>
           <div>
-            <StyledGroupNumber
-              group={`${checkNumberOfGroup()}`}
-            >{`${copyPrevGroup}`}</StyledGroupNumber>
+            <StyledGroupNumber group={`${checkNumberOfGroup()}`}>
+              {`${copyPrevGroup}`}
+              <ul>
+                {dropDownMenu.map((linkElem, index) => {
+                  return (
+                    <li key={index}>
+                      <Link
+                        to={`?group=${linkElem.groupNum}&page=0`}
+                        style={{ padding: '15px', display: 'inline-block' }}
+                      >
+                        {linkElem.text}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </StyledGroupNumber>
           </div>
         </StyledPagination>
       </StyledWrapper>
