@@ -1,4 +1,9 @@
 import React from 'react';
-import { LoadingMain } from './styles';
+import { LoadingBlock, LoadingImage, LoadingText } from './styles';
 
-export const LoadingPage: React.FC = () => <LoadingMain>Загрузка...</LoadingMain>;
+export const LoadingPage: React.FC = () => (
+  <LoadingBlock>
+    <LoadingText>Загрузка...</LoadingText>
+    <LoadingImage />
+  </LoadingBlock>
+);
