@@ -35,10 +35,14 @@ const Table = (): React.ReactElement => {
   useEffect(() => {
     if (statistic) {
       setAudioCallWords(statistic.optional.gameStatistics.audiocall.learnedWords);
-      setAudioCallCorrect(statistic.optional.gameStatistics.audiocall.correctAnswers);
+      setAudioCallCorrect(
+        (audioCallWords / statistic.optional.gameStatistics.audiocall.correctAnswers) * 100
+      );
       setAudioCallLongSeries(statistic.optional.gameStatistics.audiocall.longestSeries);
       setSprintWords(statistic.optional.gameStatistics.sprint.learnedWords);
-      setSprintCorrect(statistic.optional.gameStatistics.sprint.correctAnswers);
+      setSprintCorrect(
+        (sprintWords / statistic.optional.gameStatistics.sprint.correctAnswers) * 100
+      );
       setASprintLongSeries(statistic.optional.gameStatistics.sprint.longestSeries);
       setTotalWords(audioCallWords + sprintWords);
       setTotalCorrect(audioCallCorrect + sprintCorrect);
@@ -47,7 +51,6 @@ const Table = (): React.ReactElement => {
       );
     }
   }, [statistic]);
-  console.log(statistic);
   return (
     <div>
       <TableStatistic>
