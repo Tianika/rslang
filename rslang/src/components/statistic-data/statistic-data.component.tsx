@@ -60,7 +60,10 @@ const Table = (): React.ReactElement => {
           )
         );
         setASprintLongSeries(statistic.optional.gameStatistics.sprint.longestSeries);
-        setTotalWords(audioCallWords + sprintWords);
+        setTotalWords(
+          statistic.optional.gameStatistics.sprint.correctAnswers +
+            statistic.optional.gameStatistics.audiocall.correctAnswers
+        );
 
         setTotalLongSeries(
           audioCallLongSeries > sprintLongSeries ? audioCallLongSeries : sprintLongSeries
