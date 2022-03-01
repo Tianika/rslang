@@ -9,6 +9,9 @@ export const StyledHeader = styled.header`
   padding: 10px 10px 0 10px;
   border-bottom: 1px solid ${baseTheme.colors.secondary};
   width: 100%;
+  @media (max-width: 768px) {
+    min-width: 500px;
+  }
 `;
 
 export const Wrapper = styled.div`
