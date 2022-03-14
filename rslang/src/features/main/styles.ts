@@ -58,6 +58,11 @@ export const StyledHowToLearn = styled.section`
   & > div {
     display: flex;
     align-items: center;
+    @media (max-width: 500px) {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
   }
 
   & > div:nth-child(odd) {
@@ -85,7 +90,7 @@ export const StyledHowToLearn = styled.section`
       margin-left: -30px;
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 500px) {
     flex-direction: column;
     img {
       width: 200px;
@@ -135,11 +140,12 @@ export const StyledInnerWrap = styled.div`
       border: 1px solid #000000;
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 500px) {
     display: flex;
     flex-direction: column;
     width: 80%;
     padding: 10px 0;
+    align-items: center;
   }
 `;
 
@@ -163,6 +169,12 @@ export const StyledTeamMember = styled.div`
     a {
       margin-left: 10px;
     }
+  }
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 10px 0;
   }
 `;
 
@@ -188,16 +200,16 @@ export const StyledDemo = styled.section`
     width: 902px;
     margin: 0 auto;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 500px) {
     padding: 10px;
     iframe {
       width: 90%;
       height: 300px;
     }
     p {
-      font-size: 20px;
+      font-size: 15px;
       padding-bottom: 80px;
-      width: 400px;
+      width: 300px;
       margin: 0 auto;
     }
   }

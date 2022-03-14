@@ -10,6 +10,11 @@ export const BlockResult = styled.div`
   margin: 20px auto;
   border-radius: 13px;
   background: ${baseTheme.colors.bg};
+  font-size: 20px;
+  @media (max-width: 500px) {
+    width: 90%;
+    margin: 5px auto 55px;
+  }
 `;
 
 export const TitleGame = styled.h1`
@@ -29,6 +34,9 @@ export const SubtitleGame = styled.div`
   width: 480px;
   text-align: center;
   padding: 10px 0 20px;
+  @media (max-width: 500px) {
+    width: 90%;
+  }
 `;
 
 export const Result = styled.span`
@@ -41,6 +49,9 @@ export const Content = styled.div`
   color: ${baseTheme.colors.font};
   width: 500px;
   padding-bottom: 20px;
+  @media (max-width: 500px) {
+    width: 90%;
+  }
 `;
 
 export const ResultBlock = styled.div`
@@ -51,6 +62,10 @@ export const ResultBlock = styled.div`
   font-size: 22px;
   font-weight: 400;
   margin-bottom: 10px;
+  @media (max-width: 500px) {
+    width: 90%;
+    font-size: 20px;
+  }
 `;
 
 export const ResultWrapper = styled.div`
@@ -83,6 +98,9 @@ export const WordsTitle = styled.h4`
   font-size: 22px;
   line-height: 26px;
   font-weight: 400;
+  @media (max-width: 500px) {
+    font-size: 20px;
+  }
 `;
 
 export const RightWordsResult = styled.span`
@@ -98,6 +116,9 @@ export const RightWordsResult = styled.span`
   height: 40px;
   border-radius: 50px;
   margin: 0 10px;
+  @media (max-width: 500px) {
+    font-size: 18px;
+  }
 `;
 
 export const ErrorWordsResult = styled.span`
@@ -113,6 +134,9 @@ export const ErrorWordsResult = styled.span`
   height: 40px;
   border-radius: 50px;
   margin: 0 10px;
+  @media (max-width: 500px) {
+    font-size: 18px;
+  }
 `;
 
 export const WordContainer = styled.div`
@@ -135,6 +159,9 @@ export const WordItem = styled.div`
   line-height: 26px;
   font-weight: 400;
   color: ${baseTheme.colors.font};
+  @media (max-width: 500px) {
+    font-size: 15px;
+  }
 `;
 
 export const TransriptionItem = styled.div`
@@ -143,6 +170,9 @@ export const TransriptionItem = styled.div`
   font-weight: 400;
   color: #c4c4c4;
   margin: 0 10px;
+  @media (max-width: 500px) {
+    font-size: 15px;
+  }
 `;
 
 export const TranslateItem = styled.div`
@@ -150,6 +180,9 @@ export const TranslateItem = styled.div`
   line-height: 26px;
   font-weight: 400;
   color: ${baseTheme.colors.font};
+  @media (max-width: 500px) {
+    font-size: 15px;
+  }
 `;
 
 export const ExitButton = styled.button`
@@ -169,5 +202,8 @@ export const ExitButton = styled.button`
   cursor: pointer;
   &:hover {
     background-color: ${baseTheme.colors.green};
+  }
+  @media (max-width: 500px) {
+    font-size: 15px;
   }
 `;

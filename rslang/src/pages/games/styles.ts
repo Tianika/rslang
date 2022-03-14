@@ -7,6 +7,11 @@ export const BlockGame = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 50rem;
+  @media (max-width: 500px) {
+    margin: 0;
+    flex-direction: column;
+    height: 45rem;
+  }
 `;
 export const BlockGameElem = styled.section<GameElement>`
   background: ${(props) => (props.colorSelection === '/games/audio' ? '#6dc3ff' : '#ff6849')};
@@ -27,5 +32,9 @@ export const BlockGameElem = styled.section<GameElement>`
       props.colorSelection === '/games/audio'
         ? '4px 4px 8px 0 rgb(8, 101, 172)'
         : '14px 4px 8px 0 rgb(119, 50, 34)'};
+  }
+  @media (max-width: 500px) {
+    width: 360px;
+    height: 300px;
   }
 `;

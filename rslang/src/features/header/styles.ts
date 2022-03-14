@@ -9,8 +9,8 @@ export const StyledHeader = styled.header`
   padding: 10px 10px 0 10px;
   border-bottom: 1px solid ${baseTheme.colors.secondary};
   width: 100%;
-  @media (max-width: 768px) {
-    min-width: 500px;
+  @media (max-width: 500px) {
+    min-width: 360px;
   }
 `;
 
@@ -51,6 +51,9 @@ export const ListItem = styled.li`
     margin-bottom: 5px;
 
     display: none;
+    @media (max-width: 500px) {
+      padding-top: 69px;
+    }
 
     li:nth-child(2) {
       background-color: #ffa901;

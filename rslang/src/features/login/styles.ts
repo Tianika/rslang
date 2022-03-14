@@ -9,6 +9,10 @@ export const WindowAuthorizationAccount = styled.form`
   margin: 50px auto;
   display: flex;
   flex-direction: column;
+  @media (max-width: 500px) {
+    width: 360px;
+    height: 400px;
+  }
 `;
 export const EmailTitle = styled.p`
   margin-top: 20px;
@@ -27,6 +31,9 @@ export const EntryFieldEmail = styled.input`
   margin-left: 30px;
   font-size: 24px;
   text-align: center;
+  @media (max-width: 500px) {
+    width: 300px;
+  }
 `;
 export const PasswordTitle = styled.p`
   font-family: Roboto, sans-serif;
@@ -44,6 +51,9 @@ export const EntryFieldPassword = styled.input`
   margin-left: 30px;
   font-size: 24px;
   text-align: center;
+  @media (max-width: 500px) {
+    width: 300px;
+  }
 `;
 export const ButtonAuthentication = styled.button`
   width: 150px;
@@ -106,6 +116,10 @@ export const ContainerButton = styled.div`
   display: flex;
   justify-content: space-around;
   margin: 100px auto 20px;
+  @media (max-width: 500px) {
+    width: 300px;
+    margin: 10px auto;
+  }
 `;
 export const TabEntrance = styled.button`
   font-size: 22px;
@@ -123,6 +137,11 @@ export const TabEntrance = styled.button`
     border: 1px solid ${baseTheme.colors.red};
     transform: scale(1.1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  @media (max-width: 500px) {
+    width: 150px;
+    margin: 5px;
+    font-size: 18px;
   }
 `;
 export const TabRecord = styled.button`
@@ -142,6 +161,11 @@ export const TabRecord = styled.button`
     transform: scale(1.1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
+  @media (max-width: 500px) {
+    width: 150px;
+    margin: 5px;
+    font-size: 18px;
+  }
 `;
 export const RecordTitle = styled.p`
   margin-top: 20px;
@@ -158,6 +182,9 @@ export const EntryFieldRecord = styled.input`
   border-radius: 13px;
   border: none;
   margin-left: 30px;
+  @media (max-width: 500px) {
+    width: 300px;
+  }
 `;
 export const WindowRecordAccount = styled.div`
   width: 600px;
@@ -167,6 +194,10 @@ export const WindowRecordAccount = styled.div`
   margin: 50px auto;
   display: flex;
   flex-direction: column;
+  @media (max-width: 500px) {
+    width: 360px;
+    margin: 20px auto;
+  }
 `;
 export const ButtonRecord = styled.button`
   width: 300px;
@@ -185,5 +216,9 @@ export const ButtonRecord = styled.button`
     border: 1px solid ${baseTheme.colors.primary};
     transform: scale(1.1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  @media (max-width: 500px) {
+    width: 250px;
+    font-size: 18px;
   }
 `;
