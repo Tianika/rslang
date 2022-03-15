@@ -166,7 +166,7 @@ export const StyledMenu = styled.nav<StyledMenuOpen>`
   top: 0;
   left: 0;
   transition: transform 0.3s ease-in-out;
-
+  z-index: 999;
   @media (max-width: 576px) {
     width: 100%;
   }
@@ -221,7 +221,7 @@ export const StyledBurger = styled.button<StyledBurgerOpen>`
     transition: all 0.3s linear;
     position: relative;
     transform-origin: 1px;
-
+    z-index: 1000;
     :first-child {
       transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
     }
