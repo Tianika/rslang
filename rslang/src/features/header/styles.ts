@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../utils';
 import burgerOpen from '../../assets/svg/burgerOpen.svg';
+import { StyledBurgerOpen, StyledMenuOpen } from './types';
 
 export const StyledHeader = styled.header`
   min-width: 962px;
@@ -152,15 +153,15 @@ export const Logout = styled.button`
   }
 `;
 
-export const StyledMenu = styled.nav`
+export const StyledMenu = styled.nav<StyledMenuOpen>`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   background: #b8ddff;
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   height: 100vh;
   text-align: left;
-  padding: 2rem;
+  padding: 3rem;
   position: absolute;
   top: 0;
   left: 0;
@@ -190,7 +191,7 @@ export const StyledMenu = styled.nav`
     }
   }
 `;
-export const StyledBurger = styled.button`
+export const StyledBurger = styled.button<StyledBurgerOpen>`
   position: absolute;
   top: 15px;
   left: 1rem;

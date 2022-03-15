@@ -2,7 +2,7 @@ import { StyledMenu } from './styles';
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-const Menu = ({ open }) => {
+const Menu = ({ open, setOpen }: { open: boolean; setOpen?: any }) => {
   return (
     <StyledMenu open={open}>
       <Link to="/">Главная</Link>

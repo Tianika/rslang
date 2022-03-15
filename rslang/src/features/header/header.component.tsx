@@ -61,7 +61,7 @@ const menuHeaderData = [
 
 const Header: FC = () => {
   const [open, setOpen] = React.useState(false);
-  const node = React.useRef();
+  const node = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   return (
     <StyledHeader>
       <Wrapper>
