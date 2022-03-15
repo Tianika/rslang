@@ -46,7 +46,6 @@ import { LoadingPage } from '../../components/loading';
 import { sprintGameActions } from './sprint.slice';
 import { ResultGamePage } from '../result-game';
 import { getRandomNumber } from './utils';
-import { getStatisticActions } from '../../components/statistic-data/statistic-data.slice';
 
 const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = sprintGameActions;
 
@@ -209,6 +208,9 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     upLevelForRightAnswer();
 
     setCurrentLongestSeries(currentLongestSeries + 1);
+    if (currentLongestSeries > longestSeries) {
+      setLongestSeries(currentLongestSeries);
+    }
 
     upCurrentWordIndex();
   };
@@ -254,9 +256,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     }
 
     const timerFunction = setInterval(() => {
-      setTimer((time) => {
-        return time - 1;
-      });
+      setTimer(timer - 1);
     }, 1000);
 
     return () => clearInterval(timerFunction);

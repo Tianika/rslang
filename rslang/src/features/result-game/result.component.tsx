@@ -26,6 +26,7 @@ import { fetchGetStatisticsAction } from './result.saga';
 
 export const ResultGamePage = (props: ResultGame): React.ReactElement => {
   const dispatch = useAppDispatch();
+  console.log('result ', props);
 
   setTimeout(() => {
     dispatch(fetchGetStatisticsAction(props));

@@ -17,39 +17,38 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     const { data } = yield call(getStatisticsRequest);
 
     let newData;
-    const today = new Date().toDateString();
+    const today = new Date().toLocaleDateString('ru');
+    console.log(today);
+    console.log('data ', data);
 
     if (action.payload.gameType === GameTypes.Sprint) {
       //обновляем данные, если игра спринт
       const longest =
-        data.optional.gameStatistics.sprint.longestSeries < result.longestSeries
+        data.optional.sprint.longestSeries < result.longestSeries
           ? result.longestSeries
-          : data.optional.gameStatistics.sprint.longestSeries;
+          : data.optional.sprint.longestSeries;
 
       newData = {
-        learnedWords: data.learnedWords + result.rightAnswers.length,
+        learnedWords: 5,
         optional: {
-          wordStatistics: {
+          sprint: {
             date: today,
-            count: data.optional.wordStatistics.count + result.rightAnswers.length
+            learnedWords: 0,
+            correctAnswers: result.rightAnswers.length,
+            allWords: result.errorAnswers.length + result.rightAnswers.length,
+            longestSeries: longest
           },
-          gameStatistics: {
-            sprint: {
-              date: today,
-              learnedWords:
-                data.optional.gameStatistics.sprint.learnedWords + result.rightAnswers.length,
-              correctAnswers:
-                data.optional.gameStatistics.sprint.correctAnswers + result.rightAnswers.length,
-              errorAnswers:
-                data.optional.gameStatistics.sprint.errorAnswers + result.errorAnswers.length,
-              longestSeries: longest
-            },
-            audiocall: {
-              date: today,
-              learnedWords: data.optional.gameStatistics.audiocall.learnedWords,
-              correctAnswers: data.optional.gameStatistics.audiocall.correctAnswers,
-              errorAnswers: data.optional.gameStatistics.audiocall.errorAnswers,
-              longestSeries: data.optional.gameStatistics.audiocall.longestSeries
+          audiocall: {
+            date: today,
+            learnedWords: 0,
+            correctAnswers: 0,
+            allWords: 0,
+            longestSeries: 0
+          },
+          long: {
+            [today]: {
+              learnedWords: 0,
+              newWord: 10
             }
           }
         }
@@ -57,34 +56,31 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     } else if (action.payload.gameType === GameTypes.AudioCall) {
       //обновляем данные, если игра аудиовызов
       const longest =
-        data.optional.gameStatistics.audiocall.longestSeries < result.longestSeries
+        data.optional.audiocall.longestSeries < result.longestSeries
           ? result.longestSeries
-          : data.optional.gameStatistics.audiocall.longestSeries;
+          : data.optional.audiocall.longestSeries;
 
       newData = {
-        learnedWords: data.learnedWords + result.rightAnswers.length,
+        learnedWords: 7,
         optional: {
-          wordStatistics: {
+          sprint: {
             date: today,
-            count: data.optional.wordStatistics.count + result.rightAnswers.length
+            learnedWords: 0,
+            correctAnswers: 0,
+            allWords: 0,
+            longestSeries: 0
           },
-          gameStatistics: {
-            sprint: {
-              date: today,
-              learnedWords: data.optional.gameStatistics.sprint.learnedWords,
-              correctAnswers: data.optional.gameStatistics.sprint.correctAnswers,
-              errorAnswers: data.optional.gameStatistics.sprint.errorAnswers,
-              longestSeries: data.optional.gameStatistics.sprint.longestSeries
-            },
-            audiocall: {
-              date: today,
-              learnedWords:
-                data.optional.gameStatistics.audiocall.learnedWords + result.rightAnswers.length,
-              correctAnswers:
-                data.optional.gameStatistics.audiocall.correctAnswers + result.rightAnswers.length,
-              errorAnswers:
-                data.optional.gameStatistics.audiocall.errorAnswers + result.errorAnswers.length,
-              longestSeries: longest
+          audiocall: {
+            date: today,
+            learnedWords: 0,
+            correctAnswers: result.rightAnswers.length,
+            allWords: result.errorAnswers.length,
+            longestSeries: longest
+          },
+          long: {
+            [today]: {
+              learnedWords: 0,
+              newWord: 11
             }
           }
         }
@@ -102,26 +98,26 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
         if (action.payload.gameType === GameTypes.Sprint) {
           //новые данные, если игра спринт
           newData = {
-            learnedWords: result.rightAnswers.length,
+            learnedWords: 0,
             optional: {
-              wordStatistics: {
+              sprint: {
                 date: today,
-                count: result.rightAnswers.length
+                learnedWords: 0,
+                correctAnswers: result.rightAnswers.length,
+                allWords: result.errorAnswers.length + result.rightAnswers.length,
+                longestSeries: result.longestSeries
               },
-              gameStatistics: {
-                sprint: {
-                  date: today,
-                  learnedWords: result.rightAnswers.length,
-                  correctAnswers: result.rightAnswers.length,
-                  errorAnswers: result.errorAnswers.length,
-                  longestSeries: result.longestSeries
-                },
-                audiocall: {
-                  date: today,
+              audiocall: {
+                date: today,
+                learnedWords: 0,
+                correctAnswers: 0,
+                allWords: 0,
+                longestSeries: 0
+              },
+              long: {
+                [today]: {
                   learnedWords: 0,
-                  correctAnswers: 0,
-                  errorAnswers: 0,
-                  longestSeries: 0
+                  newWord: 0
                 }
               }
             }
@@ -129,26 +125,26 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
         } else if (action.payload.gameType === GameTypes.AudioCall) {
           //новые данные, если игра аудиовызов
           newData = {
-            learnedWords: result.rightAnswers.length,
+            learnedWords: 0,
             optional: {
-              wordStatistics: {
+              sprint: {
                 date: today,
-                count: result.rightAnswers.length
+                learnedWords: 0,
+                correctAnswers: 0,
+                allWords: 0,
+                longestSeries: 0
               },
-              gameStatistics: {
-                sprint: {
-                  date: today,
+              audiocall: {
+                date: today,
+                learnedWords: 0,
+                correctAnswers: result.rightAnswers.length,
+                allWords: result.errorAnswers.length,
+                longestSeries: result.longestSeries
+              },
+              long: {
+                [today]: {
                   learnedWords: 0,
-                  correctAnswers: 0,
-                  wrongAnswers: 0,
-                  longestSeries: 0
-                },
-                audiocall: {
-                  date: today,
-                  learnedWords: result.rightAnswers.length,
-                  correctAnswers: result.rightAnswers.length,
-                  wrongAnswers: result.errorAnswers.length,
-                  longestSeries: result.longestSeries
+                  newWord: 0
                 }
               }
             }
