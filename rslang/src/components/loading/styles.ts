@@ -28,7 +28,7 @@ export const LoadingText = styled.div`
   -webkit-animation: rainbow 10s ease infinite;
   animation: ${AnimationLoadingText} 10s ease infinite;
   line-height: 25px;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     font-size: 60px;
   }
 `;

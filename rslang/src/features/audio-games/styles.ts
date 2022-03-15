@@ -14,7 +14,7 @@ export const BlockInfo = styled.div`
   border-radius: 13px;
   padding: 40px 50px;
   background: #fff;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     width: 90%;
   }
 `;
@@ -26,14 +26,14 @@ export const TitleGame = styled.h1`
   width: 80%;
   text-align: center;
   padding-bottom: 20px;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     font-size: 30px;
   }
 `;
 export const GameDescription = styled.p`
   font-size: 22px;
   font-weight: 100;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     font-size: 20px;
   }
 `;
@@ -41,7 +41,7 @@ export const GameDescriptionElement = styled.li`
   margin-left: 20px;
   font-size: 22px;
   margin-bottom: 10px;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     font-size: 20px;
   }
 `;
@@ -155,7 +155,7 @@ export const ButtonAudio = styled.div<BlockVisible>`
     box-shadow: 0 0 24px 0 ${baseTheme.colors.blue};
     transform: scale(1.1);
   }
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     margin: 5px 40px;
     width: 200px;
     height: 200px;
@@ -172,7 +172,7 @@ export const WindowAnswer = styled.div<BlockVisible>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     width: 360px;
     height: 270px;
     margin: 10px 40px;
@@ -201,7 +201,7 @@ export const ImageWindowAnswer = styled.img<ImageAnswer>`
 `;
 export const WindowAnswerWord = styled.p`
   font-size: 22px;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     font-size: 20px;
   }
 `;
@@ -216,7 +216,7 @@ export const BlockButtonAnswer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     width: 100%;
     margin-top: 0;
     margin-bottom: 40px;
@@ -252,7 +252,7 @@ export const InitialStateButtonAnswer = styled.button`
   &:hover {
     background: ${baseTheme.colors.purple};
   }
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     width: 150px;
     margin: 15px;
     font-size: 18px;

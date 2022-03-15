@@ -7,7 +7,7 @@ export const BlockGame = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 50rem;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     margin: 0;
     flex-direction: column;
     height: 45rem;
@@ -33,7 +33,7 @@ export const BlockGameElem = styled.section<GameElement>`
         ? '4px 4px 8px 0 rgb(8, 101, 172)'
         : '14px 4px 8px 0 rgb(119, 50, 34)'};
   }
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     width: 360px;
     height: 300px;
   }

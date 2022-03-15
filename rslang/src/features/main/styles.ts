@@ -16,16 +16,25 @@ export const BlockInfo = styled.div`
 export const BlockInfoTitle = styled.h2`
   font-size: 30px;
   font-weight: 400;
+  @media (max-width: 1000px) {
+    margin: 0 auto;
+  }
 `;
 export const BlockInfoText = styled.p`
   font-family: DM Mono, sans-serif;
   font-size: 20px;
   font-weight: 100;
   font-style: italic;
+  @media (max-width: 1000px) {
+    margin: 10px auto;
+  }
 `;
 export const BlockInfoAuthor = styled.span`
   font-size: 15px;
   font-weight: 400;
+  @media (max-width: 1000px) {
+    margin: 0 auto;
+  }
 `;
 export const StyledLearnTogether = styled.section`
   max-width: ${baseTheme.sizes.container};
@@ -54,14 +63,17 @@ export const StyledHowToLearn = styled.section`
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-
+  @media (max-width: 1000px) {
+    padding: 20px;
+  }
   & > div {
     display: flex;
     align-items: center;
-    @media (max-width: 500px) {
+    @media (max-width: 1000px) {
       display: flex;
-      flex-direction: column;
       padding: 0;
+      width: 100%;
+      flex-direction: column;
     }
   }
 
@@ -69,6 +81,9 @@ export const StyledHowToLearn = styled.section`
     div {
       text-align: right;
       max-width: 450px;
+      @media (max-width: 1000px) {
+        width: 95%;
+      }
     }
   }
 
@@ -80,6 +95,10 @@ export const StyledHowToLearn = styled.section`
     }
     div {
       //text-align: left;
+      @media (max-width: 1000px) {
+        width: 95%;
+        text-align: center;
+      }
     }
   }
 
@@ -90,7 +109,7 @@ export const StyledHowToLearn = styled.section`
       margin-left: -30px;
     }
   }
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     flex-direction: column;
     img {
       width: 200px;
@@ -114,7 +133,7 @@ export const StyledTeam = styled.section`
     text-align: center;
     margin-top: 0;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -140,7 +159,7 @@ export const StyledInnerWrap = styled.div`
       border: 1px solid #000000;
     }
   }
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -170,7 +189,7 @@ export const StyledTeamMember = styled.div`
       margin-left: 10px;
     }
   }
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -200,7 +219,7 @@ export const StyledDemo = styled.section`
     width: 902px;
     margin: 0 auto;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     padding: 10px;
     iframe {
       width: 90%;

@@ -21,7 +21,7 @@ export const Container = styled.div`
   width: 100%;
   border: 1px solid ${baseTheme.colors.secondary};
   padding: 0 40px;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     padding: 0 5px;
   }
 `;
@@ -51,7 +51,7 @@ export const StyledLink = styled.a<{ logoLink: string }>`
   background-size: contain;
   background-position: center center;
   margin: 0 22px;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     width: 30px;
   }
 `;
@@ -59,7 +59,7 @@ export const StyledLink = styled.a<{ logoLink: string }>`
 export const Year = styled.p`
   font-size: ${baseTheme.fonts.footerSize}px;
   color: ${baseTheme.colors.primary};
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     font-size: 15px;
   }
 `;

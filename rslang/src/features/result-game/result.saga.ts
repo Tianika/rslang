@@ -5,6 +5,14 @@ import { getStatisticsRequest, putStatisticsRequest } from './result.api';
 import { takeLatest } from 'redux-saga/effects';
 import { GameTypes } from '../../utils';
 
+interface ShortStatistics {
+  newWordsCount: number;
+  failedWordsCount: number;
+  longSeriesCount: number;
+  date: Date;
+}
+type LongStatistics = Array<{ date: Date; count: number }>;
+
 //создаем экшен для запроса
 export const fetchGetStatisticsAction = createAction<ResultGame, string>('getStatistics/fetch');
 

@@ -19,7 +19,7 @@ export const BooksListStyled = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, auto));
   gap: 22px;
-  @media (max-width: 500px) {
+  @media (max-width: 1000px)
     width: 100%;
   }
   li:last-child {
@@ -40,12 +40,12 @@ export const ItemBookStyled = styled.li`
   }
   img {
     display: inline-block;
-    @media (max-width: 500px) {
+    @media (max-width: 1000px)
       width: 140px;
     }
   }
   .background {
-    @media (max-width: 500px) {
+    @media (max-width: 1000px)
       width: 360px;
     }
   }
