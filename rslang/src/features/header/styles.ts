@@ -204,7 +204,7 @@ export const StyledBurger = styled.button<StyledBurgerOpen>`
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 10;
+  z-index: 1000;
 
   @media (max-width: 1000px) {
     display: flex;
