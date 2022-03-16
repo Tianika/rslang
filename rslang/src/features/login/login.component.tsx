@@ -10,7 +10,9 @@ import {
   EntryFieldPassword,
   PasswordTitle,
   EmailTitle,
-  PreloadLine
+  PreloadLine,
+  ErrorWindow,
+  ButtonCloseErrorWindow
 } from './styles';
 import { AccountProps, LoadingState } from '../../utils';
 import { Link } from 'react-router-dom';
@@ -26,6 +28,7 @@ export const Login: React.FC = () => {
 
   //вкл-выкл кнопку при отправке запроса
   const [disable, setDisable] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const toggleDisable = useCallback(() => {
     setDisable(!disable);
@@ -45,6 +48,7 @@ export const Login: React.FC = () => {
   //включаем кнопку при ошибке логина
   useEffect(() => {
     if (disable && status.status === LoadingState.Error) {
+      setOpen(true);
       toggleDisable();
     }
   }, [status, disable, toggleDisable]);
@@ -67,6 +71,17 @@ export const Login: React.FC = () => {
 
   return (
     <div>
+      <ErrorWindow open={open}>
+        <ButtonCloseErrorWindow
+          onClick={() => {
+            setOpen(false);
+            (document.querySelectorAll('.inputValue')[0] as HTMLInputElement).value = '';
+            (document.querySelectorAll('.inputValue')[1] as HTMLInputElement).value = '';
+          }}
+        />
+        <p>Ошибка введенных данных.</p>
+        <p>Повторите попытку</p>
+      </ErrorWindow>
       <ContainerButton>
         <Link to={'/account/login'}>
           <TabEntrance type={'button'}>ВХОД</TabEntrance>
@@ -77,9 +92,21 @@ export const Login: React.FC = () => {
       </ContainerButton>
       <WindowAuthorizationAccount>
         <EmailTitle>ЭЛЕКТРОННАЯ ПОЧТА</EmailTitle>
-        <EntryFieldEmail onChange={onEmailChange} type={'email'} autoComplete="on" />
+        <EntryFieldEmail
+          className="inputValue"
+          onChange={onEmailChange}
+          type={'email'}
+          autoComplete="on"
+          placeholder="Email"
+        />
         <PasswordTitle>ПАРОЛЬ</PasswordTitle>
-        <EntryFieldPassword onChange={onPasswordChange} type={'password'} autoComplete="on" />
+        <EntryFieldPassword
+          className="inputValue"
+          onChange={onPasswordChange}
+          type={'password'}
+          autoComplete="on"
+          placeholder="Не менее 8 символов"
+        />
         <ButtonAuthentication disabled={disable} onClick={fetchLogin}>
           {!disable ? 'ВОЙТИ' : <PreloadDiv />}
         </ButtonAuthentication>

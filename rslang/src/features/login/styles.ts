@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../utils';
+import { ErrorBlock } from './types';
 
 export const WindowAuthorizationAccount = styled.form`
   width: 600px;
@@ -10,6 +11,7 @@ export const WindowAuthorizationAccount = styled.form`
   display: flex;
   flex-direction: column;
   @media (max-width: 1000px) {
+    margin: 80px auto;
     width: 360px;
     height: 400px;
   }
@@ -31,6 +33,10 @@ export const EntryFieldEmail = styled.input`
   margin-left: 30px;
   font-size: 24px;
   text-align: center;
+  &::placeholder {
+    font-size: 18px;
+    font-weight: 100;
+  }
   @media (max-width: 1000px) {
     width: 300px;
   }
@@ -51,6 +57,12 @@ export const EntryFieldPassword = styled.input`
   margin-left: 30px;
   font-size: 24px;
   text-align: center;
+
+  &::placeholder {
+    font-size: 18px;
+    font-weight: 100;
+  }
+
   @media (max-width: 1000px) {
     width: 300px;
   }
@@ -196,7 +208,7 @@ export const WindowRecordAccount = styled.div`
   flex-direction: column;
   @media (max-width: 1000px) {
     width: 360px;
-    margin: 20px auto;
+    margin: 50px auto;
   }
 `;
 export const ButtonRecord = styled.button`
@@ -220,5 +232,62 @@ export const ButtonRecord = styled.button`
   @media (max-width: 1000px) {
     width: 250px;
     font-size: 18px;
+  }
+`;
+export const ErrorWindow = styled.div<ErrorBlock>`
+  position: fixed;
+  display: ${(props) => (props.open ? 'flex' : 'none')};
+  flex-direction: column;
+  top: 12%;
+  left: 34%;
+  width: 32vw;
+  height: 14vh;
+  background: rgb(255, 255, 255);
+  border-radius: 13px;
+  border: 1px solid #6dc3ff;
+  color: rgba(128, 128, 128, 0.5);
+  z-index: 2;
+  padding: 10px;
+  align-items: center;
+  font-size: 20px;
+  @media (max-width: 1000px) {
+    top: 8%;
+    left: 10%;
+    width: 80vw;
+    font-size: 15px;
+    height: 13vh;
+  }
+  @media (max-width: 450px) {
+    top: 7%;
+    left: 10%;
+    width: 80vw;
+    font-size: 15px;
+    height: 13vh;
+  }
+  @media (max-width: 375px) {
+    top: 10%;
+    left: 8%;
+    width: 85vw;
+    font-size: 15px;
+    height: 15vh;
+  }
+`;
+export const ButtonCloseErrorWindow = styled.div`
+  background-image: url('https://www.svgrepo.com/show/100952/open.svg');
+  position: fixed;
+  right: 34%;
+  width: 30px;
+  height: 30px;
+  color: #c00101;
+  margin: 0 10px;
+  transform-style: preserve-3d;
+  transition: 1s;
+  &:hover {
+    background-image: url('https://www.svgrepo.com/show/3076/close.svg');
+    transform: rotateY(360deg);
+  }
+  @media (max-width: 1000px) {
+    margin: 0;
+    right: 12%;
   }
 `;
