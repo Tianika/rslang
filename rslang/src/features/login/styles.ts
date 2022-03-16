@@ -208,7 +208,7 @@ export const WindowRecordAccount = styled.div`
   flex-direction: column;
   @media (max-width: 1000px) {
     width: 360px;
-    margin: 20px auto;
+    margin: 50px auto;
   }
 `;
 export const ButtonRecord = styled.button`
@@ -251,9 +251,11 @@ export const ErrorWindow = styled.div<ErrorBlock>`
   align-items: center;
   font-size: 20px;
   @media (max-width: 1000px) {
-    top: 6%;
+    top: 8%;
     left: 10%;
     width: 80vw;
+    font-size: 15px;
+    height: 12vh;
   }
 `;
 export const ButtonCloseErrorWindow = styled.div`
@@ -269,9 +271,6 @@ export const ButtonCloseErrorWindow = styled.div`
   &:hover {
     background-image: url('https://www.svgrepo.com/show/3076/close.svg');
     transform: rotateY(360deg);
-  }
-  &:active {
-    transform: scale(1.1);
   }
   @media (max-width: 1000px) {
     margin: 0;
