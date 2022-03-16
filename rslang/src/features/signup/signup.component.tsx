@@ -126,7 +126,7 @@ export const Signup: React.FC = () => {
           type={'password'}
           autoComplete="on"
           className="inputValue"
-          placeholder="Минимум 8 символов"
+          placeholder="Не менее 8 символов"
         />
         <ButtonRecord onClick={fetchSignup}>
           {!disable ? 'ЗАРЕГИСТРИРОВАТЬСЯ' : <PreloadDiv />}
