@@ -11,7 +11,7 @@ export const WindowAuthorizationAccount = styled.form`
   display: flex;
   flex-direction: column;
   @media (max-width: 1000px) {
-    margin: 60px auto;
+    margin: 80px auto;
     width: 360px;
     height: 400px;
   }
@@ -255,12 +255,19 @@ export const ErrorWindow = styled.div<ErrorBlock>`
     left: 10%;
     width: 80vw;
     font-size: 15px;
-    height: 12vh;
+    height: 13vh;
   }
-  @media (max-width: 380px) {
+  @media (max-width: 450px) {
+    top: 7%;
+    left: 10%;
+    width: 80vw;
+    font-size: 15px;
+    height: 15vh;
+  }
+  @media (max-width: 375px) {
     top: 10%;
     left: 8%;
-    width: 84vw;
+    width: 85vw;
     font-size: 15px;
     height: 15vh;
   }
