@@ -72,14 +72,29 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           : statistics.optional.sprint.longestSeries;
 
       statistics.learnedWords += 1;
-      statistics.optional.sprint.date = today;
-      statistics.optional.sprint.learnedWords += 1;
-      statistics.optional.sprint.correctAnswers += result.rightAnswers.length;
-      statistics.optional.sprint.allWords +=
-        result.errorAnswers.length + result.rightAnswers.length;
-      statistics.optional.sprint.longestSeries = longest;
-      statistics.optional.long[today].learnedWords += 1;
-      statistics.optional.long[today].newWord += 2;
+
+      if (statistics.optional.sprint.date === today) {
+        statistics.optional.sprint.learnedWords += 1;
+        statistics.optional.sprint.correctAnswers += result.rightAnswers.length;
+        statistics.optional.sprint.allWords +=
+          result.errorAnswers.length + result.rightAnswers.length;
+        statistics.optional.sprint.longestSeries = longest;
+        statistics.optional.long[today].learnedWords += 1;
+        statistics.optional.long[today].newWord += 2;
+      } else {
+        const yesterday = new Date(+new Date() - 86400000).toLocaleDateString('ru');
+
+        statistics.optional.sprint.date = today;
+        statistics.optional.sprint.learnedWords += 1;
+        statistics.optional.sprint.correctAnswers = result.rightAnswers.length;
+        statistics.optional.sprint.allWords =
+          result.errorAnswers.length + result.rightAnswers.length;
+        statistics.optional.sprint.longestSeries = result.longestSeries;
+        statistics.optional.long[today].learnedWords =
+          statistics.optional.long[yesterday].learnedWords + 1;
+        statistics.optional.long[today].newWord =
+          statistics.optional.long[yesterday].learnedWords + 1;
+      }
     } else if (action.payload.gameType === GameTypes.AudioCall) {
       //обновляем данные, если игра аудиовызов
       const longest =
@@ -88,14 +103,35 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           : statistics.optional.audiocall.longestSeries;
 
       statistics.learnedWords += 1;
-      statistics.optional.audiocall.date = today;
-      statistics.optional.audiocall.learnedWords += 1;
-      statistics.optional.audiocall.correctAnswers += result.rightAnswers.length;
-      statistics.optional.audiocall.allWords +=
-        result.errorAnswers.length + result.rightAnswers.length;
-      statistics.optional.audiocall.longestSeries = longest;
-      statistics.optional.long[today].learnedWords += 1;
-      statistics.optional.long[today].newWord += 2;
+
+      if (statistics.optional.audiocall.date === today) {
+        statistics.optional.audiocall.learnedWords += 1;
+        statistics.optional.audiocall.correctAnswers += result.rightAnswers.length;
+        statistics.optional.audiocall.allWords +=
+          result.errorAnswers.length + result.rightAnswers.length;
+        statistics.optional.audiocall.longestSeries = longest;
+        statistics.optional.long[today].learnedWords += 1;
+        statistics.optional.long[today].newWord += 2;
+      } else {
+        const yesterday = new Date(+new Date() - 86400000).toLocaleDateString('ru');
+
+        statistics.optional.audiocall.date = today;
+        statistics.optional.audiocall.learnedWords += 1;
+        statistics.optional.audiocall.correctAnswers = result.rightAnswers.length;
+        statistics.optional.audiocall.allWords =
+          result.errorAnswers.length + result.rightAnswers.length;
+        statistics.optional.audiocall.longestSeries = result.longestSeries;
+
+        if (statistics.optional.long[today]) {
+          statistics.optional.long[today].learnedWords =
+            statistics.optional.long[yesterday].learnedWords + 1;
+          statistics.optional.long[today].newWord =
+            statistics.optional.long[yesterday].learnedWords + 1;
+        } else {
+          statistics.optional.long[today].learnedWords += 1;
+          statistics.optional.long[today].newWord += 2;
+        }
+      }
     }
 
     //отправить на сервер
