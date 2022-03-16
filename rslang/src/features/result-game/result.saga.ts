@@ -1,9 +1,15 @@
 import * as Effects from 'redux-saga/effects';
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
-import { ResultGame } from './types';
-import { getStatisticsRequest, getWordDataRequest, putStatisticsRequest } from './result.api';
+import { GettingWordStat, ResultGame } from './types';
+import {
+  createWordDataRequest,
+  getStatisticsRequest,
+  getWordDataRequest,
+  putStatisticsRequest
+} from './result.api';
 import { takeLatest } from 'redux-saga/effects';
 import { GameTypes } from '../../utils';
+import { Word } from '../sprint/types';
 
 //создаем экшен для запроса
 export const fetchGetStatisticsAction = createAction<ResultGame, string>('getStatistics/fetch');
@@ -17,6 +23,15 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
 
     const { data: wordsStatistics } = yield call(getWordDataRequest);
     console.log('wordsStatistics ', wordsStatistics);
+    const userWordsIds: Array<string | undefined> = [];
+
+    wordsStatistics.forEach((word: GettingWordStat | undefined) => {
+      if (!word) return;
+
+      userWordsIds.push(word.wordId);
+    }, []);
+
+    console.log('userWords ', userWordsIds);
 
     //запрос на получение статистики
     const { data: statistics } = yield call(getStatisticsRequest);
@@ -24,6 +39,30 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     const today = new Date().toLocaleDateString('ru');
     console.log(today);
     console.log('get stat ', statistics);
+    const errors = result.errorAnswers;
+
+    for (let i = 0; i < errors.length; i += 1) {
+      const error = errors[i];
+      if (!error) return;
+
+      let wordStat;
+
+      if (userWordsIds.includes(error.id)) {
+        // обновить статистику по слову
+      } else {
+        // создать статистику по слову
+        wordStat = {
+          difficulty: 'unstudied',
+          optional: {
+            correct: 0,
+            wrong: 1,
+            series: 0
+          }
+        };
+      }
+
+      yield call(createWordDataRequest, error.id, wordStat);
+    }
 
     if (action.payload.gameType === GameTypes.Sprint) {
       //обновляем данные, если игра спринт
