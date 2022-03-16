@@ -16,3 +16,6 @@ export type Signin = {
   userId: string;
   name: string;
 };
+export type ErrorBlock = {
+  open: boolean;
+};
