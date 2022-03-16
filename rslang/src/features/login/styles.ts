@@ -241,7 +241,7 @@ export const ErrorWindow = styled.div<ErrorBlock>`
   top: 12%;
   left: 34%;
   width: 32vw;
-  height: 11vh;
+  height: 14vh;
   background: rgb(255, 255, 255);
   border-radius: 13px;
   border: 1px solid #6dc3ff;
@@ -262,7 +262,7 @@ export const ErrorWindow = styled.div<ErrorBlock>`
     left: 10%;
     width: 80vw;
     font-size: 15px;
-    height: 15vh;
+    height: 13vh;
   }
   @media (max-width: 375px) {
     top: 10%;
