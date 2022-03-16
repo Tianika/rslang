@@ -5,6 +5,7 @@ import { SprintWordsState } from './types';
 const initialState: SprintWordsState = {
   loadingState: LoadingState.Initial,
   words: [],
+  userWords: [],
   rightAnswers: [],
   errorAnswers: []
 };
@@ -28,6 +29,12 @@ export const sprintGameSlice = createSlice({
     resetAnswerArrays: (state) => {
       state.rightAnswers = [];
       state.errorAnswers = [];
+    },
+    setUserWords: (state, action) => {
+      state.userWords = action.payload;
+    },
+    resetUserWords: (state) => {
+      state.userWords = [];
     }
   }
 });

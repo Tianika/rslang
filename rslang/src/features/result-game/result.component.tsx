@@ -28,9 +28,11 @@ export const ResultGamePage = (props: ResultGame): React.ReactElement => {
   const dispatch = useAppDispatch();
   console.log('result ', props);
 
-  setTimeout(() => {
-    dispatch(fetchGetStatisticsAction(props));
-  }, 0);
+  if (localStorage.rslangUserId) {
+    setTimeout(() => {
+      dispatch(fetchGetStatisticsAction(props));
+    }, 0);
+  }
 
   const playAudio: AudioEventHandle = (event) => {
     const target = event.target as HTMLElement;

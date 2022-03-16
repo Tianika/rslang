@@ -38,6 +38,8 @@ import {
   KeyTypes,
   MAX_LEVEL_CHECKBOXES,
   MAX_LEVEL_SCORE,
+  MAX_PAGE_PER_GROUP,
+  MAX_REQUESTS_COUNT,
   MAX_SCORE_PER_WORD
 } from './constants';
 import { GameTypes, LoadingState } from '../../utils';
@@ -46,8 +48,9 @@ import { LoadingPage } from '../../components/loading';
 import { sprintGameActions } from './sprint.slice';
 import { ResultGamePage } from '../result-game';
 import { getRandomNumber } from './utils';
+import { DataForFetch } from './types';
 
-const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = sprintGameActions;
+const { addRightAnswers, addErrorAnswers, resetAnswerArrays, resetUserWords } = sprintGameActions;
 
 export const SprintGame = (props: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -72,11 +75,31 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const rightAnswersArr = useAppSelector(rightAnswersSelector);
   const errorAnswersArr = useAppSelector(errorAnswersSelector);
 
+  const createNumberArr = () => {
+    const numbers: Array<number | undefined> = [];
+
+    while (numbers.length < MAX_REQUESTS_COUNT) {
+      const number = getRandomNumber(MAX_PAGE_PER_GROUP - 1);
+
+      if (!numbers.includes(number)) {
+        numbers.push(number);
+      }
+    }
+
+    return numbers;
+  };
+
+  const pagesNumbers = createNumberArr();
+  const dataForFetch: DataForFetch = { level: props.level, pages: pagesNumbers };
+
   //при включении игры
   useEffect(() => {
     dispatch(resetAnswerArrays());
+    dispatch(resetUserWords());
+
+    dispatch(fetchSprintAction(dataForFetch));
+
     setTimeout(() => {
-      dispatch(fetchSprintAction(props.level));
       setCurrentWordIndex(0);
     });
   }, []);
@@ -250,7 +273,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [timer, setTimer] = useState(GAME_TIME);
 
   useEffect(() => {
-    if (timer === 0) {
+    if (timer === 0 || (currentWordIndex > 0 && currentWordIndex === words.length - 1)) {
       enableIsEndGame();
       return;
     }
