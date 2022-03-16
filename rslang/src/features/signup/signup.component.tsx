@@ -10,14 +10,16 @@ import {
   RecordTitle,
   WindowRecordAccount,
   ButtonRecord,
-  PreloadLine
+  PreloadLine,
+  ButtonCloseErrorWindow,
+  ErrorWindow
 } from '../login/styles';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { newUserSelector, statusSelector } from './signup.selector';
 import { signupActions } from './signup.slice';
 import { fetchSignupAction } from './signup.saga';
-import { AccountProps } from '../../utils/types';
+import { AccountProps } from '../../utils';
 
 //получаем экшены
 const { changeName, changeEmail, changePassword } = signupActions;
@@ -33,6 +35,7 @@ export const Signup: React.FC = () => {
 
   //вкл-выкл кнопку при отправке запроса
   const [disable, setDisable] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const toggleDisable = useCallback(() => {
     setDisable(!disable);
@@ -57,6 +60,7 @@ export const Signup: React.FC = () => {
   //включаем кнопку при ошибке регистрации
   useEffect(() => {
     if (disable && status.status === 'Error') {
+      setOpen(true);
       toggleDisable();
     }
   }, [status, disable, toggleDisable]);
@@ -79,6 +83,18 @@ export const Signup: React.FC = () => {
 
   return (
     <div>
+      <ErrorWindow open={open}>
+        <ButtonCloseErrorWindow
+          onClick={() => {
+            setOpen(false);
+            (document.querySelectorAll('.inputValue')[0] as HTMLInputElement).value = '';
+            (document.querySelectorAll('.inputValue')[1] as HTMLInputElement).value = '';
+            (document.querySelectorAll('.inputValue')[2] as HTMLInputElement).value = '';
+          }}
+        />
+        <p>Некорректный логин или пароль</p>
+        <p>Повторите попытку</p>
+      </ErrorWindow>
       <ContainerButton>
         <Link to={'/account/login'}>
           <TabEntrance type={'button'}>ВХОД</TabEntrance>
@@ -89,11 +105,29 @@ export const Signup: React.FC = () => {
       </ContainerButton>
       <WindowRecordAccount>
         <RecordTitle>ИМЯ</RecordTitle>
-        <EntryFieldEmail onChange={onNameChange} type={'text'} autoComplete="on" />
+        <EntryFieldEmail
+          className="inputValue"
+          onChange={onNameChange}
+          type={'text'}
+          autoComplete="on"
+          placeholder="Имя"
+        />
         <EmailTitle>ЭЛЕКТРОННАЯ ПОЧТА</EmailTitle>
-        <EntryFieldEmail onChange={onEmailChange} type={'email'} autoComplete="on" />
+        <EntryFieldEmail
+          onChange={onEmailChange}
+          type={'email'}
+          autoComplete="on"
+          className="inputValue"
+          placeholder="Email"
+        />
         <PasswordTitle>ПАРОЛЬ</PasswordTitle>
-        <EntryFieldPassword onChange={onPasswordChange} type={'password'} autoComplete="on" />
+        <EntryFieldPassword
+          onChange={onPasswordChange}
+          type={'password'}
+          autoComplete="on"
+          className="inputValue"
+          placeholder="Минимум 8 символов"
+        />
         <ButtonRecord onClick={fetchSignup}>
           {!disable ? 'ЗАРЕГИСТРИРОВАТЬСЯ' : <PreloadDiv />}
         </ButtonRecord>

@@ -11,6 +11,7 @@ export const WindowAuthorizationAccount = styled.form`
   display: flex;
   flex-direction: column;
   @media (max-width: 1000px) {
+    margin: 60px auto;
     width: 360px;
     height: 400px;
   }
@@ -237,7 +238,7 @@ export const ErrorWindow = styled.div<ErrorBlock>`
   position: fixed;
   display: ${(props) => (props.open ? 'flex' : 'none')};
   flex-direction: column;
-  top: 13%;
+  top: 12%;
   left: 34%;
   width: 32vw;
   height: 11vh;
@@ -248,6 +249,7 @@ export const ErrorWindow = styled.div<ErrorBlock>`
   z-index: 2;
   padding: 10px;
   align-items: center;
+  font-size: 20px;
   @media (max-width: 1000px) {
     top: 6%;
     left: 10%;
