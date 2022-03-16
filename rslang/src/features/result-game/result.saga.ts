@@ -9,7 +9,6 @@ import {
 } from './result.api';
 import { takeLatest } from 'redux-saga/effects';
 import { GameTypes } from '../../utils';
-import { Word } from '../sprint/types';
 
 //создаем экшен для запроса
 export const fetchGetStatisticsAction = createAction<ResultGame, string>('getStatistics/fetch');
@@ -41,6 +40,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     console.log('get stat ', statistics);
     const errors = result.errorAnswers;
 
+    // для ошибок
     for (let i = 0; i < errors.length; i += 1) {
       const error = errors[i];
       if (!error) return;
@@ -62,6 +62,32 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
       }
 
       yield call(createWordDataRequest, error.id, wordStat);
+    }
+
+    //для правильных ответов
+    const corrects = result.rightAnswers;
+
+    for (let i = 0; i < corrects.length; i += 1) {
+      const correct = corrects[i];
+      if (!correct) return;
+
+      let wordStat;
+
+      if (userWordsIds.includes(correct.id)) {
+        // обновить статистику по слову
+      } else {
+        // создать статистику по слову
+        wordStat = {
+          difficulty: 'unstudied',
+          optional: {
+            correct: 1,
+            wrong: 0,
+            series: 1
+          }
+        };
+      }
+
+      yield call(createWordDataRequest, correct.id, wordStat);
     }
 
     if (action.payload.gameType === GameTypes.Sprint) {
