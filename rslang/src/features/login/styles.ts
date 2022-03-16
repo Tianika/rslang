@@ -257,6 +257,13 @@ export const ErrorWindow = styled.div<ErrorBlock>`
     font-size: 15px;
     height: 12vh;
   }
+  @media (max-width: 380px) {
+    top: 10%;
+    left: 8%;
+    width: 84vw;
+    font-size: 15px;
+    height: 15vh;
+  }
 `;
 export const ButtonCloseErrorWindow = styled.div`
   background-image: url('https://www.svgrepo.com/show/100952/open.svg');
