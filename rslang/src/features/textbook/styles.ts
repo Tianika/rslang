@@ -17,9 +17,11 @@ export const BooksListStyled = styled.ul`
   align-items: center;
   justify-items: center;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(490px, auto));
+  grid-template-columns: repeat(auto-fill, minmax(360px, auto));
   gap: 22px;
-
+  @media (max-width: 1000px)
+    width: 100%;
+  }
   li:last-child {
     display: ${localStorage.getItem('rslangUserName') ? '' : 'none'};
     a {
@@ -33,14 +35,20 @@ export const ItemBookStyled = styled.li`
   display: inline-block;
   position: relative;
   transition: 1s;
-
   &:hover {
     transform: rotate(360deg);
   }
   img {
     display: inline-block;
+    @media (max-width: 1000px)
+      width: 140px;
+    }
   }
-
+  .background {
+    @media (max-width: 1000px)
+      width: 360px;
+    }
+  }
   a {
     display: inline-block;
     position: absolute;

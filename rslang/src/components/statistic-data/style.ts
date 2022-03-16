@@ -5,15 +5,24 @@ export const TableStatistic = styled.table`
   border: none;
   border-collapse: collapse;
   margin: 100px auto;
+  @media (max-width: 1000px) {
+    margin: 20px auto;
+  }
 `;
 export const TableStatisticTitle = styled.caption`
   margin-bottom: 30px;
   font-size: 30px;
+  @media (max-width: 1000px) {
+    width: 90%;
+  }
 `;
 export const TableStatisticHead = styled.thead`
   display: table-header-group;
   vertical-align: middle;
   border-color: inherit;
+  @media (max-width: 1000px) {
+    width: 90%;
+  }
 `;
 export const TableStatisticHeadTr = styled.tr`
   background-color: rgba(0, 0, 0, 0.04);

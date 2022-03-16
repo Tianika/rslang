@@ -35,6 +35,10 @@ export const AnswerText = styled.div`
   -webkit-animation: rainbow 10s ease infinite;
   animation: ${AnimationAnswerText} 10s ease infinite;
   line-height: 25px;
+  @media (max-width: 1000px) {
+    font-size: 200px;
+    margin-top: 10px;
+  }
 `;
 export const AnswerTextError = styled.p`
   color: #d6d6d6;
@@ -53,6 +57,9 @@ export const AnswerTextError = styled.p`
     color: transparent;
     text-shadow: 1px 1px 2px transparentize(#fff, 0.5);
   }
+  @media (max-width: 1000px) {
+    font-size: 7vh;
+  }
 `;
 export const TextDescription = styled.p`
   color: #d6d6d6;
@@ -70,5 +77,8 @@ export const TextDescription = styled.p`
     right: 0;
     color: transparent;
     text-shadow: 1px 1px 2px transparentize(#fff, 0.5);
+  }
+  @media (max-width: 1000px) {
+    font-size: 12px;
   }
 `;

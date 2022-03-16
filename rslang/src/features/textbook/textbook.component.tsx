@@ -94,7 +94,7 @@ export const Textbook: React.FC = () => {
 
           return (
             <ItemBookStyled key={item.alt}>
-              <img src={imgLink} alt={alt} />
+              <img src={imgLink} alt={alt} className="background" />
               <Link to={link}>
                 {titleSection}
                 <img src={linkBook} alt={altForImg} width={170} />

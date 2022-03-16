@@ -78,6 +78,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       disableIsLoading();
       soundPlay(word.audio);
     }
+    return () => {};
   }, [words]);
 
   useEffect(() => {

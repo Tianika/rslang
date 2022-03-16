@@ -13,6 +13,9 @@ export const StyledCardSection = styled.section<{ group: string }>`
   color: ${font};
   min-height: 100vh;
   padding: 50px;
+  @media (max-width: 1000px) {
+    padding: 15px;
+  }
 `;
 
 export const StyledWrapper = styled.div`
@@ -41,6 +44,10 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
   font-size: 20px;
   color: #fff;
   transition: all 0.2s;
+  @media (max-width: 1000px) {
+    width: 90%;
+    min-width: 200px;
+  }
   &:hover {
     box-shadow: 5px 5px 15px 5px #fff;
     transform: scale(1.01);
@@ -65,6 +72,9 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
     border-radius: 13px;
     z-index: -1;
     transition: all 0.2s;
+    //@media (max-width: 1000px) {
+    //  width: 90%;
+    //}
   }
 
   &.difficult {
@@ -146,6 +156,9 @@ export const StyledCardContent = styled.div`
     width: 100%;
     border: 1px solid #676161;
     margin-bottom: 20px;
+    @media (max-width: 1000px) {
+      width: 90%;
+    }
   }
 
   hr + div {
@@ -206,22 +219,25 @@ export const StyledPagination = styled.div`
   bottom: 50px;
   left: 0;
   right: 0;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  @media (max-width: 1000px) {
+    height: 10px;
+    min-height: 50px;
+  }
   div:first-child {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-
     max-width: 270px;
     width: 100%;
     margin: 0 auto;
     font-size: 30px;
-
     position: relative;
+    @media (max-width: 1000px) {
+      padding-right: 30px;
+    }
   }
 
   div:nth-child(2) {
@@ -262,9 +278,16 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
   position: absolute;
   right: 65px;
   top: -55px;
-
   color: #000;
   cursor: pointer;
+  @media (max-width: 1000px) {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    border: 2px solid ${bg};
+    top: -40px;
+    right: 30px;
+  }
   &:hover {
     ul {
       display: block;
@@ -272,6 +295,9 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
       width: auto;
       height: auto;
       bottom: 35px;
+      @media (max-width: 1000px) {
+        bottom: 20px;
+      }
     }
   }
   ul {
@@ -290,6 +316,13 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
       height: 64px;
       border: 3px solid ${bg};
       border-radius: 50%;
+      @media (max-width: 1000px) {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        border: 2px solid ${bg};
+        bottom: -300px;
+      }
     }
     li:last-child {
       background-color: ${baseTheme.colors.red};
