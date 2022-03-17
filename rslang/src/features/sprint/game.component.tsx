@@ -25,7 +25,7 @@ import checkboxIcon from '../../assets/svg/checked-word-sprint.svg';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   sprintErrorAnswersSelector,
-  loadingStatus,
+  sprintLoadingStatus,
   sprintRightAnswersSelector,
   sprintWordsSelector
 } from './sprint.selectors';
@@ -317,7 +317,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   };
 
   //отслеживаем статус загрузки
-  const status = useAppSelector(loadingStatus);
+  const status = useAppSelector(sprintLoadingStatus);
 
   const [isLoading, setIsLoading] = useState(true);
   const disableIsLoading = () => {

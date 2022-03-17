@@ -1,7 +1,7 @@
 import { RootState } from '../../app/store';
 
 //статус загрузки
-export const loadingStatus = (state: RootState) => {
+export const sprintLoadingStatus = (state: RootState) => {
   return state.sprintGame.loadingState;
 };
 
