@@ -50,7 +50,7 @@ import { ResultGamePage } from '../result-game';
 import { getRandomNumber } from './utils';
 import { DataForFetch } from './types';
 
-const { addRightAnswers, addErrorAnswers, resetAnswerArrays, resetUserWords } = sprintGameActions;
+const { addSprintRightAnswers, addSprintErrorAnswers, resetSprintAnswerArrays } = sprintGameActions;
 
 export const SprintGame = (props: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -94,14 +94,10 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //при включении игры
   useEffect(() => {
-    dispatch(resetAnswerArrays());
-    dispatch(resetUserWords());
-
+    dispatch(resetSprintAnswerArrays());
     dispatch(fetchSprintAction(dataForFetch));
 
-    setTimeout(() => {
-      setCurrentWordIndex(0);
-    });
+    setCurrentWordIndex(0);
   }, []);
 
   useEffect(() => {
@@ -225,7 +221,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     disableKeydown();
 
     const word = words[currentWordIndex];
-    dispatch(addRightAnswers(word));
+    dispatch(addSprintRightAnswers(word));
 
     changeTotalScore();
     upLevelForRightAnswer();
@@ -245,7 +241,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     disableKeydown();
 
     const word = words[currentWordIndex];
-    dispatch(addErrorAnswers(word));
+    dispatch(addSprintErrorAnswers(word));
 
     resetSprintGameLevel();
 

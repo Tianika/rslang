@@ -12,10 +12,10 @@ const call: any = Effects.call;
 export const fetchSprintAction = createAction<DataForFetch, string>('sprint/fetch');
 
 //получаем функцию из экшенов
-const { changeLoadingState, setWordsArray } = sprintGameActions;
+const { changeSprintLoadingState, setSprintWordsArray } = sprintGameActions;
 
 function* sprintGameFetch(action: PayloadAction<DataForFetch>) {
-  yield put(changeLoadingState(LoadingState.Loading));
+  yield put(changeSprintLoadingState(LoadingState.Loading));
 
   try {
     //массив номеров страниц
@@ -33,11 +33,11 @@ function* sprintGameFetch(action: PayloadAction<DataForFetch>) {
     }
 
     //обрабатываем полученный массив слов
-    yield put(setWordsArray(words));
+    yield put(setSprintWordsArray(words));
 
-    yield put(changeLoadingState(LoadingState.Success));
+    yield put(changeSprintLoadingState(LoadingState.Success));
   } catch (error: any) {
-    yield put(changeLoadingState(LoadingState.Error));
+    yield put(changeSprintLoadingState(LoadingState.Error));
   }
 }
 

@@ -91,6 +91,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     }
 
     if (action.payload.gameType === GameTypes.Sprint) {
+      console.log('stat 1', statistics);
       //обновляем данные, если игра спринт
       const longest =
         statistics.optional.sprint.longestSeries < result.longestSeries
@@ -111,16 +112,24 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
         const yesterday = new Date(+new Date() - 86400000).toLocaleDateString('ru');
 
         statistics.optional.sprint.date = today;
-        statistics.optional.sprint.learnedWords += 1;
+        statistics.optional.sprint.learnedWords = 1;
         statistics.optional.sprint.correctAnswers = result.rightAnswers.length;
         statistics.optional.sprint.allWords =
           result.errorAnswers.length + result.rightAnswers.length;
         statistics.optional.sprint.longestSeries = result.longestSeries;
-        statistics.optional.long[today].learnedWords =
-          statistics.optional.long[yesterday].learnedWords + 1;
-        statistics.optional.long[today].newWord =
-          statistics.optional.long[yesterday].learnedWords + 1;
+
+        if (statistics.optional.long[yesterday]) {
+          statistics.optional.long[today].learnedWords =
+            statistics.optional.long[yesterday].learnedWords + 1;
+          statistics.optional.long[today].newWord =
+            statistics.optional.long[yesterday].learnedWords + 1;
+        } else {
+          statistics.optional.long[today].learnedWords += 1;
+          statistics.optional.long[today].newWord += 2;
+        }
       }
+
+      console.log('stat 2', statistics);
     } else if (action.payload.gameType === GameTypes.AudioCall) {
       //обновляем данные, если игра аудиовызов
       const longest =
@@ -142,13 +151,13 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
         const yesterday = new Date(+new Date() - 86400000).toLocaleDateString('ru');
 
         statistics.optional.audiocall.date = today;
-        statistics.optional.audiocall.learnedWords += 1;
+        statistics.optional.audiocall.learnedWords = 1;
         statistics.optional.audiocall.correctAnswers = result.rightAnswers.length;
         statistics.optional.audiocall.allWords =
           result.errorAnswers.length + result.rightAnswers.length;
         statistics.optional.audiocall.longestSeries = result.longestSeries;
 
-        if (statistics.optional.long[today]) {
+        if (statistics.optional.long[yesterday]) {
           statistics.optional.long[today].learnedWords =
             statistics.optional.long[yesterday].learnedWords + 1;
           statistics.optional.long[today].newWord =
@@ -159,7 +168,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
         }
       }
     }
-
+    console.log('stat 2', statistics);
     //отправить на сервер
     yield call(putStatisticsRequest, statistics);
   } catch (error: any) {

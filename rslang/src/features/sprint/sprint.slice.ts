@@ -14,27 +14,21 @@ export const sprintGameSlice = createSlice({
   name: 'sprint/game',
   initialState,
   reducers: {
-    changeLoadingState: (state, action) => {
+    changeSprintLoadingState: (state, action) => {
       state.loadingState = action.payload;
     },
-    setWordsArray: (state, action) => {
+    setSprintWordsArray: (state, action) => {
       state.words = action.payload;
     },
-    addRightAnswers: (state, action) => {
+    addSprintRightAnswers: (state, action) => {
       state.rightAnswers.push(action.payload);
     },
-    addErrorAnswers: (state, action) => {
+    addSprintErrorAnswers: (state, action) => {
       state.errorAnswers.push(action.payload);
     },
-    resetAnswerArrays: (state) => {
+    resetSprintAnswerArrays: (state) => {
       state.rightAnswers = [];
       state.errorAnswers = [];
-    },
-    setUserWords: (state, action) => {
-      state.userWords = action.payload;
-    },
-    resetUserWords: (state) => {
-      state.userWords = [];
     }
   }
 });
