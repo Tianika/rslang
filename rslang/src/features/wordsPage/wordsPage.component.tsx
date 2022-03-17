@@ -12,7 +12,9 @@ import {
   hex2rgba,
   StyledPagination,
   StyledGroupNumber,
-  StyledRemoveBtn
+  StyledRemoveBtn,
+  ButtonAudioGame,
+  ButtonSprintGame
 } from './styles';
 import cardIconAudio from '../../assets/svg/card-icon-audio.svg';
 import cardPlusIcon from '../../assets/svg/card-plus-icon.svg';
@@ -306,6 +308,8 @@ export const WordsPage: React.FC = () => {
               </StyledCard>
             );
           })}
+        <ButtonAudioGame />
+        <ButtonSprintGame />
         <StyledPagination>
           <div>
             <Link to={changePrevGroup()} title={group === '0' ? '' : 'следующий раздел'}>
