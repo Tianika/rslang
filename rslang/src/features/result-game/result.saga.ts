@@ -5,9 +5,10 @@ import {
   createWordDataRequest,
   getStatisticsRequest,
   getWordDataRequest,
-  putStatisticsRequest
+  putStatisticsRequest,
+  updateWordDataRequest
 } from './result.api';
-import { takeLatest } from 'redux-saga/effects';
+import { takeEvery, takeLatest } from 'redux-saga/effects';
 import { GameTypes } from '../../utils';
 
 //создаем экшен для запроса
@@ -22,15 +23,15 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
 
     const { data: wordsStatistics } = yield call(getWordDataRequest);
     console.log('wordsStatistics ', wordsStatistics);
-    const userWordsIds: Array<string | undefined> = [];
+    // const userWordsIds: Array<string | undefined> = [];
 
-    wordsStatistics.forEach((word: GettingWordStat | undefined) => {
-      if (!word) return;
+    // wordsStatistics.forEach((word: GettingWordStat | undefined) => {
+    //   if (!word) return;
 
-      userWordsIds.push(word.wordId);
-    }, []);
+    //   userWordsIds.push(word.wordId);
+    // });
 
-    console.log('userWords ', userWordsIds);
+    // console.log('userWords ', userWordsIds);
 
     //запрос на получение статистики
     const { data: statistics } = yield call(getStatisticsRequest);
@@ -40,16 +41,34 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     console.log('get stat ', statistics);
     const errors = result.errorAnswers;
 
+    let newWords = 0;
+    let learnedWords = 0;
+
     // для ошибок
     for (let i = 0; i < errors.length; i += 1) {
+      console.log('statForWord error ');
       const error = errors[i];
       if (!error) return;
 
       let wordStat;
 
-      if (userWordsIds.includes(error.id)) {
+      const statForWord = wordsStatistics.find((word: GettingWordStat) => word.wordId === error.id);
+      console.log('statForWord error ', statForWord);
+
+      if (statForWord) {
         // обновить статистику по слову
+        wordStat = {
+          difficulty: 'unstudied',
+          optional: {
+            correct: statForWord.optional.correct,
+            wrong: statForWord.optional.wrong + 1,
+            series: 0
+          }
+        };
+
+        yield call(updateWordDataRequest, error.id, wordStat);
       } else {
+        newWords += 1;
         // создать статистику по слову
         wordStat = {
           difficulty: 'unstudied',
@@ -59,9 +78,9 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
             series: 0
           }
         };
-      }
 
-      yield call(createWordDataRequest, error.id, wordStat);
+        yield call(createWordDataRequest, error.id, wordStat);
+      }
     }
 
     //для правильных ответов
@@ -69,13 +88,47 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
 
     for (let i = 0; i < corrects.length; i += 1) {
       const correct = corrects[i];
+
       if (!correct) return;
 
       let wordStat;
 
-      if (userWordsIds.includes(correct.id)) {
+      const statForWord = wordsStatistics.find(
+        (word: GettingWordStat) => word.wordId === correct.id
+      );
+      console.log('statForWord correct ', statForWord);
+
+      if (statForWord) {
         // обновить статистику по слову
+        if (
+          (statForWord.difficulty === 'hard' && statForWord.optional.series === 4) ||
+          (statForWord.difficulty === 'unstudied' && statForWord.optional.series === 2)
+        ) {
+          learnedWords += 1;
+
+          wordStat = {
+            difficulty: 'learned',
+            optional: {
+              correct: statForWord.optional.correct + 1,
+              wrong: statForWord.optional.wrong,
+              series: statForWord.optional.series + 1
+            }
+          };
+        } else {
+          wordStat = {
+            difficulty: 'unstudied',
+            optional: {
+              correct: statForWord.optional.correct + 1,
+              wrong: statForWord.optional.wrong,
+              series: statForWord.optional.series + 1
+            }
+          };
+        }
+        console.log(wordStat);
+        yield call(updateWordDataRequest, correct.id, wordStat);
       } else {
+        newWords += 1;
+
         // создать статистику по слову
         wordStat = {
           difficulty: 'unstudied',
@@ -85,9 +138,9 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
             series: 1
           }
         };
-      }
 
-      yield call(createWordDataRequest, correct.id, wordStat);
+        yield call(createWordDataRequest, correct.id, wordStat);
+      }
     }
 
     if (action.payload.gameType === 'Sprint') {
@@ -98,38 +151,38 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           ? result.longestSeries
           : statistics.optional.sprint.longestSeries;
 
-      statistics.learnedWords += 1;
+      statistics.learnedWords += learnedWords;
 
       if (statistics.optional.sprint.date === today) {
-        statistics.optional.sprint.learnedWords += 1;
+        statistics.optional.sprint.date = today;
+        statistics.optional.sprint.learnedWords += learnedWords;
         statistics.optional.sprint.correctAnswers += result.rightAnswers.length;
         statistics.optional.sprint.allWords +=
           result.errorAnswers.length + result.rightAnswers.length;
         statistics.optional.sprint.longestSeries = longest;
-        statistics.optional.long[today].learnedWords += 1;
-        statistics.optional.long[today].newWord += 2;
+
+        statistics.optional.long[today] = {
+          learnedWords: statistics.optional.long[today].learnedWords + learnedWords,
+          newWords: statistics.optional.long[today].newWords + newWords
+        };
       } else {
         const yesterday = new Date(+new Date() - 86400000).toLocaleDateString('ru');
 
         statistics.optional.sprint.date = today;
-        statistics.optional.sprint.learnedWords = 1;
+        statistics.optional.sprint.learnedWords = learnedWords;
         statistics.optional.sprint.correctAnswers = result.rightAnswers.length;
         statistics.optional.sprint.allWords =
           result.errorAnswers.length + result.rightAnswers.length;
         statistics.optional.sprint.longestSeries = result.longestSeries;
 
-        if (statistics.optional.long[yesterday]) {
-          statistics.optional.long[today].learnedWords =
-            statistics.optional.long[yesterday].learnedWords + 1;
-          statistics.optional.long[today].newWord =
-            statistics.optional.long[yesterday].learnedWords + 1;
-        } else {
-          statistics.optional.long[today].learnedWords += 1;
-          statistics.optional.long[today].newWord += 2;
-        }
+        statistics.optional.long[today] = {
+          learnedWords: statistics.optional.long[yesterday].learnedWords + learnedWords,
+          newWords: statistics.optional.long[yesterday].newWords + newWords
+        };
       }
-
-      console.log('end');
+      console.log('stat 2', statistics);
+      //отправить на сервер
+      yield call(putStatisticsRequest, statistics);
     } else if (action.payload.gameType === GameTypes.AudioCall) {
       //обновляем данные, если игра аудиовызов
       const longest =
@@ -137,40 +190,39 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           ? result.longestSeries
           : statistics.optional.audiocall.longestSeries;
 
-      statistics.learnedWords += 1;
+      statistics.learnedWords += learnedWords;
 
       if (statistics.optional.audiocall.date === today) {
-        statistics.optional.audiocall.learnedWords += 1;
+        statistics.optional.audiocall.date = today;
+        statistics.optional.audiocall.learnedWords += learnedWords;
         statistics.optional.audiocall.correctAnswers += result.rightAnswers.length;
         statistics.optional.audiocall.allWords +=
           result.errorAnswers.length + result.rightAnswers.length;
         statistics.optional.audiocall.longestSeries = longest;
-        statistics.optional.long[today].learnedWords += 1;
-        statistics.optional.long[today].newWord += 2;
+
+        statistics.optional.long[today] = {
+          learnedWords: statistics.optional.long[today].learnedWords + learnedWords,
+          newWords: statistics.optional.long[today].newWords + newWords
+        };
       } else {
         const yesterday = new Date(+new Date() - 86400000).toLocaleDateString('ru');
 
         statistics.optional.audiocall.date = today;
-        statistics.optional.audiocall.learnedWords = 1;
+        statistics.optional.audiocall.learnedWords = learnedWords;
         statistics.optional.audiocall.correctAnswers = result.rightAnswers.length;
         statistics.optional.audiocall.allWords =
           result.errorAnswers.length + result.rightAnswers.length;
         statistics.optional.audiocall.longestSeries = result.longestSeries;
 
-        if (statistics.optional.long[yesterday]) {
-          statistics.optional.long[today].learnedWords =
-            statistics.optional.long[yesterday].learnedWords + 1;
-          statistics.optional.long[today].newWord =
-            statistics.optional.long[yesterday].learnedWords + 1;
-        } else {
-          statistics.optional.long[today].learnedWords += 1;
-          statistics.optional.long[today].newWord += 2;
-        }
+        statistics.optional.long[today] = {
+          learnedWords: statistics.optional.long[yesterday].learnedWords + learnedWords,
+          newWords: statistics.optional.long[yesterday].newWords + newWords
+        };
       }
+      console.log('stat 2', statistics);
+      //отправить на сервер
+      yield call(putStatisticsRequest, statistics);
     }
-    console.log('stat 2', statistics);
-    //отправить на сервер
-    yield call(putStatisticsRequest, statistics);
   } catch (error: any) {
     if (error.response) {
       if (error.response.status == 404) {
@@ -240,7 +292,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
 }
 
 function* statisticsSaga() {
-  yield takeLatest(fetchGetStatisticsAction, workGetStatisticsFetch);
+  yield takeEvery(fetchGetStatisticsAction, workGetStatisticsFetch);
 }
 
 export default statisticsSaga;
