@@ -90,7 +90,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
       yield call(createWordDataRequest, correct.id, wordStat);
     }
 
-    if (action.payload.gameType === GameTypes.Sprint) {
+    if (action.payload.gameType === 'Sprint') {
       console.log('stat 1', statistics);
       //обновляем данные, если игра спринт
       const longest =
@@ -129,7 +129,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
         }
       }
 
-      console.log('stat 2', statistics);
+      console.log('end');
     } else if (action.payload.gameType === GameTypes.AudioCall) {
       //обновляем данные, если игра аудиовызов
       const longest =

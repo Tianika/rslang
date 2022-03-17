@@ -43,6 +43,6 @@ export const MAX_LEVEL_SCORE = 4;
 
 export const MAX_LEVEL_CHECKBOXES = 3;
 
-export const MAX_REQUESTS_COUNT = 3;
+export const MAX_REQUESTS_COUNT = 4;
 
 export const MAX_PAGE_PER_GROUP = 30;

@@ -6,16 +6,16 @@ export const loadingStatus = (state: RootState) => {
 };
 
 //массив слов
-export const wordsSelector = (state: RootState) => {
+export const sprintWordsSelector = (state: RootState) => {
   return state.sprintGame.words;
 };
 
 //правильные ответы
-export const rightAnswersSelector = (state: RootState) => {
+export const sprintRightAnswersSelector = (state: RootState) => {
   return state.sprintGame.rightAnswers;
 };
 
 //неправильные ответы
-export const errorAnswersSelector = (state: RootState) => {
+export const sprintErrorAnswersSelector = (state: RootState) => {
   return state.sprintGame.errorAnswers;
 };

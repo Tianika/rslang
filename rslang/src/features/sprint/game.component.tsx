@@ -24,10 +24,10 @@ import {
 import checkboxIcon from '../../assets/svg/checked-word-sprint.svg';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  errorAnswersSelector,
+  sprintErrorAnswersSelector,
   loadingStatus,
-  rightAnswersSelector,
-  wordsSelector
+  sprintRightAnswersSelector,
+  sprintWordsSelector
 } from './sprint.selectors';
 import {
   ARROWS,
@@ -71,9 +71,9 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [currentLongestSeries, setCurrentLongestSeries] = useState(0);
 
   //получаем слова
-  const words = useAppSelector(wordsSelector);
-  const rightAnswersArr = useAppSelector(rightAnswersSelector);
-  const errorAnswersArr = useAppSelector(errorAnswersSelector);
+  const words = useAppSelector(sprintWordsSelector);
+  const rightAnswersArr = useAppSelector(sprintRightAnswersSelector);
+  const errorAnswersArr = useAppSelector(sprintErrorAnswersSelector);
 
   const createNumberArr = () => {
     const numbers: Array<number | undefined> = [];
@@ -95,9 +95,12 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   //при включении игры
   useEffect(() => {
     dispatch(resetSprintAnswerArrays());
-    dispatch(fetchSprintAction(dataForFetch));
 
-    setCurrentWordIndex(0);
+    setTimeout(() => {
+      dispatch(fetchSprintAction(dataForFetch));
+
+      setCurrentWordIndex(0);
+    }, 200);
   }, []);
 
   useEffect(() => {
@@ -274,11 +277,9 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       return;
     }
 
-    const timerFunction = setInterval(() => {
+    setTimeout(() => {
       setTimer(timer - 1);
     }, 1000);
-
-    return () => clearInterval(timerFunction);
   }, [timer]);
 
   const ANSWER_BUTTONS = [

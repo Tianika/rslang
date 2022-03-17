@@ -5,6 +5,7 @@ import { LoadingState } from '../../utils';
 import { requestSprintWordsFromGroup } from './sprint.api';
 import { sprintGameActions } from './sprint.slice';
 import { DataForFetch, Word } from './types';
+import { getRandomNumber } from './utils';
 
 const call: any = Effects.call;
 
