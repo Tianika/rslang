@@ -238,9 +238,9 @@ export const WordsPage: React.FC = () => {
 
   // для запуска игр со страницы
   const startUserGame = () => {
-    dispatch(setIsUserGame(true));
     dispatch(setUserLevel(+group));
     dispatch(setUserPage(+page));
+    dispatch(setIsUserGame(true));
   };
 
   return (

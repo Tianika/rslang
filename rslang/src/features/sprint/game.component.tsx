@@ -47,8 +47,10 @@ import { fetchSprintAction } from './sprint.saga';
 import { LoadingPage } from '../../components/loading';
 import { sprintGameActions } from './sprint.slice';
 import { ResultGamePage } from '../result-game';
-import { getRandomNumber } from './utils';
 import { DataForFetch } from './types';
+import { getUserRandomNumber } from './utils';
+import { pageGameSelector, typeGameSelector } from '../wordsPage/wordsPage.selectors';
+import { wordsPageActions } from '../wordsPage/wordsPage.slice';
 
 const {
   addSprintRightAnswers,
@@ -79,12 +81,16 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const words = useAppSelector(sprintWordsSelector);
   const rightAnswersArr = useAppSelector(sprintRightAnswersSelector);
   const errorAnswersArr = useAppSelector(sprintErrorAnswersSelector);
+  const isUserGame = useAppSelector(typeGameSelector);
+  const userPage = useAppSelector(pageGameSelector);
+
+  const { setIsUserGame } = wordsPageActions;
 
   const createNumberArr = () => {
     const numbers: Array<number | undefined> = [];
 
     while (numbers.length < MAX_REQUESTS_COUNT) {
-      const number = getRandomNumber(MAX_PAGE_PER_GROUP - 1);
+      const number = getUserRandomNumber(MAX_PAGE_PER_GROUP - 1);
 
       if (!numbers.includes(number)) {
         numbers.push(number);
@@ -94,7 +100,14 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     return numbers;
   };
 
-  const pagesNumbers = createNumberArr();
+  let pagesNumbers;
+
+  if (isUserGame) {
+    pagesNumbers = [userPage];
+  } else {
+    pagesNumbers = createNumberArr();
+  }
+
   const dataForFetch: DataForFetch = { level: props.level, pages: pagesNumbers };
 
   //при включении игры
@@ -103,6 +116,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
     setTimeout(() => {
       dispatch(fetchSprintAction(dataForFetch));
+      dispatch(setIsUserGame(false));
 
       setCurrentWordIndex(0);
     }, 200);
@@ -191,7 +205,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       const max = words.length - 1;
 
       do {
-        random = getRandomNumber(max);
+        random = getUserRandomNumber(max);
       } while (random === currentWordIndex);
 
       const word = words[random];

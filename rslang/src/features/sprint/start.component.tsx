@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SprintGame } from '.';
 import { useAppSelector } from '../../app/hooks';
 import { AccountProps } from '../../utils';
-import { typeGameSelector } from '../wordsPage/wordsPage.selectors';
+import { levelGameSelector, typeGameSelector } from '../wordsPage/wordsPage.selectors';
 import { DIFFICULTY, SPRINT_DESCRIPTION } from './constants';
 import {
   BlockInfo,
@@ -20,12 +20,20 @@ const SprintStartPage = (): React.ReactElement => {
   const DataDescription: string[] = SPRINT_DESCRIPTION;
   const Difficulty: string[] = DIFFICULTY;
 
+  const isUserGame = useAppSelector(typeGameSelector);
+  const userLevelGame = useAppSelector(levelGameSelector);
+
   //меняем уровень игры
-  const [level, setLevel] = useState(0);
+  let level = 0;
+
   const levelChange: AccountProps['onLevelChange'] = (event) => {
     const value = event.target.options.selectedIndex;
-    setLevel(value);
+    level = value;
   };
+
+  if (isUserGame) {
+    level = userLevelGame;
+  }
 
   //старт игры
   const [isGame, setIsGame] = useState(false);
