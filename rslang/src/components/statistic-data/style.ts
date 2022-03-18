@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TableStatistic = styled.table`
+export const TableStatistic = styled.div`
   width: 80%;
   border: none;
   border-collapse: collapse;
@@ -9,14 +9,14 @@ export const TableStatistic = styled.table`
     margin: 20px auto;
   }
 `;
-export const TableStatisticTitle = styled.caption`
+export const TableStatisticTitle = styled.div`
   margin-bottom: 30px;
   font-size: 30px;
   @media (max-width: 1000px) {
     width: 90%;
   }
 `;
-export const TableStatisticHead = styled.thead`
+export const TableStatisticHead = styled.div`
   display: table-header-group;
   vertical-align: middle;
   border-color: inherit;
@@ -24,7 +24,7 @@ export const TableStatisticHead = styled.thead`
     width: 90%;
   }
 `;
-export const TableStatisticHeadTr = styled.tr`
+export const TableStatisticHeadTr = styled.div`
   background-color: rgba(0, 0, 0, 0.04);
   color: inherit;
   display: table-row;
@@ -33,7 +33,7 @@ export const TableStatisticHeadTr = styled.tr`
   border-spacing: 0;
   border-collapse: collapse;
 `;
-export const TableStatisticHeadThStart = styled.th`
+export const TableStatisticHeadThStart = styled.div`
   color: rgba(0, 0, 0, 0.87);
   font-weight: 500;
   line-height: 1.5rem;
@@ -46,7 +46,7 @@ export const TableStatisticHeadThStart = styled.th`
   letter-spacing: 0.01071em;
   vertical-align: inherit;
 `;
-export const TableStatisticHeadThEnd = styled.th`
+export const TableStatisticHeadThEnd = styled.div`
   color: rgba(0, 0, 0, 0.87);
   font-weight: 500;
   line-height: 1.5rem;
@@ -59,7 +59,7 @@ export const TableStatisticHeadThEnd = styled.th`
   letter-spacing: 0.01071em;
   vertical-align: inherit;
 `;
-export const TableStatisticHeadTh = styled.th`
+export const TableStatisticHeadTh = styled.div`
   color: rgba(0, 0, 0, 0.87);
   font-weight: 500;
   line-height: 1.5rem;
@@ -71,10 +71,10 @@ export const TableStatisticHeadTh = styled.th`
   letter-spacing: 0.01071em;
   vertical-align: inherit;
 `;
-export const TableStatisticBody = styled.tbody`
+export const TableStatisticBody = styled.div`
   display: table-row-group;
 `;
-export const TableStatisticBodyTr = styled.tr`
+export const TableStatisticBodyTr = styled.div`
   color: inherit;
   display: table-row;
   outline: 0;
@@ -82,7 +82,7 @@ export const TableStatisticBodyTr = styled.tr`
   border-spacing: 0;
   border-collapse: collapse;
 `;
-export const TableStatisticBodyTrEnd = styled.tr`
+export const TableStatisticBodyTrEnd = styled.div`
   background-color: rgba(109, 195, 255, 0.5);
   color: inherit;
   display: table-row;
@@ -91,7 +91,7 @@ export const TableStatisticBodyTrEnd = styled.tr`
   border-spacing: 0;
   border-collapse: collapse;
 `;
-export const TableStatisticBodyTh = styled.td`
+export const TableStatisticBodyTh = styled.div`
   padding: 6px 24px 6px 16px;
   color: rgba(0, 0, 0, 0.87);
   display: table-cell;
@@ -104,7 +104,7 @@ export const TableStatisticBodyTh = styled.td`
   vertical-align: inherit;
   text-align: center;
 `;
-export const TableStatisticBodyThName = styled.td`
+export const TableStatisticBodyThName = styled.div`
   border-radius: 8px 0 0 8px;
   padding: 6px 24px 6px 16px;
   color: rgba(0, 0, 0, 0.87);

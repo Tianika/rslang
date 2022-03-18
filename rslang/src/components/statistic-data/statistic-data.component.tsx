@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Doughnut } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import {
   TableStatistic,
   TableStatisticBody,
@@ -19,56 +21,44 @@ import { getStatisticSelector } from './statistic-data.selectors';
 
 const Table = (): React.ReactElement => {
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(fetchGettingStatisticsAction());
   }, []);
+
   const statistic: any = useAppSelector(getStatisticSelector);
   const [audioCallWords, setAudioCallWords] = useState(0);
   const [audioCallCorrect, setAudioCallCorrect] = useState(0);
-  const [audioCallWrong, setAudioCallWrong] = useState(0);
   const [audioCallLongSeries, setAudioCallLongSeries] = useState(0);
   const [sprintWords, setSprintWords] = useState(0);
-  const [sprintWrong, setsprintWrong] = useState(0);
   const [sprintCorrect, setSprintCorrect] = useState(0);
   const [sprintLongSeries, setASprintLongSeries] = useState(0);
   const [totalWords, setTotalWords] = useState(0);
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalLongSeries, setTotalLongSeries] = useState(0);
+
   useEffect(() => {
-    if (statistic.optional) {
-      setAudioCallWrong(statistic.optional.gameStatistics.audiocall.errorAnswers);
-      setsprintWrong(statistic.optional.gameStatistics.sprint.errorAnswers);
-      if (statistic.optional) {
-        setAudioCallWords(statistic.optional.gameStatistics.audiocall.learnedWords);
-        setAudioCallCorrect(
-          Math.floor(
-            (statistic.optional.gameStatistics.audiocall.correctAnswers /
-              (statistic.optional.gameStatistics.audiocall.correctAnswers +
-                statistic.optional.gameStatistics.audiocall.errorAnswers)) *
-              100
-          )
-        );
-
-        setAudioCallLongSeries(statistic.optional.gameStatistics.audiocall.longestSeries);
-        setSprintWords(statistic.optional.gameStatistics.sprint.learnedWords);
-        setSprintCorrect(
-          Math.floor(
-            (statistic.optional.gameStatistics.sprint.correctAnswers /
-              (statistic.optional.gameStatistics.sprint.correctAnswers +
-                statistic.optional.gameStatistics.sprint.errorAnswers)) *
-              100
-          )
-        );
-        setASprintLongSeries(statistic.optional.gameStatistics.sprint.longestSeries);
-        setTotalWords(
-          statistic.optional.gameStatistics.sprint.correctAnswers +
-            statistic.optional.gameStatistics.audiocall.correctAnswers
-        );
-
-        setTotalLongSeries(
-          audioCallLongSeries > sprintLongSeries ? audioCallLongSeries : sprintLongSeries
-        );
-      }
+    if (statistic.optional.sprint && statistic.optional.audio) {
+      setAudioCallLongSeries(statistic.optional.audiocall.longestSeries);
+      setASprintLongSeries(statistic.optional.sprint.longestSeries);
+      setTotalLongSeries(
+        statistic.optional.sprint.longestSeries + statistic.optional.audiocall.longestSeries
+      );
+      setAudioCallWords(statistic.optional.audiocall.allWords);
+      setSprintWords(statistic.optional.sprint.allWords);
+      setTotalWords(statistic.optional.audiocall.allWords + statistic.optional.sprint.allWords);
+      setAudioCallCorrect(
+        Math.floor(
+          statistic.optional.audiocall.correctAnswers /
+            (statistic.optional.audiocall.allWords / 100)
+        )
+      );
+      setSprintCorrect(
+        Math.floor(
+          statistic.optional.sprint.correctAnswers / (statistic.optional.sprint.allWords / 100)
+        )
+      );
+      setTotalCorrect((sprintCorrect + audioCallCorrect) / 2);
     }
   }, [statistic]);
 
@@ -100,7 +90,7 @@ const Table = (): React.ReactElement => {
           <TableStatisticBodyTrEnd>
             <TableStatisticBodyThName>Всего</TableStatisticBodyThName>
             <TableStatisticBodyTh>{totalWords}</TableStatisticBodyTh>
-            <TableStatisticBodyTh></TableStatisticBodyTh>
+            <TableStatisticBodyTh>{totalCorrect}%</TableStatisticBodyTh>
             <TableStatisticHeadThEnd>{totalLongSeries}</TableStatisticHeadThEnd>
           </TableStatisticBodyTrEnd>
         </TableStatisticBody>
