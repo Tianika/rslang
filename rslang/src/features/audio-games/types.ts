@@ -44,7 +44,7 @@ export type AudioGameState = {
 };
 
 export type ButtonProps = {
-  updateCurrentLongestSeries: any;
+  updateCurrentLongestSeries?: any;
   fakeArray: any;
   showAnswer: any;
   hideAnswer: any;
@@ -58,8 +58,8 @@ export type ButtonProps = {
   audioGameErrorAnswerHandler: any;
   audioGameRightAnswerHandler: any;
   updateFakeWords(): void;
-  updateLongestSeries(): void;
-  resetLongestSeries(): void;
+  updateLongestSeries?: void;
+  resetLongestSeries?: void;
 };
 export type ImageAnswer = {
   linkImage: string;
