@@ -41,8 +41,6 @@ const SprintStartPage = (): React.ReactElement => {
     setIsGame(true);
   };
 
-  const isUserGameValue = useAppSelector(typeGameSelector);
-
   if (isGame) {
     return <SprintGame level={level} />;
   }
@@ -59,7 +57,7 @@ const SprintStartPage = (): React.ReactElement => {
         ))}
       </ul>
       <BlockSelect>
-        {isUserGameValue ? null : (
+        {isUserGame ? null : (
           <MenuDifficultySelection>
             <MenuDifficultySelectionTitle>Сложность</MenuDifficultySelectionTitle>
             <ChoiceDifficulty onChange={levelChange}>

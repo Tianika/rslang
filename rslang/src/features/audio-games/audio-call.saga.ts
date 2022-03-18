@@ -11,24 +11,29 @@ const all: any = Effects.all;
 const call: any = Effects.call;
 
 //создаем экшен для запроса
-export const fetchAudioAction = createAction<number, string>('audio/fetch');
+export const fetchAudioAction = createAction<{ level: number; page: number }, string>(
+  'audio/fetch'
+);
 
 //получаем функцию из экшенов
 const { changeLoadingState, setWordsArray, setFakeWordsArray } = audioGameActions;
 
-function* audioGameFetch(action: PayloadAction<number>) {
+function* audioGameFetch(action: PayloadAction<{ level: number; page: number }>) {
   yield put(changeLoadingState(LoadingState.Loading));
 
   try {
     //рандомный номер страницы
-    const pageNumber = getRandomNumber(30);
     const fakePage = getRandomNumber(29);
     //получаем данные из запроса
-    const { data } = yield call(requestWordsFromGroup, action.payload, pageNumber) as AxiosResponse;
-    const prom1 = call(requestWordsFromGroup, action.payload, fakePage) as AxiosResponse;
-    const prom2 = call(requestWordsFromGroup, action.payload, fakePage) as AxiosResponse;
-    const prom3 = call(requestWordsFromGroup, action.payload, fakePage) as AxiosResponse;
-    const prom4 = call(requestWordsFromGroup, action.payload, fakePage) as AxiosResponse;
+    const { data } = yield call(
+      requestWordsFromGroup,
+      action.payload.level,
+      action.payload.page
+    ) as AxiosResponse;
+    const prom1 = call(requestWordsFromGroup, action.payload.level, fakePage) as AxiosResponse;
+    const prom2 = call(requestWordsFromGroup, action.payload.level, fakePage) as AxiosResponse;
+    const prom3 = call(requestWordsFromGroup, action.payload.level, fakePage) as AxiosResponse;
+    const prom4 = call(requestWordsFromGroup, action.payload.level, fakePage) as AxiosResponse;
     const [...wordsResponse] = yield all([prom1, prom2, prom3, prom4]);
     const words = wordsResponse.map((resp: AxiosResponse) => resp.data).flat();
     yield put(setWordsArray(data));

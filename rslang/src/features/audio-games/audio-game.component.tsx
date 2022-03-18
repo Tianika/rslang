@@ -14,14 +14,23 @@ import { AccountProps } from '../../utils';
 import { AUDIO_DESCRIPTION, DIFFICULTY } from './constants';
 import GameWindow from './game-window.component';
 import { useAppSelector } from '../../app/hooks';
-import { typeGameSelector } from '../wordsPage/wordsPage.selectors';
+import { levelGameSelector, typeGameSelector } from '../wordsPage/wordsPage.selectors';
 
 const StartPageAudioCall = (): React.ReactElement => {
-  const [level, setLevel] = useState(0);
+  const isUserGame = useAppSelector(typeGameSelector);
+  const userLevelGame = useAppSelector(levelGameSelector);
+
+  let level = 0;
+
   const levelChange: AccountProps['onLevelChange'] = (event) => {
     const value = event.target.options.selectedIndex;
-    setLevel(value);
+    level = value;
   };
+
+  if (isUserGame) {
+    level = userLevelGame;
+  }
+
   //старт игры
   const [isGame, setIsGame] = useState(false);
   const startGame = () => {
