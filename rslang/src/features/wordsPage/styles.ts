@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../utils';
+import audio from '../../assets/svg/miniLogoAudio.svg';
+import sprint from '../../assets/svg/miniSprintLogo.svg';
 
 export const hex2rgba = (hex: string, alpha = 1): string => {
   const [r, g, b] = (hex.match(/\w\w/g) as Array<string>).map((x) => parseInt(x, 16));
@@ -14,7 +16,7 @@ export const StyledCardSection = styled.section<{ group: string }>`
   min-height: 100vh;
   padding: 50px;
   @media (max-width: 1000px) {
-    padding: 15px;
+    padding: 10px 0;
   }
 `;
 
@@ -26,6 +28,16 @@ export const StyledWrapper = styled.div`
   width: 100%;
   gap: 40px;
   padding-bottom: 115px;
+  @media (max-width: 1000px) {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, auto));
+    max-width: 1800px;
+    width: 100%;
+    gap: 40px;
+    padding-bottom: 115px;
+    justify-items: center;
+  }
 `;
 
 export const StyledCard = styled.div<{ imgUrl: string }>`
@@ -72,9 +84,6 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
     border-radius: 13px;
     z-index: -1;
     transition: all 0.2s;
-    //@media (max-width: 1000px) {
-    //  width: 90%;
-    //}
   }
 
   &.difficult {
@@ -224,7 +233,7 @@ export const StyledPagination = styled.div`
   justify-content: center;
   @media (max-width: 1000px) {
     height: 10px;
-    min-height: 50px;
+    min-height: 55px;
   }
   div:first-child {
     display: flex;
@@ -236,7 +245,9 @@ export const StyledPagination = styled.div`
     font-size: 30px;
     position: relative;
     @media (max-width: 1000px) {
-      padding-right: 30px;
+      font-size: 20px;
+      padding-left: 50px;
+      width: 63%;
     }
   }
 
@@ -269,7 +280,6 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
   justify-content: center;
   width: 64px;
   height: 64px;
-
   background-color: ${(props) => props.group};
   border: 3px solid ${bg};
   color: ${bg};
@@ -285,7 +295,7 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
     height: 40px;
     font-size: 20px;
     border: 2px solid ${bg};
-    top: -40px;
+    top: -32px;
     right: 30px;
   }
   &:hover {
@@ -349,3 +359,56 @@ export const StyledPrevGroupBtn = styled(StyledClearPaginationBtn)``;
 export const StyledPrevPageBtn = styled(StyledClearPaginationBtn)``;
 export const StyledNextGroupBtn = styled(StyledClearPaginationBtn)``;
 export const StyledNextPageBtn = styled(StyledClearPaginationBtn)``;
+
+export const ButtonAudioGame = styled.button`
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  z-index: 1000;
+  border: none;
+  background: transparent url(${audio});
+  background-size: cover;
+  bottom: 8%;
+  left: 13%;
+  transition: 1s;
+  &:hover {
+    transform: scale(1.1);
+  }
+  @media (max-width: 1000px) {
+    left: 6%;
+    bottom: 6%;
+    width: 40px;
+    height: 40px;
+  }
+  @media (max-height: 750px) {
+    bottom: 8%;
+  }
+`;
+export const ButtonSprintGame = styled.button`
+  position: fixed;
+  width: 51px;
+  height: 50px;
+  z-index: 1000;
+  border: none;
+  background: transparent url(${sprint});
+  background-size: cover;
+  bottom: 8%;
+  left: 17%;
+  transition: 1s;
+  margin-left: 10px;
+  &:hover {
+    transform: scale(1.1);
+  }
+  @media (max-width: 1000px) {
+    left: 11%;
+    bottom: 6%;
+    width: 41px;
+    height: 40px;
+  }
+  @media (max-width: 600px) {
+    left: 15%;
+  }
+  @media (max-height: 750px) {
+    bottom: 8%;
+  }
+`;

@@ -12,7 +12,9 @@ import {
   hex2rgba,
   StyledPagination,
   StyledGroupNumber,
-  StyledRemoveBtn
+  StyledRemoveBtn,
+  ButtonAudioGame,
+  ButtonSprintGame
 } from './styles';
 import cardIconAudio from '../../assets/svg/card-icon-audio.svg';
 import cardPlusIcon from '../../assets/svg/card-plus-icon.svg';
@@ -39,6 +41,7 @@ import {
 import { baseUrl } from './wordsPage.api';
 import { dropDownMenu } from './wordsPage.constants';
 import { UserWordsClass } from './types';
+import { SprintGame } from '../sprint';
 
 const {
   firstBookColor,
@@ -306,6 +309,14 @@ export const WordsPage: React.FC = () => {
               </StyledCard>
             );
           })}
+        <Link to="/games/audio">
+          <ButtonAudioGame />
+        </Link>
+
+        <Link to="/games/sprint">
+          <ButtonSprintGame />
+        </Link>
+
         <StyledPagination>
           <div>
             <Link to={changePrevGroup()} title={group === '0' ? '' : 'следующий раздел'}>
