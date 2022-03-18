@@ -37,14 +37,11 @@ const BlockButton: React.FC<ButtonProps> = ({
         setTimeout(() => {
           showAnswer(true);
         }, 1000);
-        resetLongestSeries();
         break;
       case rightWord:
         setDisable(true);
         audioGameRightAnswerHandler();
-        updateCurrentLongestSeries();
         showAnswer(false);
-        updateLongestSeries();
         break;
       case VALUENEXTWORD:
         setClickedButtonIndex(-1);
@@ -55,12 +52,9 @@ const BlockButton: React.FC<ButtonProps> = ({
         showAnswer(true);
         break;
       default:
-        resetLongestSeries();
         setDisable(true);
         audioGameErrorAnswerHandler();
-        updateCurrentLongestSeries(0);
         showAnswer(false);
-
         break;
     }
   };

@@ -3,58 +3,41 @@ import { createAction, PayloadAction } from '@reduxjs/toolkit';
 import * as Effects from 'redux-saga/effects';
 import { LoadingState } from '../../utils';
 import { requestSprintWordsFromGroup } from './sprint.api';
-import { getRandomNumber } from './utils';
 import { sprintGameActions } from './sprint.slice';
-import { Word } from './types';
-import { MAX_PAGE_PER_GROUP, MAX_REQUESTS_COUNT } from './constants';
+import { DataForFetch, Word } from './types';
 
 const call: any = Effects.call;
 
-const createNumberArr = () => {
-  const numbers: Array<number | undefined> = [];
-
-  while (numbers.length < MAX_REQUESTS_COUNT) {
-    const number = getRandomNumber(MAX_PAGE_PER_GROUP - 1);
-
-    if (!numbers.includes(number)) {
-      numbers.push(number);
-    }
-  }
-
-  return numbers;
-};
-
 //создаем экшен для запроса
-export const fetchSprintAction = createAction<number, string>('sprint/fetch');
+export const fetchSprintAction = createAction<DataForFetch, string>('sprint/fetch');
 
 //получаем функцию из экшенов
-const { changeLoadingState, setWordsArray } = sprintGameActions;
+const { changeSprintLoadingState, setSprintWordsArray } = sprintGameActions;
 
-function* sprintGameFetch(action: PayloadAction<number>) {
-  yield put(changeLoadingState(LoadingState.Loading));
+function* sprintGameFetch(action: PayloadAction<DataForFetch>) {
+  yield put(changeSprintLoadingState(LoadingState.Loading));
 
   try {
     //массив номеров страниц
-    const numbers = createNumberArr();
     const words: Array<Word | undefined> = [];
+    const props: DataForFetch = action.payload;
 
-    for (let i = 0; i < numbers.length; i++) {
+    const numbers = props.pages;
+    const level = props.level;
+
+    for (let i = 0; i < numbers.length; i += 1) {
       //получаем данные из запроса
-      const { data } = yield call(
-        requestSprintWordsFromGroup,
-        action.payload,
-        numbers[i]
-      ) as Response;
+      const { data } = yield call(requestSprintWordsFromGroup, level, numbers[i]) as Response;
 
       words.push(...data);
     }
 
     //обрабатываем полученный массив слов
-    yield put(setWordsArray(words));
+    yield put(setSprintWordsArray(words));
 
-    yield put(changeLoadingState(LoadingState.Success));
+    yield put(changeSprintLoadingState(LoadingState.Success));
   } catch (error: any) {
-    yield put(changeLoadingState(LoadingState.Error));
+    yield put(changeSprintLoadingState(LoadingState.Error));
   }
 }
 

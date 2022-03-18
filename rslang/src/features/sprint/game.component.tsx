@@ -24,10 +24,10 @@ import {
 import checkboxIcon from '../../assets/svg/checked-word-sprint.svg';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  errorAnswersSelector,
-  loadingStatus,
-  rightAnswersSelector,
-  wordsSelector
+  sprintErrorAnswersSelector,
+  sprintLoadingStatus,
+  sprintRightAnswersSelector,
+  sprintWordsSelector
 } from './sprint.selectors';
 import {
   ARROWS,
@@ -38,6 +38,8 @@ import {
   KeyTypes,
   MAX_LEVEL_CHECKBOXES,
   MAX_LEVEL_SCORE,
+  MAX_PAGE_PER_GROUP,
+  MAX_REQUESTS_COUNT,
   MAX_SCORE_PER_WORD
 } from './constants';
 import { GameTypes, LoadingState } from '../../utils';
@@ -46,9 +48,9 @@ import { LoadingPage } from '../../components/loading';
 import { sprintGameActions } from './sprint.slice';
 import { ResultGamePage } from '../result-game';
 import { getRandomNumber } from './utils';
-import { getStatisticActions } from '../../components/statistic-data/statistic-data.slice';
+import { DataForFetch } from './types';
 
-const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = sprintGameActions;
+const { addSprintRightAnswers, addSprintErrorAnswers, resetSprintAnswerArrays } = sprintGameActions;
 
 export const SprintGame = (props: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -69,17 +71,36 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [currentLongestSeries, setCurrentLongestSeries] = useState(0);
 
   //получаем слова
-  const words = useAppSelector(wordsSelector);
-  const rightAnswersArr = useAppSelector(rightAnswersSelector);
-  const errorAnswersArr = useAppSelector(errorAnswersSelector);
+  const words = useAppSelector(sprintWordsSelector);
+  const rightAnswersArr = useAppSelector(sprintRightAnswersSelector);
+  const errorAnswersArr = useAppSelector(sprintErrorAnswersSelector);
+
+  const createNumberArr = () => {
+    const numbers: Array<number | undefined> = [];
+
+    while (numbers.length < MAX_REQUESTS_COUNT) {
+      const number = getRandomNumber(MAX_PAGE_PER_GROUP - 1);
+
+      if (!numbers.includes(number)) {
+        numbers.push(number);
+      }
+    }
+
+    return numbers;
+  };
+
+  const pagesNumbers = createNumberArr();
+  const dataForFetch: DataForFetch = { level: props.level, pages: pagesNumbers };
 
   //при включении игры
   useEffect(() => {
-    dispatch(resetAnswerArrays());
+    dispatch(resetSprintAnswerArrays());
+
     setTimeout(() => {
-      dispatch(fetchSprintAction(props.level));
+      dispatch(fetchSprintAction(dataForFetch));
+
       setCurrentWordIndex(0);
-    });
+    }, 200);
   }, []);
 
   useEffect(() => {
@@ -203,12 +224,15 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     disableKeydown();
 
     const word = words[currentWordIndex];
-    dispatch(addRightAnswers(word));
+    dispatch(addSprintRightAnswers(word));
 
     changeTotalScore();
     upLevelForRightAnswer();
 
     setCurrentLongestSeries(currentLongestSeries + 1);
+    if (currentLongestSeries > longestSeries) {
+      setLongestSeries(currentLongestSeries);
+    }
 
     upCurrentWordIndex();
   };
@@ -220,7 +244,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     disableKeydown();
 
     const word = words[currentWordIndex];
-    dispatch(addErrorAnswers(word));
+    dispatch(addSprintErrorAnswers(word));
 
     resetSprintGameLevel();
 
@@ -248,18 +272,14 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [timer, setTimer] = useState(GAME_TIME);
 
   useEffect(() => {
-    if (timer === 0) {
+    if (timer === 0 || (currentWordIndex > 0 && currentWordIndex === words.length - 1)) {
       enableIsEndGame();
       return;
     }
 
-    const timerFunction = setInterval(() => {
-      setTimer((time) => {
-        return time - 1;
-      });
+    setTimeout(() => {
+      setTimer(timer - 1);
     }, 1000);
-
-    return () => clearInterval(timerFunction);
   }, [timer]);
 
   const ANSWER_BUTTONS = [
@@ -297,7 +317,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   };
 
   //отслеживаем статус загрузки
-  const status = useAppSelector(loadingStatus);
+  const status = useAppSelector(sprintLoadingStatus);
 
   const [isLoading, setIsLoading] = useState(true);
   const disableIsLoading = () => {
