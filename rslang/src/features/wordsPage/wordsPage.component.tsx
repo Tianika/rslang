@@ -41,6 +41,7 @@ import {
 import { baseUrl } from './wordsPage.api';
 import { dropDownMenu } from './wordsPage.constants';
 import { UserWordsClass } from './types';
+import { SprintGame } from '../sprint';
 
 const {
   firstBookColor,
@@ -308,8 +309,14 @@ export const WordsPage: React.FC = () => {
               </StyledCard>
             );
           })}
-        <ButtonAudioGame />
-        <ButtonSprintGame />
+        <Link to="/games/audio">
+          <ButtonAudioGame />
+        </Link>
+
+        <Link to="/games/sprint">
+          <ButtonSprintGame />
+        </Link>
+
         <StyledPagination>
           <div>
             <Link to={changePrevGroup()} title={group === '0' ? '' : 'следующий раздел'}>
