@@ -114,6 +114,15 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
               series: statForWord.optional.series + 1
             }
           };
+        } else if (statForWord.difficulty === 'learned') {
+          wordStat = {
+            difficulty: 'learned',
+            optional: {
+              correct: statForWord.optional.correct + 1,
+              wrong: statForWord.optional.wrong,
+              series: statForWord.optional.series + 1
+            }
+          };
         } else {
           wordStat = {
             difficulty: 'unstudied',
