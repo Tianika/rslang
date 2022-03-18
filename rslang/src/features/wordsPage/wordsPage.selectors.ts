@@ -33,3 +33,18 @@ export const learnedWordsSelector = (state: RootState) => {
 
   return learnedWordsIds;
 };
+
+//получаем level
+export const levelGameSelector = (state: RootState) => {
+  return state.wordsPage.level;
+};
+
+//получаем page
+export const pageGameSelector = (state: RootState) => {
+  return state.wordsPage.page;
+};
+
+//получаем тип игры
+export const typeGameSelector = (state: RootState) => {
+  return state.wordsPage.isUserGame;
+};

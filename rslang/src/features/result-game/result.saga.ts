@@ -11,13 +11,13 @@ import {
 import { takeEvery, takeLatest } from 'redux-saga/effects';
 import { GameTypes } from '../../utils';
 
-interface ShortStatistics {
-  newWordsCount: number;
-  failedWordsCount: number;
-  longSeriesCount: number;
-  date: Date;
-}
-type LongStatistics = Array<{ date: Date; count: number }>;
+// interface ShortStatistics {
+//   newWordsCount: number;
+//   failedWordsCount: number;
+//   longSeriesCount: number;
+//   date: Date;
+// }
+// type LongStatistics = Array<{ date: Date; count: number }>;
 
 //создаем экшен для запроса
 export const fetchGetStatisticsAction = createAction<ResultGame, string>('getStatistics/fetch');
@@ -31,15 +31,6 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
 
     const { data: wordsStatistics } = yield call(getWordDataRequest);
     console.log('wordsStatistics ', wordsStatistics);
-    // const userWordsIds: Array<string | undefined> = [];
-
-    // wordsStatistics.forEach((word: GettingWordStat | undefined) => {
-    //   if (!word) return;
-
-    //   userWordsIds.push(word.wordId);
-    // });
-
-    // console.log('userWords ', userWordsIds);
 
     //запрос на получение статистики
     const { data: statistics } = yield call(getStatisticsRequest);
@@ -192,10 +183,17 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           result.errorAnswers.length + result.rightAnswers.length;
         statistics.optional.sprint.longestSeries = result.longestSeries;
 
-        statistics.optional.long[today] = {
-          learnedWords: statistics.optional.long[yesterday].learnedWords + learnedWords,
-          newWords: statistics.optional.long[yesterday].newWords + newWords
-        };
+        if (statistics.optional.long[yesterday]) {
+          statistics.optional.long[today] = {
+            learnedWords: statistics.optional.long[yesterday].learnedWords + learnedWords,
+            newWords: statistics.optional.long[yesterday].newWords + newWords
+          };
+        } else {
+          statistics.optional.long[today] = {
+            learnedWords: learnedWords,
+            newWords: newWords
+          };
+        }
       }
       console.log('stat 2', statistics);
       //отправить на сервер
@@ -231,10 +229,17 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           result.errorAnswers.length + result.rightAnswers.length;
         statistics.optional.audiocall.longestSeries = result.longestSeries;
 
-        statistics.optional.long[today] = {
-          learnedWords: statistics.optional.long[yesterday].learnedWords + learnedWords,
-          newWords: statistics.optional.long[yesterday].newWords + newWords
-        };
+        if (statistics.optional.long[yesterday]) {
+          statistics.optional.long[today] = {
+            learnedWords: statistics.optional.long[yesterday].learnedWords + learnedWords,
+            newWords: statistics.optional.long[yesterday].newWords + newWords
+          };
+        } else {
+          statistics.optional.long[today] = {
+            learnedWords: learnedWords,
+            newWords: newWords
+          };
+        }
       }
       console.log('stat 2', statistics);
       //отправить на сервер

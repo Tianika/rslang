@@ -50,7 +50,12 @@ import { ResultGamePage } from '../result-game';
 import { getRandomNumber } from './utils';
 import { DataForFetch } from './types';
 
-const { addSprintRightAnswers, addSprintErrorAnswers, resetSprintAnswerArrays } = sprintGameActions;
+const {
+  addSprintRightAnswers,
+  addSprintErrorAnswers,
+  resetSprintAnswerArrays,
+  resetSprintWordsArray
+} = sprintGameActions;
 
 export const SprintGame = (props: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -273,13 +278,17 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   useEffect(() => {
     if (timer === 0 || (currentWordIndex > 0 && currentWordIndex === words.length - 1)) {
+      setIsDisableKeydown(true);
+      dispatch(resetSprintWordsArray());
       enableIsEndGame();
       return;
     }
 
-    setTimeout(() => {
-      setTimer(timer - 1);
-    }, 1000);
+    if (timer > 0) {
+      setTimeout(() => {
+        setTimer(timer - 1);
+      }, 1000);
+    }
   }, [timer]);
 
   const ANSWER_BUTTONS = [

@@ -6,7 +6,10 @@ const initialState: WordsPageState = {
   words: [],
   difficultWords: [],
   learnedWords: [],
-  loadingState: LoadingState.Initial
+  loadingState: LoadingState.Initial,
+  level: 0,
+  page: 0,
+  isUserGame: false
 };
 
 //создаем редюсеры
@@ -25,6 +28,15 @@ export const wordsPageSlice = createSlice({
     },
     setLearnedWords: (state, action) => {
       state.learnedWords = action.payload;
+    },
+    setUserLevel: (state, action) => {
+      state.level = action.payload;
+    },
+    setUserPage: (state, action) => {
+      state.page = action.payload;
+    },
+    setIsUserGame: (state, action) => {
+      state.isUserGame = action.payload;
     }
   }
 });

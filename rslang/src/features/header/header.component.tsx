@@ -27,6 +27,7 @@ const logoutHandle = () => {
 };
 import Burger from './burger.component';
 import Menu from './menu.component';
+import { checkVerification } from '../login/verification';
 
 const menuHeaderData = [
   {
@@ -62,6 +63,11 @@ const menuHeaderData = [
 const Header: FC = () => {
   const [open, setOpen] = React.useState(false);
   const node = React.useRef() as React.MutableRefObject<HTMLInputElement>;
+
+  if (localStorage.userId) {
+    checkVerification();
+  }
+
   return (
     <StyledHeader>
       <Wrapper>

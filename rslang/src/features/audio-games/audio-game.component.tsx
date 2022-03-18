@@ -13,6 +13,8 @@ import {
 import { AccountProps } from '../../utils';
 import { AUDIO_DESCRIPTION, DIFFICULTY } from './constants';
 import GameWindow from './game-window.component';
+import { useAppSelector } from '../../app/hooks';
+import { typeGameSelector } from '../wordsPage/wordsPage.selectors';
 
 const StartPageAudioCall = (): React.ReactElement => {
   const [level, setLevel] = useState(0);
@@ -25,6 +27,8 @@ const StartPageAudioCall = (): React.ReactElement => {
   const startGame = () => {
     setIsGame(true);
   };
+
+  const isUserGameValue = useAppSelector(typeGameSelector);
 
   if (isGame) {
     return <GameWindow level={level} />;
@@ -41,14 +45,17 @@ const StartPageAudioCall = (): React.ReactElement => {
         ))}
       </ul>
       <BlockSelect>
-        <MenuDifficultySelection>
-          <MenuDifficultySelectionTitle>Сложность</MenuDifficultySelectionTitle>
-          <ChoiceDifficulty onChange={levelChange}>
-            {DIFFICULTY.map((el, index) => (
-              <option key={index}>{el}</option>
-            ))}
-          </ChoiceDifficulty>
-        </MenuDifficultySelection>
+        {isUserGameValue ? null : (
+          <MenuDifficultySelection>
+            <MenuDifficultySelectionTitle>Сложность</MenuDifficultySelectionTitle>
+            <ChoiceDifficulty onChange={levelChange}>
+              {DIFFICULTY.map((el, index) => (
+                <option key={index}>{el}</option>
+              ))}
+            </ChoiceDifficulty>
+          </MenuDifficultySelection>
+        )}
+
         <ButtonPlay
           onClick={() => {
             startGame();

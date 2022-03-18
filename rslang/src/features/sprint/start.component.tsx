@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { SprintGame } from '.';
+import { useAppSelector } from '../../app/hooks';
 import { AccountProps } from '../../utils';
+import { typeGameSelector } from '../wordsPage/wordsPage.selectors';
 import { DIFFICULTY, SPRINT_DESCRIPTION } from './constants';
 import {
   BlockInfo,
@@ -31,6 +33,8 @@ const SprintStartPage = (): React.ReactElement => {
     setIsGame(true);
   };
 
+  const isUserGameValue = useAppSelector(typeGameSelector);
+
   if (isGame) {
     return <SprintGame level={level} />;
   }
@@ -47,14 +51,17 @@ const SprintStartPage = (): React.ReactElement => {
         ))}
       </ul>
       <BlockSelect>
-        <MenuDifficultySelection>
-          <MenuDifficultySelectionTitle>Сложность</MenuDifficultySelectionTitle>
-          <ChoiceDifficulty onChange={levelChange}>
-            {Difficulty.map((el, index) => (
-              <option key={index}>{el}</option>
-            ))}
-          </ChoiceDifficulty>
-        </MenuDifficultySelection>
+        {isUserGameValue ? null : (
+          <MenuDifficultySelection>
+            <MenuDifficultySelectionTitle>Сложность</MenuDifficultySelectionTitle>
+            <ChoiceDifficulty onChange={levelChange}>
+              {Difficulty.map((el, index) => (
+                <option key={index}>{el}</option>
+              ))}
+            </ChoiceDifficulty>
+          </MenuDifficultySelection>
+        )}
+
         <ButtonPlay onClick={startGame}>Начать</ButtonPlay>
       </BlockSelect>
     </BlockInfo>
