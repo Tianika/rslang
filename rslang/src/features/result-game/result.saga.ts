@@ -46,12 +46,14 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     // для ошибок
     for (let i = 0; i < errors.length; i += 1) {
       console.log('statForWord error ');
-      const error = errors[i];
+      const error: any = errors[i];
+      const errorId = error.id || error._id;
+
       if (!error) return;
 
       let wordStat;
 
-      const statForWord = wordsStatistics.find((word: GettingWordStat) => word.wordId === error.id);
+      const statForWord = wordsStatistics.find((word: GettingWordStat) => word.wordId === errorId);
       console.log('statForWord error ', statForWord);
 
       if (statForWord) {
@@ -65,7 +67,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           }
         };
 
-        yield call(updateWordDataRequest, error.id, wordStat);
+        yield call(updateWordDataRequest, errorId, wordStat);
       } else {
         newWords += 1;
         // создать статистику по слову
@@ -78,7 +80,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           }
         };
 
-        yield call(createWordDataRequest, error.id, wordStat);
+        yield call(createWordDataRequest, errorId, wordStat);
       }
     }
 
@@ -86,14 +88,15 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     const corrects = result.rightAnswers;
 
     for (let i = 0; i < corrects.length; i += 1) {
-      const correct = corrects[i];
+      const correct: any = corrects[i];
+      const correctId = correct.id || correct._id;
 
       if (!correct) return;
 
       let wordStat;
 
       const statForWord = wordsStatistics.find(
-        (word: GettingWordStat) => word.wordId === correct.id
+        (word: GettingWordStat) => word.wordId === correctId
       );
       console.log('statForWord correct ', statForWord);
 
@@ -133,7 +136,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           };
         }
         console.log(wordStat);
-        yield call(updateWordDataRequest, correct.id, wordStat);
+        yield call(updateWordDataRequest, correctId, wordStat);
       } else {
         newWords += 1;
 
@@ -147,7 +150,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           }
         };
 
-        yield call(createWordDataRequest, correct.id, wordStat);
+        yield call(createWordDataRequest, correctId, wordStat);
       }
     }
 

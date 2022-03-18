@@ -33,7 +33,6 @@ import {
   ARROWS,
   BOOK_LINKS,
   BorderColors,
-  GAME_TIME,
   HEADER_BG_COLOR,
   KeyTypes,
   MAX_LEVEL_CHECKBOXES,
@@ -76,6 +75,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [isDisableKeydown, setIsDisableKeydown] = useState(false);
   const [longestSeries, setLongestSeries] = useState(0);
   const [currentLongestSeries, setCurrentLongestSeries] = useState(0);
+  const [timer, setTimer] = useState(-1);
 
   //получаем слова
   const words = useAppSelector(sprintWordsSelector);
@@ -114,12 +114,11 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   useEffect(() => {
     dispatch(resetSprintAnswerArrays());
 
-    setTimeout(() => {
-      dispatch(fetchSprintAction(dataForFetch));
-      dispatch(setIsUserGame(false));
+    dispatch(fetchSprintAction(dataForFetch));
+    dispatch(setIsUserGame(false));
 
-      setCurrentWordIndex(0);
-    }, 200);
+    setCurrentWordIndex(0);
+    setTimer(60);
   }, []);
 
   useEffect(() => {
@@ -288,11 +287,8 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   };
 
   //таймер
-  const [timer, setTimer] = useState(GAME_TIME);
-
   useEffect(() => {
-    if (timer === 0 || (currentWordIndex > 0 && currentWordIndex === words.length - 1)) {
-      setIsDisableKeydown(true);
+    if (timer === 0 || (currentWordIndex > 0 && currentWordIndex === words.length)) {
       dispatch(resetSprintWordsArray());
       enableIsEndGame();
       return;
@@ -302,6 +298,8 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       setTimeout(() => {
         setTimer(timer - 1);
       }, 1000);
+    } else {
+      return () => {};
     }
   }, [timer]);
 
@@ -320,20 +318,22 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //управление ответами с клавиатуры
   document.body.onkeydown = (event: KeyboardEvent) => {
-    if (!isDisableButton && !isDisableKeydown) {
-      if (isRight) {
-        if (event.key === KeyTypes.ArrowLeft) {
-          sprintGameErrorAnswerHandler();
-        }
-        if (event.key === KeyTypes.ArrowRight) {
-          sprintGameRightAnswerHandler();
-        }
-      } else {
-        if (event.key === KeyTypes.ArrowLeft) {
-          sprintGameRightAnswerHandler();
-        }
-        if (event.key === KeyTypes.ArrowRight) {
-          sprintGameErrorAnswerHandler();
+    if (!isEndGame) {
+      if (!isDisableButton && !isDisableKeydown) {
+        if (isRight) {
+          if (event.key === KeyTypes.ArrowLeft) {
+            sprintGameErrorAnswerHandler();
+          }
+          if (event.key === KeyTypes.ArrowRight) {
+            sprintGameRightAnswerHandler();
+          }
+        } else {
+          if (event.key === KeyTypes.ArrowLeft) {
+            sprintGameRightAnswerHandler();
+          }
+          if (event.key === KeyTypes.ArrowRight) {
+            sprintGameErrorAnswerHandler();
+          }
         }
       }
     }

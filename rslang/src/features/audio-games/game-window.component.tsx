@@ -135,7 +135,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       soundPlay(word.audio);
     }
   };
-  if (currentWordIndex === 20) {
+  if (currentWordIndex === words.length) {
     return (
       <ResultGamePage
         rightAnswers={rightAnswersArr}
