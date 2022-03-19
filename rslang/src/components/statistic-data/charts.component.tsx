@@ -46,8 +46,6 @@ const Charts = (): React.ReactElement => {
       if (response.status === 200 && response.data.optional) {
         const labels = Object.keys(response.data.optional.long);
         const dataDay: any = Object.values(response.data.optional.long);
-        console.log(labels);
-        console.log(dataDay);
         if (dataDay) {
           setData({
             labels,
@@ -68,7 +66,6 @@ const Charts = (): React.ReactElement => {
       }
     });
   }, []);
-  console.log(data);
   return (
     <ChartBlock>
       <ChartContainer>

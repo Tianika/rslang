@@ -4,22 +4,17 @@ import { ButtonProps } from './types';
 import { VALUEBUTTONNEXT, VALUEBUTTONNOSAVVY, VALUENEXT, VALUENEXTWORD } from './constants';
 
 const BlockButton: React.FC<ButtonProps> = ({
-  updateCurrentLongestSeries,
   fakeArray,
   showAnswer,
-  hideAnswer,
   rightWord,
   countChoice,
   changeCurrentWord,
-  setArrayWordRightId,
   idCurrentWord,
   count,
   upCurrentWordIndex,
   audioGameErrorAnswerHandler,
   audioGameRightAnswerHandler,
-  updateFakeWords,
-  updateLongestSeries,
-  resetLongestSeries
+  updateFakeWords
 }): React.ReactElement => {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
   const [clickedButtonIndex, setClickedButtonIndex] = useState(-1);
@@ -58,11 +53,17 @@ const BlockButton: React.FC<ButtonProps> = ({
         break;
     }
   };
+  const keyCode = [49, 50, 51, 52, 53, 32];
+
   return (
     <BlockButtonAnswer>
       {fakeArray.map((el: any, index: number) => {
         return (
           <StyledButton
+            onKeyPress={(event) => {
+              switch (event.keyCode) {
+              }
+            }}
             disabled={disable}
             key={index}
             value={el}

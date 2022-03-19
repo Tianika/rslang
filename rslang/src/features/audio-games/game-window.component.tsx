@@ -93,8 +93,6 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
     }
   }, [fakeWords, fakeWordsSection.length]);
 
-  console.log(fakeWordsSection);
-
   useEffect(() => {
     if (status === LoadingState.Success) {
       disableIsLoading();
@@ -123,7 +121,6 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
     setCurrentWordIndex(currentWordIndex + 1);
   };
 
-  console.log(words, currentWordIndex, currentWord);
   const changeCurrentWord = () => {
     const word = words[currentWordIndex + 1];
     if (word) {
