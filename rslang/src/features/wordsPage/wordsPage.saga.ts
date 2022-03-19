@@ -74,6 +74,7 @@ function* getUserWordsSaga(action: PayloadAction<UserWord>) {
       action.payload.group,
       action.payload.page
     );
+
     yield put(setLearnedWords(words.data[0].paginatedResults));
   } catch (error) {}
 }
@@ -95,11 +96,11 @@ function* fetchTextBookSaga(action: PayloadAction<{ group: string; page: string 
       words = data[0].paginatedResults;
     }
 
-    yield put(setWords(words));
+    const wordsArr = JSON.parse(JSON.stringify(words));
+
+    yield put(setWords(wordsArr));
     yield put(changeLoadingState(LoadingState.Success));
   } catch (error: any) {
-    console.log(error.response.status);
-
     yield put(changeLoadingState(LoadingState.Error));
   }
 }

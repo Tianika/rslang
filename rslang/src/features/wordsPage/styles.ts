@@ -88,13 +88,7 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
 
   &.difficult {
     &::before {
-      background: linear-gradient(
-        180deg,
-        rgba(196, 196, 196, 0) 0%,
-        rgba(196, 196, 196, 0.0753941) -7.85%,
-        rgba(196, 196, 196, 0.4) -40.67%,
-        ${baseTheme.colors.sevenBookColor} 100%
-      );
+      outline: ${baseTheme.colors.sevenBookColor} 5px solid;
     }
 
     &:hover {
@@ -104,19 +98,23 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
 
   &.learned {
     &::before {
-      background: linear-gradient(
-        180deg,
-        rgba(196, 196, 196, 0) 0%,
-        rgba(196, 196, 196, 0.0753941) -7.85%,
-        rgba(196, 196, 196, 0.4) -40.67%,
-        ${baseTheme.colors.learned} 100%
-      );
+      outline: ${baseTheme.colors.learned} 5px solid;
     }
 
     &:hover {
       box-shadow: 5px 5px 15px 5px ${baseTheme.colors.learned};
     }
   }
+`;
+
+export const StyledWordStat = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  color: ${font};
 `;
 
 export const StyledCardContent = styled.div`

@@ -28,16 +28,12 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
 
   try {
     // запрос на получение статистики по каждому слову
-
     const { data: wordsStatistics } = yield call(getWordDataRequest);
-    console.log('wordsStatistics ', wordsStatistics);
 
     //запрос на получение статистики
     const { data: statistics } = yield call(getStatisticsRequest);
 
     const today = new Date().toLocaleDateString('ru');
-    console.log(today);
-    console.log('get stat ', statistics);
     const errors = result.errorAnswers;
 
     let newWords = 0;
@@ -45,7 +41,6 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
 
     // для ошибок
     for (let i = 0; i < errors.length; i += 1) {
-      console.log('statForWord error ');
       const error: any = errors[i];
       const errorId = error.id || error._id;
 
@@ -54,7 +49,6 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
       let wordStat;
 
       const statForWord = wordsStatistics.find((word: GettingWordStat) => word.wordId === errorId);
-      console.log('statForWord error ', statForWord);
 
       if (statForWord) {
         // обновить статистику по слову
@@ -98,7 +92,6 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
       const statForWord = wordsStatistics.find(
         (word: GettingWordStat) => word.wordId === correctId
       );
-      console.log('statForWord correct ', statForWord);
 
       if (statForWord) {
         // обновить статистику по слову
@@ -135,7 +128,7 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
             }
           };
         }
-        console.log(wordStat);
+
         yield call(updateWordDataRequest, correctId, wordStat);
       } else {
         newWords += 1;
@@ -155,7 +148,6 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
     }
 
     if (action.payload.gameType === 'Sprint') {
-      console.log('stat 1', statistics);
       //обновляем данные, если игра спринт
       const longest =
         statistics.optional.sprint.longestSeries < result.longestSeries
@@ -198,7 +190,6 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           };
         }
       }
-      console.log('stat 2', statistics);
       //отправить на сервер
       yield call(putStatisticsRequest, statistics);
     } else if (action.payload.gameType === GameTypes.AudioCall) {
@@ -244,7 +235,6 @@ function* workGetStatisticsFetch(action: PayloadAction<ResultGame>) {
           };
         }
       }
-      console.log('stat 2', statistics);
       //отправить на сервер
       yield call(putStatisticsRequest, statistics);
     }
