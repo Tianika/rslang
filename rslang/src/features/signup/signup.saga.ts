@@ -37,15 +37,6 @@ function* workSignupFetch(action: PayloadAction<NewUser>) {
 
     yield put(changeLoadingState(LoadingState.Success));
   } catch (error: any) {
-    console.log(error.response.status);
-    //добавить обработчик ошибок
-
-    //throw new Error(String(error));
-    //       case 417:
-    //         console.log('пользователь уже есть в базе');
-
-    //       case 422:
-    //         console.log('некорректный логин или пароль');
     yield put(changeLoadingState(LoadingState.Error));
   }
 }

@@ -37,14 +37,6 @@ function* workLoginFetch(action: PayloadAction<User>) {
 
     yield put(changeLoadingState(LoadingState.Success));
   } catch (error: any) {
-    console.log(error.response.status);
-    //добавить обработку ошибок
-
-    //       case 403:
-    //         console.log('неверный пароль');
-
-    //       case 404:
-    //         console.log('пользователь не найден');
     yield put(changeLoadingState(LoadingState.Error));
   }
 }
