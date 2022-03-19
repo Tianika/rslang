@@ -5,7 +5,6 @@ import statisticsSaga from '../features/result-game/result.saga';
 import sprintSaga from '../features/sprint/sprint.saga';
 import { wordsPageSaga } from '../features/wordsPage/wordsPage.saga';
 import audioSaga from '../features/audio-games/audio-call.saga';
-import getStatisticsSaga from '../components/statistic-data/statistis-data.saga';
 export function* rootSaga() {
   yield all([
     loginSaga(),
@@ -13,7 +12,6 @@ export function* rootSaga() {
     wordsPageSaga(),
     sprintSaga(),
     statisticsSaga(),
-    audioSaga(),
-    getStatisticsSaga()
+    audioSaga()
   ]);
 }

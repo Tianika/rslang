@@ -21,7 +21,7 @@ import { audioGameActions } from './audio-call.slice';
 import { ResultGamePage } from '../result-game';
 import { GameTypes, LoadingState } from '../../utils';
 import { LoadingPage } from '../../components/loading';
-import { loadingStatus } from '../audio-games/audio-call.selectors';
+import { loadingStatus } from './audio-call.selectors';
 import { getRandomNumber, shuffleArray } from './utils';
 import { wordsPageActions } from '../wordsPage/wordsPage.slice';
 import { pageGameSelector, typeGameSelector } from '../wordsPage/wordsPage.selectors';
