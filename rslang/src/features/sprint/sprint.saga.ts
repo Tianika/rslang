@@ -1,10 +1,12 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { all, put, takeLatest } from 'redux-saga/effects';
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
 import * as Effects from 'redux-saga/effects';
 import { LoadingState } from '../../utils';
 import { requestSprintWordsFromGroup } from './sprint.api';
 import { sprintGameActions } from './sprint.slice';
-import { DataForFetch, Word } from './types';
+import { DataForFetch } from './types';
+import { AxiosResponse } from 'axios';
+import { requestDifficultWords } from '../wordsPage/wordsPage.api';
 
 const call: any = Effects.call;
 
@@ -19,21 +21,30 @@ function* sprintGameFetch(action: PayloadAction<DataForFetch>) {
 
   try {
     //массив номеров страниц
-    const words: Array<Word | undefined> = [];
     const props: DataForFetch = action.payload;
+    const requests: Array<AxiosResponse | undefined> = [];
 
     const numbers = props.pages;
     const level = props.level;
 
-    for (let i = 0; i < numbers.length; i += 1) {
-      //получаем данные из запроса
-      const { data } = yield call(requestSprintWordsFromGroup, level, numbers[i]) as Response;
+    if (level === 6) {
+      const { data } = yield call(requestDifficultWords);
 
-      words.push(...data);
+      //обрабатываем полученный массив слов
+      yield put(setSprintWordsArray(data[0].paginatedResults));
+    } else {
+      for (let i = 0; i < numbers.length; i += 1) {
+        // создаем запросы
+
+        requests[i] = call(requestSprintWordsFromGroup, level, numbers[i]) as AxiosResponse;
+      }
+
+      const [...wordsResponse] = yield all(requests);
+      const words = wordsResponse.map((resp: AxiosResponse) => resp.data).flat();
+
+      //обрабатываем полученный массив слов
+      yield put(setSprintWordsArray(words));
     }
-
-    //обрабатываем полученный массив слов
-    yield put(setSprintWordsArray(words));
 
     yield put(changeSprintLoadingState(LoadingState.Success));
   } catch (error: any) {

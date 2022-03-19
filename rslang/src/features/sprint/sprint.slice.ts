@@ -29,6 +29,9 @@ export const sprintGameSlice = createSlice({
     resetSprintAnswerArrays: (state) => {
       state.rightAnswers = [];
       state.errorAnswers = [];
+    },
+    resetSprintWordsArray: (state) => {
+      state.words = [];
     }
   }
 });

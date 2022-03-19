@@ -33,7 +33,6 @@ import {
   ARROWS,
   BOOK_LINKS,
   BorderColors,
-  GAME_TIME,
   HEADER_BG_COLOR,
   KeyTypes,
   MAX_LEVEL_CHECKBOXES,
@@ -47,10 +46,17 @@ import { fetchSprintAction } from './sprint.saga';
 import { LoadingPage } from '../../components/loading';
 import { sprintGameActions } from './sprint.slice';
 import { ResultGamePage } from '../result-game';
-import { getRandomNumber } from './utils';
 import { DataForFetch } from './types';
+import { getUserRandomNumber } from './utils';
+import { pageGameSelector, typeGameSelector } from '../wordsPage/wordsPage.selectors';
+import { wordsPageActions } from '../wordsPage/wordsPage.slice';
 
-const { addSprintRightAnswers, addSprintErrorAnswers, resetSprintAnswerArrays } = sprintGameActions;
+const {
+  addSprintRightAnswers,
+  addSprintErrorAnswers,
+  resetSprintAnswerArrays,
+  resetSprintWordsArray
+} = sprintGameActions;
 
 export const SprintGame = (props: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -69,17 +75,22 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [isDisableKeydown, setIsDisableKeydown] = useState(false);
   const [longestSeries, setLongestSeries] = useState(0);
   const [currentLongestSeries, setCurrentLongestSeries] = useState(0);
+  const [timer, setTimer] = useState(-1);
 
   //получаем слова
   const words = useAppSelector(sprintWordsSelector);
   const rightAnswersArr = useAppSelector(sprintRightAnswersSelector);
   const errorAnswersArr = useAppSelector(sprintErrorAnswersSelector);
+  const isUserGame = useAppSelector(typeGameSelector);
+  const userPage = useAppSelector(pageGameSelector);
+
+  const { setIsUserGame } = wordsPageActions;
 
   const createNumberArr = () => {
     const numbers: Array<number | undefined> = [];
 
     while (numbers.length < MAX_REQUESTS_COUNT) {
-      const number = getRandomNumber(MAX_PAGE_PER_GROUP - 1);
+      const number = getUserRandomNumber(MAX_PAGE_PER_GROUP - 1);
 
       if (!numbers.includes(number)) {
         numbers.push(number);
@@ -89,18 +100,25 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
     return numbers;
   };
 
-  const pagesNumbers = createNumberArr();
+  let pagesNumbers;
+
+  if (isUserGame) {
+    pagesNumbers = [userPage];
+  } else {
+    pagesNumbers = createNumberArr();
+  }
+
   const dataForFetch: DataForFetch = { level: props.level, pages: pagesNumbers };
 
   //при включении игры
   useEffect(() => {
     dispatch(resetSprintAnswerArrays());
 
-    setTimeout(() => {
-      dispatch(fetchSprintAction(dataForFetch));
+    dispatch(fetchSprintAction(dataForFetch));
+    dispatch(setIsUserGame(false));
 
-      setCurrentWordIndex(0);
-    }, 200);
+    setCurrentWordIndex(0);
+    setTimer(60);
   }, []);
 
   useEffect(() => {
@@ -186,7 +204,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       const max = words.length - 1;
 
       do {
-        random = getRandomNumber(max);
+        random = getUserRandomNumber(max);
       } while (random === currentWordIndex);
 
       const word = words[random];
@@ -269,17 +287,20 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   };
 
   //таймер
-  const [timer, setTimer] = useState(GAME_TIME);
-
   useEffect(() => {
-    if (timer === 0 || (currentWordIndex > 0 && currentWordIndex === words.length - 1)) {
+    if (timer === 0 || (currentWordIndex > 0 && currentWordIndex === words.length)) {
+      dispatch(resetSprintWordsArray());
       enableIsEndGame();
       return;
     }
 
-    setTimeout(() => {
-      setTimer(timer - 1);
-    }, 1000);
+    if (timer > 0) {
+      setTimeout(() => {
+        setTimer(timer - 1);
+      }, 1000);
+    } else {
+      return () => {};
+    }
   }, [timer]);
 
   const ANSWER_BUTTONS = [
@@ -297,20 +318,22 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //управление ответами с клавиатуры
   document.body.onkeydown = (event: KeyboardEvent) => {
-    if (!isDisableButton && !isDisableKeydown) {
-      if (isRight) {
-        if (event.key === KeyTypes.ArrowLeft) {
-          sprintGameErrorAnswerHandler();
-        }
-        if (event.key === KeyTypes.ArrowRight) {
-          sprintGameRightAnswerHandler();
-        }
-      } else {
-        if (event.key === KeyTypes.ArrowLeft) {
-          sprintGameRightAnswerHandler();
-        }
-        if (event.key === KeyTypes.ArrowRight) {
-          sprintGameErrorAnswerHandler();
+    if (!isEndGame) {
+      if (!isDisableButton && !isDisableKeydown) {
+        if (isRight) {
+          if (event.key === KeyTypes.ArrowLeft) {
+            sprintGameErrorAnswerHandler();
+          }
+          if (event.key === KeyTypes.ArrowRight) {
+            sprintGameRightAnswerHandler();
+          }
+        } else {
+          if (event.key === KeyTypes.ArrowLeft) {
+            sprintGameRightAnswerHandler();
+          }
+          if (event.key === KeyTypes.ArrowRight) {
+            sprintGameErrorAnswerHandler();
+          }
         }
       }
     }

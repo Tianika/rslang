@@ -41,7 +41,7 @@ import {
 import { baseUrl } from './wordsPage.api';
 import { dropDownMenu } from './wordsPage.constants';
 import { UserWordsClass } from './types';
-import { SprintGame } from '../sprint';
+import { wordsPageActions } from './wordsPage.slice';
 
 const {
   firstBookColor,
@@ -55,6 +55,8 @@ const {
 
 export const WordsPage: React.FC = () => {
   const dispatch = useAppDispatch();
+
+  const { setUserLevel, setUserPage, setIsUserGame } = wordsPageActions;
 
   //слова
   const words = useAppSelector(wordsSelector);
@@ -108,6 +110,8 @@ export const WordsPage: React.FC = () => {
   };
 
   useEffect(() => {
+    dispatch(setIsUserGame(false));
+
     if (localStorage.rslangUserId) {
       dispatch(getDifficultWordsAction());
       dispatch(getLearnedWordsAction({ group, page }));
@@ -232,6 +236,13 @@ export const WordsPage: React.FC = () => {
 
   if (isLoading) return <LoadingPage />;
 
+  // для запуска игр со страницы
+  const startUserGame = () => {
+    dispatch(setUserLevel(+group));
+    dispatch(setUserPage(+page));
+    dispatch(setIsUserGame(true));
+  };
+
   return (
     <StyledCardSection group={`${checkNumberOfGroup()}`}>
       <StyledWrapper>
@@ -310,11 +321,10 @@ export const WordsPage: React.FC = () => {
             );
           })}
         <Link to="/games/audio">
-          <ButtonAudioGame />
+          <ButtonAudioGame onClick={startUserGame} />
         </Link>
-
         <Link to="/games/sprint">
-          <ButtonSprintGame />
+          <ButtonSprintGame onClick={startUserGame} />
         </Link>
 
         <StyledPagination>

@@ -23,6 +23,8 @@ import { GameTypes, LoadingState } from '../../utils';
 import { LoadingPage } from '../../components/loading';
 import { loadingStatus } from '../audio-games/audio-call.selectors';
 import { getRandomNumber, shuffleArray } from './utils';
+import { wordsPageActions } from '../wordsPage/wordsPage.slice';
+import { pageGameSelector, typeGameSelector } from '../wordsPage/wordsPage.selectors';
 
 const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = audioGameActions;
 const GameWindow = (props: { level: number }): React.ReactElement => {
@@ -46,6 +48,10 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const arrayWordRightId = [];
   const [isLoading, setIsLoading] = useState(true);
   const [fakeWordsSection, setFakeWordsSection] = useState<string[]>([]);
+
+  const isUserGame = useAppSelector(typeGameSelector);
+  const userPage = useAppSelector(pageGameSelector);
+  const { setIsUserGame } = wordsPageActions;
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const getWordsSectionArray = (currentWord: string) => {
@@ -95,11 +101,21 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
     }
   }, [status]);
 
+  //проверяем как пользователь запустил игру
+  let pageNumber = 0;
+
+  if (isUserGame) {
+    pageNumber = userPage;
+  } else {
+    pageNumber = getRandomNumber(29);
+  }
+
   //пока не догрузились данные страница Loading
   useEffect(() => {
-    dispatch(fetchAudioAction(props.level));
+    dispatch(fetchAudioAction({ level: props.level, page: pageNumber }));
     dispatch(resetAnswerArrays());
     setCurrentWordIndex(0);
+    dispatch(setIsUserGame(false));
   }, []);
 
   if (isLoading) return <LoadingPage />;
@@ -119,7 +135,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       soundPlay(word.audio);
     }
   };
-  if (currentWordIndex === 20) {
+  if (currentWordIndex === words.length) {
     return (
       <ResultGamePage
         rightAnswers={rightAnswersArr}

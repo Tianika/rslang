@@ -6,6 +6,9 @@ export type WordsPageState = {
   difficultWords: Array<IWord>;
   learnedWords: Array<IWord>;
   loadingState: LoadingState;
+  level: number;
+  page: number;
+  isUserGame: boolean;
 };
 
 export type UserWord = {
