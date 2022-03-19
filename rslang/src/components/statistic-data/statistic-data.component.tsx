@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {
   TableStatistic,
-  TableStatisticBody,
-  TableStatisticHead,
-  TableStatisticHeadTr,
-  TableStatisticHeadTh,
   TableStatisticTitle,
-  TableStatisticBodyTh,
-  TableStatisticBodyThName,
-  TableStatisticBodyTr,
-  TableStatisticHeadThStart,
-  TableStatisticBodyTrEnd,
-  TableStatisticHeadThEnd
+  TableStatisticHeader,
+  TableAudioRow,
+  Column1,
+  Column2,
+  Column3,
+  Column4,
+  TableSprintRow,
+  TableTotalRow
 } from './style';
 import axios from 'axios';
 
@@ -63,39 +61,34 @@ const Table = (): React.ReactElement => {
   }, []);
 
   return (
-    <div>
-      <TableStatistic>
-        <TableStatisticTitle>Статистика за сегодня</TableStatisticTitle>
-        <TableStatisticHead>
-          <TableStatisticHeadTr>
-            <TableStatisticHeadThStart>Игра</TableStatisticHeadThStart>
-            <TableStatisticHeadTh>Изучено слов</TableStatisticHeadTh>
-            <TableStatisticHeadTh>Правильно (%)</TableStatisticHeadTh>
-            <TableStatisticHeadThEnd>Самая длинная серия</TableStatisticHeadThEnd>
-          </TableStatisticHeadTr>
-        </TableStatisticHead>
-        <TableStatisticBody>
-          <TableStatisticBodyTr>
-            <TableStatisticBodyThName>Аудиовызов</TableStatisticBodyThName>
-            <TableStatisticBodyTh>{audioCallWords}</TableStatisticBodyTh>
-            <TableStatisticBodyTh>{audioCallCorrect}%</TableStatisticBodyTh>
-            <TableStatisticBodyTh>{audioCallLongSeries}</TableStatisticBodyTh>
-          </TableStatisticBodyTr>
-          <TableStatisticBodyTr>
-            <TableStatisticBodyThName>Спринт</TableStatisticBodyThName>
-            <TableStatisticBodyTh>{sprintWords}</TableStatisticBodyTh>
-            <TableStatisticBodyTh>{sprintCorrect}%</TableStatisticBodyTh>
-            <TableStatisticBodyTh>{sprintLongSeries}</TableStatisticBodyTh>
-          </TableStatisticBodyTr>
-          <TableStatisticBodyTrEnd>
-            <TableStatisticBodyThName>Всего</TableStatisticBodyThName>
-            <TableStatisticBodyTh>{totalWords}</TableStatisticBodyTh>
-            <TableStatisticBodyTh>{totalCorrect}%</TableStatisticBodyTh>
-            <TableStatisticHeadThEnd>{totalLongSeries}</TableStatisticHeadThEnd>
-          </TableStatisticBodyTrEnd>
-        </TableStatisticBody>
-      </TableStatistic>
-    </div>
+    <TableStatistic>
+      <TableStatisticTitle>Статистика за сегодня</TableStatisticTitle>
+      <TableStatisticHeader>
+        <Column1>Игра</Column1>
+        <Column2>Изучено слов</Column2>
+        <Column3>Правильно (%)</Column3>
+        <Column4>Самая длинная серия</Column4>
+      </TableStatisticHeader>
+
+      <TableAudioRow>
+        <Column1>Аудиовызов</Column1>
+        <Column2>{audioCallWords}</Column2>
+        <Column3>{audioCallCorrect}%</Column3>
+        <Column4>{audioCallLongSeries}</Column4>
+      </TableAudioRow>
+      <TableSprintRow>
+        <Column1>Спринт</Column1>
+        <Column2>{sprintWords}</Column2>
+        <Column3>{sprintCorrect}%</Column3>
+        <Column4>{sprintLongSeries}</Column4>
+      </TableSprintRow>
+      <TableTotalRow>
+        <Column1>Всего</Column1>
+        <Column2>{totalWords}</Column2>
+        <Column3>{totalCorrect}%</Column3>
+        <Column4>{totalLongSeries}</Column4>
+      </TableTotalRow>
+    </TableStatistic>
   );
 };
 

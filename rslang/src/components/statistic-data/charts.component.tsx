@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ChartBlock } from './style';
+import { ChartBlock, ChartContainer } from './style';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,7 +8,8 @@ import {
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ChartData
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -26,8 +27,10 @@ const options = {
 };
 
 const Charts = (): React.ReactElement => {
-  let labels;
-  const [data, setData] = useState({});
+  const [data, setData] = useState<ChartData<'bar', number[], unknown>>({
+    labels: [],
+    datasets: []
+  });
   const config = {
     headers: {
       Authorization: `Bearer ${localStorage.rslangUserToken}`
@@ -40,31 +43,37 @@ const Charts = (): React.ReactElement => {
   );
   useEffect(() => {
     request.then(function (response) {
-      if (response.status === 200) {
-        labels = Object.keys(response.data.optional.long);
+      if (response.status === 200 && response.data.optional) {
+        const labels = Object.keys(response.data.optional.long);
         const dataDay: any = Object.values(response.data.optional.long);
-        setData({
-          labels,
-          datasets: [
-            {
-              label: 'Новые слова',
-              data: labels.map((el, i) => dataDay[i].newWord),
-              backgroundColor: 'rgba(245,255,99,0.5)'
-            },
-            {
-              label: 'Всего слов',
-              data: labels.map((el, i) => dataDay[i].learnedWords),
-              backgroundColor: 'rgba(53, 162, 235, 0.5)'
-            }
-          ]
-        });
+        console.log(labels);
+        console.log(dataDay);
+        if (dataDay) {
+          setData({
+            labels,
+            datasets: [
+              {
+                label: 'Новые слова',
+                data: labels.map((el, i) => dataDay[i].newWords),
+                backgroundColor: 'rgba(245,255,99,0.5)'
+              },
+              {
+                label: 'Изученные слова',
+                data: labels.map((el, i) => dataDay[i].learnedWords),
+                backgroundColor: 'rgba(53, 162, 235, 0.5)'
+              }
+            ]
+          });
+        }
       }
     });
   }, []);
+  console.log(data);
   return (
     <ChartBlock>
-      <Bar options={options} data={data} />
-      <div>график</div>
+      <ChartContainer>
+        <Bar options={options} data={data} />
+      </ChartContainer>
     </ChartBlock>
   );
 };
