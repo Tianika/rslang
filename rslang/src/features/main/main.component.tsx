@@ -46,7 +46,7 @@ const Main: FC = () => {
     <div>
       <StyledHowToLearn>
         {BlockData.map((el, index) => (
-          <Block>
+          <Block key={el.textTitle}>
             <img src={BlockInfoImg[index]} alt="remember" />
             <BlockInfo>
               <BlockInfoTitle>{el.textTitle}</BlockInfoTitle>
@@ -60,7 +60,7 @@ const Main: FC = () => {
         <h3>Команда</h3>
         <StyledInnerWrap>
           {TeamInfo.map((el, index) => (
-            <StyledTeamMember>
+            <StyledTeamMember key={el.name}>
               <img src={ImageMember[index]} alt="member" />
               <p>
                 {el.name}
