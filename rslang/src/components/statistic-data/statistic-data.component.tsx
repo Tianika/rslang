@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Doughnut } from 'react-chartjs-2';
-import { Line } from 'react-chartjs-2';
 import {
   TableStatistic,
   TableStatisticBody,
@@ -15,74 +13,54 @@ import {
   TableStatisticBodyTrEnd,
   TableStatisticHeadThEnd
 } from './style';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { fetchGettingStatisticsAction } from './statistis-data.saga';
-import { getStatisticSelector } from './statistic-data.selectors';
-import { LoadingState } from '../../utils';
-import { requestUserStatistic } from './statistis-data.api';
+import axios from 'axios';
 
 const Table = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchGettingStatisticsAction());
-  }, []);
-  console.log(requestUserStatistic().then((data) => data));
-  const statistic: any = useAppSelector(getStatisticSelector);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${localStorage.rslangUserToken}`
+    }
+  };
+  const id = localStorage.rslangUserId;
+  const request = axios.get(
+    `https://learnwords-team17.herokuapp.com/users/${id}/statistics`,
+    config
+  );
   const [audioCallWords, setAudioCallWords] = useState(0);
   const [audioCallCorrect, setAudioCallCorrect] = useState(0);
   const [audioCallLongSeries, setAudioCallLongSeries] = useState(0);
   const [sprintWords, setSprintWords] = useState(0);
   const [sprintCorrect, setSprintCorrect] = useState(0);
   const [sprintLongSeries, setASprintLongSeries] = useState(0);
-  const [totalWords, setTotalWords] = useState(0);
+  const [totalWords, setTotalWords] = useState([]);
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalLongSeries, setTotalLongSeries] = useState(0);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const disableIsLoading = () => {
-  //   setIsLoading(false);
-  // };
-  // useEffect(() => {
-  //   if (status === LoadingState.Success) {
-  //     disableIsLoading();
-  //   }
-  // }, [status]);
-  // useEffect(() => {
-  //   if (isLoading) {
-  //     if (statistic.optional.sprint && statistic.optional.audio) {
-  //       setAudioCallLongSeries(statistic.optional.audiocall.longestSeries);
-  //       setASprintLongSeries(statistic.optional.sprint.longestSeries);
-  //       setTotalLongSeries(
-  //         statistic.optional.sprint.longestSeries + statistic.optional.audiocall.longestSeries
-  //       );
-  //       setAudioCallWords(statistic.optional.audiocall.allWords);
-  //       setSprintWords(statistic.optional.sprint.allWords);
-  //       setTotalWords(statistic.optional.audiocall.allWords + statistic.optional.sprint.allWords);
-  //       setAudioCallCorrect(
-  //         Math.floor(
-  //           statistic.optional.audiocall.correctAnswers /
-  //             (statistic.optional.audiocall.allWords / 100)
-  //         )
-  //       );
-  //       setSprintCorrect(
-  //         Math.floor(
-  //           statistic.optional.sprint.correctAnswers / (statistic.optional.sprint.allWords / 100)
-  //         )
-  //       );
-  //       setTotalCorrect((sprintCorrect + audioCallCorrect) / 2);
-  //     } else {
-  //       setAudioCallLongSeries(0);
-  //       setASprintLongSeries(0);
-  //       setTotalLongSeries(0);
-  //       setAudioCallWords(0);
-  //       setSprintWords(0);
-  //       setTotalWords(0);
-  //       setAudioCallCorrect(0);
-  //       setSprintCorrect(0);
-  //       setTotalCorrect(0);
-  //     }
-  //   }
-  // }, [statistic]);
+
+  useEffect(() => {
+    request.then(function (response) {
+      if (response.status === 200) {
+        const objAudio = response.data.optional.audiocall;
+        const objSprint = response.data.optional.sprint;
+        setAudioCallWords(objAudio.allWords);
+        setAudioCallCorrect(Math.floor(objAudio.correctAnswers / (objAudio.allWords / 100)));
+        setAudioCallLongSeries(objAudio.longestSeries);
+        setSprintWords(objSprint.allWords);
+        setSprintCorrect(Math.floor(objSprint.correctAnswers / (objSprint.allWords / 100)));
+        setASprintLongSeries(objSprint.longestSeries);
+        setTotalWords(objAudio.allWords + objSprint.allWords);
+        setTotalCorrect(
+          (Math.floor(objAudio.correctAnswers / (objAudio.allWords / 100)) +
+            Math.floor(objSprint.correctAnswers / (objSprint.allWords / 100))) /
+            2
+        );
+        if (objAudio.longestSeries > objSprint.longestSeries) {
+          setTotalLongSeries(objAudio.longestSeries);
+        } else {
+          setTotalLongSeries(objSprint.longestSeries);
+        }
+      }
+    });
+  }, []);
 
   return (
     <div>
@@ -116,10 +94,6 @@ const Table = (): React.ReactElement => {
             <TableStatisticHeadThEnd>{totalLongSeries}</TableStatisticHeadThEnd>
           </TableStatisticBodyTrEnd>
         </TableStatisticBody>
-      </TableStatistic>
-      <TableStatistic>
-        <TableStatisticTitle>Долгосрочная статистика</TableStatisticTitle>
-        <TableStatisticBodyTh>Данных пока нет Данных пока нет</TableStatisticBodyTh>
       </TableStatistic>
     </div>
   );
