@@ -107,6 +107,16 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
   }
 `;
 
+export const StyledWordStat = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  color: ${font};
+`;
+
 export const StyledCardContent = styled.div`
   display: flex;
   flex-direction: column;

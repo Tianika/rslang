@@ -27,9 +27,13 @@ export const postUserWord = (wordId: string, type: string) => {
   const userId = getUserId();
   const data = {
     difficulty: type,
-    optional: {}
+    optional: {
+      correct: 0,
+      wrong: 0,
+      series: 0
+    }
   };
-  console.log(data);
+
   return axios.post(`${baseUrl}/users/${userId}/words/${wordId}`, data, config);
 };
 
@@ -38,9 +42,13 @@ export const updateUserWord = (wordId: string, type: string) => {
   const userId = getUserId();
   const data = {
     difficulty: type,
-    optional: {}
+    optional: {
+      correct: 0,
+      wrong: 0,
+      series: 0
+    }
   };
-  console.log(data);
+
   return axios.put(`${baseUrl}/users/${userId}/words/${wordId}`, data, config);
 };
 
@@ -53,7 +61,7 @@ export const requestDifficultWords = (): AxiosPromise<Response> => {
   const id = localStorage.rslangUserId;
 
   return axios.get(
-    `${baseUrl}/users/${id}/aggregatedWords?wordsPerPage=3600&filter={"userWord.difficulty":"hard"}`,
+    `${baseUrl}/users/${id}/aggregatedWords?wordsPerPage=600&filter={"userWord.difficulty":"hard"}`,
     config
   );
 };
