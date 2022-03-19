@@ -41,7 +41,6 @@ function* audioGameFetch(action: PayloadAction<{ level: number; page: number }>)
       const words = wordsResponse.map((resp: AxiosResponse) => resp.data).flat();
 
       yield put(setFakeWordsArray(words));
-      console.log(words);
     } else {
       const { data } = yield call(
         requestWordsFromGroup,
@@ -59,7 +58,6 @@ function* audioGameFetch(action: PayloadAction<{ level: number; page: number }>)
       const words = wordsResponse.map((resp: AxiosResponse) => resp.data).flat();
 
       yield put(setFakeWordsArray(words));
-      console.log(words);
     }
 
     yield put(changeLoadingState(LoadingState.Success));

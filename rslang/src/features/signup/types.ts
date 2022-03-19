@@ -1,4 +1,4 @@
-import { LoadingState } from '../../utils/constants';
+import { LoadingState } from '../../utils';
 
 export type NewUser = {
   name: string;
