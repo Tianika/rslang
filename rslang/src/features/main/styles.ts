@@ -1,6 +1,41 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../utils';
 
+export const Block = styled.div`
+  margin: 0 auto;
+  width: 50%;
+  text-align: right;
+`;
+export const BlockInfo = styled.div`
+  width: 50%;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+export const BlockInfoTitle = styled.h2`
+  font-size: 30px;
+  font-weight: 400;
+  @media (max-width: 1000px) {
+    margin: 0 auto;
+  }
+`;
+export const BlockInfoText = styled.p`
+  font-family: DM Mono, sans-serif;
+  font-size: 20px;
+  font-weight: 100;
+  font-style: italic;
+  @media (max-width: 1000px) {
+    margin: 10px auto;
+  }
+`;
+export const BlockInfoAuthor = styled.span`
+  font-size: 15px;
+  font-weight: 400;
+  @media (max-width: 1000px) {
+    margin: 0 auto;
+  }
+`;
 export const StyledLearnTogether = styled.section`
   max-width: ${baseTheme.sizes.container};
   width: 100%;
@@ -26,31 +61,29 @@ export const StyledHowToLearn = styled.section`
   color: ${baseTheme.colors.font};
   width: 100%;
   margin: 0 auto;
-
-  h3 {
-    font-size: ${baseTheme.fonts.mainH3size};
-    font-weight: 400;
+  display: flex;
+  flex-wrap: wrap;
+  @media (max-width: 1000px) {
+    padding: 20px;
   }
-
-  p {
-    font-size: ${baseTheme.fonts.mainParagraphSize};
-    font-style: italic;
-    max-width: 450px;
-
-    span {
-      font-style: normal;
-    }
-  }
-
   & > div {
     display: flex;
     align-items: center;
+    @media (max-width: 1000px) {
+      display: flex;
+      padding: 0;
+      width: 100%;
+      flex-direction: column;
+    }
   }
 
   & > div:nth-child(odd) {
     div {
       text-align: right;
       max-width: 450px;
+      @media (max-width: 1000px) {
+        width: 95%;
+      }
     }
   }
 
@@ -61,7 +94,11 @@ export const StyledHowToLearn = styled.section`
       display: inline-block;
     }
     div {
-      text-align: left;
+      //text-align: left;
+      @media (max-width: 1000px) {
+        width: 95%;
+        text-align: center;
+      }
     }
   }
 
@@ -70,6 +107,12 @@ export const StyledHowToLearn = styled.section`
 
     img {
       margin-left: -30px;
+    }
+  }
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    img {
+      width: 200px;
     }
   }
 `;
@@ -89,6 +132,12 @@ export const StyledTeam = styled.section`
     font-weight: 400;
     text-align: center;
     margin-top: 0;
+  }
+  @media (max-width: 1000px) {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 10px 0;
   }
 `;
 
@@ -110,6 +159,13 @@ export const StyledInnerWrap = styled.div`
       border: 1px solid #000000;
     }
   }
+  @media (max-width: 1000px) {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 10px 0;
+    align-items: center;
+  }
 `;
 
 export const StyledTeamMember = styled.div`
@@ -125,8 +181,19 @@ export const StyledTeamMember = styled.div`
   margin-bottom: 30px;
 
   p {
+    display: flex;
+    align-items: flex-start;
     margin: 10px;
     font-size: 20px;
+    a {
+      margin-left: 10px;
+    }
+  }
+  @media (max-width: 1000px) {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 10px 0;
   }
 `;
 
@@ -134,7 +201,7 @@ export const StyledDemo = styled.section`
   max-width: ${baseTheme.sizes.container};
   color: ${baseTheme.colors.font};
   width: 100%;
-  margin: 0 auto;
+  margin: 40px auto 0;
 
   text-align: center;
 
@@ -147,7 +214,22 @@ export const StyledDemo = styled.section`
   }
 
   p {
-    font-size: 35px;
+    font-size: 20px;
     padding-bottom: 80px;
+    width: 902px;
+    margin: 0 auto;
+  }
+  @media (max-width: 1000px) {
+    padding: 10px;
+    iframe {
+      width: 90%;
+      height: 300px;
+    }
+    p {
+      font-size: 15px;
+      padding-bottom: 80px;
+      width: 300px;
+      margin: 0 auto;
+    }
   }
 `;

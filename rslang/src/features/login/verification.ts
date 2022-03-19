@@ -13,7 +13,6 @@ export const checkVerification = async () => {
     headers: config.headers
   });
 
-  console.log(response);
   if (response.status !== 200) {
     localStorage.removeItem('rslangUserName');
     localStorage.removeItem('rslangUserId');

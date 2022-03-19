@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -9,7 +9,8 @@ import {
   ListItem,
   RigthSideBlock,
   UserName,
-  Logout
+  Logout,
+  Logo
 } from './styles';
 
 import logo from '../../assets/icons/logo.svg';
@@ -24,6 +25,9 @@ const logoutHandle = () => {
 
   location.href = location.origin;
 };
+import Burger from './burger.component';
+import Menu from './menu.component';
+import { checkVerification } from '../login/verification';
 
 const menuHeaderData = [
   {
@@ -57,11 +61,22 @@ const menuHeaderData = [
 ];
 
 const Header: FC = () => {
+  const [open, setOpen] = React.useState(false);
+  const node = React.useRef() as React.MutableRefObject<HTMLInputElement>;
+
+  if (localStorage.userId) {
+    checkVerification();
+  }
+
   return (
     <StyledHeader>
       <Wrapper>
         <LeftSideBlock>
-          <img src={logo} alt={logo} width={40} height={40} />
+          <Logo src={logo} alt={logo} width={40} height={40} />
+          <div ref={node}>
+            <Burger open={open} setOpen={setOpen} />
+            <Menu open={open} setOpen={setOpen} />
+          </div>
           <List>
             <ListItem>
               <Link to="/">Главная</Link>

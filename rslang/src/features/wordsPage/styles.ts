@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { baseTheme } from '../../utils';
+import audio from '../../assets/svg/miniLogoAudio.svg';
+import sprint from '../../assets/svg/miniSprintLogo.svg';
 
 export const hex2rgba = (hex: string, alpha = 1): string => {
   const [r, g, b] = (hex.match(/\w\w/g) as Array<string>).map((x) => parseInt(x, 16));
@@ -13,6 +15,9 @@ export const StyledCardSection = styled.section<{ group: string }>`
   color: ${font};
   min-height: 100vh;
   padding: 50px;
+  @media (max-width: 1000px) {
+    padding: 10px 0;
+  }
 `;
 
 export const StyledWrapper = styled.div`
@@ -23,6 +28,16 @@ export const StyledWrapper = styled.div`
   width: 100%;
   gap: 40px;
   padding-bottom: 115px;
+  @media (max-width: 1000px) {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, auto));
+    max-width: 1800px;
+    width: 100%;
+    gap: 40px;
+    padding-bottom: 115px;
+    justify-items: center;
+  }
 `;
 
 export const StyledCard = styled.div<{ imgUrl: string }>`
@@ -41,6 +56,10 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
   font-size: 20px;
   color: #fff;
   transition: all 0.2s;
+  @media (max-width: 1000px) {
+    width: 90%;
+    min-width: 200px;
+  }
   &:hover {
     box-shadow: 5px 5px 15px 5px #fff;
     transform: scale(1.01);
@@ -69,13 +88,7 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
 
   &.difficult {
     &::before {
-      background: linear-gradient(
-        180deg,
-        rgba(196, 196, 196, 0) 0%,
-        rgba(196, 196, 196, 0.0753941) -7.85%,
-        rgba(196, 196, 196, 0.4) -40.67%,
-        ${baseTheme.colors.sevenBookColor} 100%
-      );
+      outline: ${baseTheme.colors.sevenBookColor} 5px solid;
     }
 
     &:hover {
@@ -85,19 +98,23 @@ export const StyledCard = styled.div<{ imgUrl: string }>`
 
   &.learned {
     &::before {
-      background: linear-gradient(
-        180deg,
-        rgba(196, 196, 196, 0) 0%,
-        rgba(196, 196, 196, 0.0753941) -7.85%,
-        rgba(196, 196, 196, 0.4) -40.67%,
-        ${baseTheme.colors.learned} 100%
-      );
+      outline: ${baseTheme.colors.learned} 5px solid;
     }
 
     &:hover {
       box-shadow: 5px 5px 15px 5px ${baseTheme.colors.learned};
     }
   }
+`;
+
+export const StyledWordStat = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  color: ${font};
 `;
 
 export const StyledCardContent = styled.div`
@@ -146,6 +163,9 @@ export const StyledCardContent = styled.div`
     width: 100%;
     border: 1px solid #676161;
     margin-bottom: 20px;
+    @media (max-width: 1000px) {
+      width: 90%;
+    }
   }
 
   hr + div {
@@ -206,22 +226,27 @@ export const StyledPagination = styled.div`
   bottom: 50px;
   left: 0;
   right: 0;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  @media (max-width: 1000px) {
+    height: 10px;
+    min-height: 55px;
+  }
   div:first-child {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-
     max-width: 270px;
     width: 100%;
     margin: 0 auto;
     font-size: 30px;
-
     position: relative;
+    @media (max-width: 1000px) {
+      font-size: 20px;
+      padding-left: 50px;
+      width: 63%;
+    }
   }
 
   div:nth-child(2) {
@@ -253,7 +278,6 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
   justify-content: center;
   width: 64px;
   height: 64px;
-
   background-color: ${(props) => props.group};
   border: 3px solid ${bg};
   color: ${bg};
@@ -262,9 +286,16 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
   position: absolute;
   right: 65px;
   top: -55px;
-
   color: #000;
   cursor: pointer;
+  @media (max-width: 1000px) {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    border: 2px solid ${bg};
+    top: -32px;
+    right: 30px;
+  }
   &:hover {
     ul {
       display: block;
@@ -272,6 +303,9 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
       width: auto;
       height: auto;
       bottom: 35px;
+      @media (max-width: 1000px) {
+        bottom: 20px;
+      }
     }
   }
   ul {
@@ -290,6 +324,13 @@ export const StyledGroupNumber = styled.span<{ group: string }>`
       height: 64px;
       border: 3px solid ${bg};
       border-radius: 50%;
+      @media (max-width: 1000px) {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        border: 2px solid ${bg};
+        bottom: -300px;
+      }
     }
     li:last-child {
       background-color: ${baseTheme.colors.red};
@@ -316,3 +357,56 @@ export const StyledPrevGroupBtn = styled(StyledClearPaginationBtn)``;
 export const StyledPrevPageBtn = styled(StyledClearPaginationBtn)``;
 export const StyledNextGroupBtn = styled(StyledClearPaginationBtn)``;
 export const StyledNextPageBtn = styled(StyledClearPaginationBtn)``;
+
+export const ButtonAudioGame = styled.button`
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  z-index: 1000;
+  border: none;
+  background: transparent url(${audio});
+  background-size: cover;
+  bottom: 8%;
+  left: 13%;
+  transition: 1s;
+  &:hover {
+    transform: scale(1.1);
+  }
+  @media (max-width: 1000px) {
+    left: 6%;
+    bottom: 6%;
+    width: 40px;
+    height: 40px;
+  }
+  @media (max-height: 750px) {
+    bottom: 8%;
+  }
+`;
+export const ButtonSprintGame = styled.button`
+  position: fixed;
+  width: 51px;
+  height: 50px;
+  z-index: 1000;
+  border: none;
+  background: transparent url(${sprint});
+  background-size: cover;
+  bottom: 8%;
+  left: 17%;
+  transition: 1s;
+  margin-left: 10px;
+  &:hover {
+    transform: scale(1.1);
+  }
+  @media (max-width: 1000px) {
+    left: 11%;
+    bottom: 6%;
+    width: 41px;
+    height: 40px;
+  }
+  @media (max-width: 600px) {
+    left: 15%;
+  }
+  @media (max-height: 750px) {
+    bottom: 8%;
+  }
+`;

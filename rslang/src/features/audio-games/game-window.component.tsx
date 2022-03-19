@@ -21,8 +21,10 @@ import { audioGameActions } from './audio-call.slice';
 import { ResultGamePage } from '../result-game';
 import { GameTypes, LoadingState } from '../../utils';
 import { LoadingPage } from '../../components/loading';
-import { loadingStatus } from '../sprint/sprint.selectors';
+import { loadingStatus } from './audio-call.selectors';
 import { getRandomNumber, shuffleArray } from './utils';
+import { wordsPageActions } from '../wordsPage/wordsPage.slice';
+import { pageGameSelector, typeGameSelector } from '../wordsPage/wordsPage.selectors';
 
 const { addRightAnswers, addErrorAnswers, resetAnswerArrays } = audioGameActions;
 const GameWindow = (props: { level: number }): React.ReactElement => {
@@ -46,6 +48,10 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const arrayWordRightId = [];
   const [isLoading, setIsLoading] = useState(true);
   const [fakeWordsSection, setFakeWordsSection] = useState<string[]>([]);
+
+  const isUserGame = useAppSelector(typeGameSelector);
+  const userPage = useAppSelector(pageGameSelector);
+  const { setIsUserGame } = wordsPageActions;
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const getWordsSectionArray = (currentWord: string) => {
@@ -78,6 +84,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       disableIsLoading();
       soundPlay(word.audio);
     }
+    return () => {};
   }, [words]);
 
   useEffect(() => {
@@ -86,19 +93,27 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
     }
   }, [fakeWords, fakeWordsSection.length]);
 
-  console.log(fakeWordsSection);
-
   useEffect(() => {
     if (status === LoadingState.Success) {
       disableIsLoading();
     }
   }, [status]);
 
+  //проверяем как пользователь запустил игру
+  let pageNumber = 0;
+
+  if (isUserGame) {
+    pageNumber = userPage;
+  } else {
+    pageNumber = getRandomNumber(29);
+  }
+
   //пока не догрузились данные страница Loading
   useEffect(() => {
-    dispatch(fetchAudioAction(props.level));
+    dispatch(fetchAudioAction({ level: props.level, page: pageNumber }));
     dispatch(resetAnswerArrays());
     setCurrentWordIndex(0);
+    dispatch(setIsUserGame(false));
   }, []);
 
   if (isLoading) return <LoadingPage />;
@@ -106,7 +121,6 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
     setCurrentWordIndex(currentWordIndex + 1);
   };
 
-  console.log(words, currentWordIndex, currentWord);
   const changeCurrentWord = () => {
     const word = words[currentWordIndex + 1];
     if (word) {
@@ -118,7 +132,7 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       soundPlay(word.audio);
     }
   };
-  if (currentWordIndex === 20) {
+  if (currentWordIndex === words.length) {
     return (
       <ResultGamePage
         rightAnswers={rightAnswersArr}
@@ -132,18 +146,23 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
   const audioGameRightAnswerHandler = () => {
     const word = words[currentWordIndex];
     dispatch(addRightAnswers(word));
+    setCurrentLongestSeries(currentLongestSeries + 1);
+    if (currentLongestSeries > longestSeries) {
+      setLongestSeries(currentLongestSeries);
+    }
   };
 
   //логика игры при нажатии на неверный ответ
   const audioGameErrorAnswerHandler = () => {
     const word = words[currentWordIndex];
     dispatch(addErrorAnswers(word));
+    if (currentLongestSeries > longestSeries) {
+      setLongestSeries(currentLongestSeries);
+    }
+    setCurrentLongestSeries(0);
   };
   const addRightWordIdArray = () => {
     arrayWordRightId.push(idCurrentWord);
-  };
-  const updateCurrentLongestSeries = () => {
-    setCurrentLongestSeries(currentLongestSeries + 1);
   };
 
   return (
@@ -171,7 +190,6 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
       </WindowAnswer>
 
       <BlockButton
-        updateCurrentLongestSeries={updateCurrentLongestSeries}
         fakeArray={fakeWordsSection}
         showAnswer={setGetAnswerButtonClick}
         hideAnswer={setGetAnswerButtonClick}
@@ -188,12 +206,6 @@ const GameWindow = (props: { level: number }): React.ReactElement => {
         upCurrentWordIndex={upCurrentWordIndex}
         audioGameErrorAnswerHandler={audioGameErrorAnswerHandler}
         audioGameRightAnswerHandler={audioGameRightAnswerHandler}
-        updateLongestSeries={() => {
-          setCurrentLongestSeries(currentLongestSeries + 1);
-        }}
-        resetLongestSeries={() => {
-          setCurrentLongestSeries(0);
-        }}
       />
     </BlockGame>
   );

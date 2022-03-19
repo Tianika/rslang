@@ -27,9 +27,11 @@ import { fetchGetStatisticsAction } from './result.saga';
 export const ResultGamePage = (props: ResultGame): React.ReactElement => {
   const dispatch = useAppDispatch();
 
-  setTimeout(() => {
-    dispatch(fetchGetStatisticsAction(props));
-  }, 0);
+  if (localStorage.rslangUserId) {
+    setTimeout(() => {
+      dispatch(fetchGetStatisticsAction(props));
+    }, 0);
+  }
 
   const playAudio: AudioEventHandle = (event) => {
     const target = event.target as HTMLElement;

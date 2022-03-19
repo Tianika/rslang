@@ -1,60 +1,54 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { all, put, takeLatest } from 'redux-saga/effects';
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
 import * as Effects from 'redux-saga/effects';
 import { LoadingState } from '../../utils';
 import { requestSprintWordsFromGroup } from './sprint.api';
-import { getRandomNumber } from './utils';
 import { sprintGameActions } from './sprint.slice';
-import { Word } from './types';
-import { MAX_PAGE_PER_GROUP, MAX_REQUESTS_COUNT } from './constants';
+import { DataForFetch } from './types';
+import { AxiosResponse } from 'axios';
+import { requestDifficultWords } from '../wordsPage/wordsPage.api';
 
 const call: any = Effects.call;
 
-const createNumberArr = () => {
-  const numbers: Array<number | undefined> = [];
-
-  while (numbers.length < MAX_REQUESTS_COUNT) {
-    const number = getRandomNumber(MAX_PAGE_PER_GROUP - 1);
-
-    if (!numbers.includes(number)) {
-      numbers.push(number);
-    }
-  }
-
-  return numbers;
-};
-
 //создаем экшен для запроса
-export const fetchSprintAction = createAction<number, string>('sprint/fetch');
+export const fetchSprintAction = createAction<DataForFetch, string>('sprint/fetch');
 
 //получаем функцию из экшенов
-const { changeLoadingState, setWordsArray } = sprintGameActions;
+const { changeSprintLoadingState, setSprintWordsArray } = sprintGameActions;
 
-function* sprintGameFetch(action: PayloadAction<number>) {
-  yield put(changeLoadingState(LoadingState.Loading));
+function* sprintGameFetch(action: PayloadAction<DataForFetch>) {
+  yield put(changeSprintLoadingState(LoadingState.Loading));
 
   try {
     //массив номеров страниц
-    const numbers = createNumberArr();
-    const words: Array<Word | undefined> = [];
+    const props: DataForFetch = action.payload;
+    const requests: Array<AxiosResponse | undefined> = [];
 
-    for (let i = 0; i < numbers.length; i++) {
-      //получаем данные из запроса
-      const { data } = yield call(
-        requestSprintWordsFromGroup,
-        action.payload,
-        numbers[i]
-      ) as Response;
+    const numbers = props.pages;
+    const level = props.level;
 
-      words.push(...data);
+    if (level === 6) {
+      const { data } = yield call(requestDifficultWords);
+
+      //обрабатываем полученный массив слов
+      yield put(setSprintWordsArray(data[0].paginatedResults));
+    } else {
+      for (let i = 0; i < numbers.length; i += 1) {
+        // создаем запросы
+
+        requests[i] = call(requestSprintWordsFromGroup, level, numbers[i]) as AxiosResponse;
+      }
+
+      const [...wordsResponse] = yield all(requests);
+      const words = wordsResponse.map((resp: AxiosResponse) => resp.data).flat();
+
+      //обрабатываем полученный массив слов
+      yield put(setSprintWordsArray(words));
     }
 
-    //обрабатываем полученный массив слов
-    yield put(setWordsArray(words));
-
-    yield put(changeLoadingState(LoadingState.Success));
+    yield put(changeSprintLoadingState(LoadingState.Success));
   } catch (error: any) {
-    yield put(changeLoadingState(LoadingState.Error));
+    yield put(changeSprintLoadingState(LoadingState.Error));
   }
 }
 

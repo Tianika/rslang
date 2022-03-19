@@ -30,13 +30,30 @@ export type Word = {
   textExampleTranslate: string;
 };
 
+type OptionalWord = {
+  correct: number;
+  wrong: number;
+  series: number;
+};
+
+type UserWords = {
+  difficult: string;
+  optional: OptionalWord;
+};
+
 export type SprintWordsState = {
   loadingState: LoadingState;
   words: Array<Word>;
+  userWords: Array<UserWords>;
   rightAnswers: Array<Word | undefined>;
   errorAnswers: Array<Word | undefined>;
 };
 
 export type SprintGameState = {
   words: Array<Word | undefined>;
+};
+
+export type DataForFetch = {
+  level: number;
+  pages: Array<number | undefined>;
 };

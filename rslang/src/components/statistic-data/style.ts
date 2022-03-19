@@ -1,110 +1,116 @@
 import styled from 'styled-components';
 
-export const TableStatistic = styled.table`
+export const TableStatistic = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (max-width: 1000px) {
+    width: 90%;
+  }
+`;
+export const TableStatisticTitle = styled.h2`
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-weight: 100;
+  @media (max-width: 500px) {
+    font-size: 20px;
+  }
+`;
+export const TableStatisticHeader = styled.div`
+  font-size: 25px;
+  font-weight: 400;
+  display: flex;
+  justify-content: space-around;
+  width: 70%;
+  background: rgba(109, 195, 255, 0.5);
+  padding: 15px;
+  min-width: 300px;
+  border-radius: 13px;
+  @media (max-width: 1000px) {
+    width: 100%;
+    padding: 5px;
+    font-size: 18px;
+  }
+`;
+export const TableAudioRow = styled.div`
+  font-size: 25px;
+  font-weight: 100;
+  display: flex;
+  width: 70%;
+  padding: 15px;
+  min-width: 300px;
+  border-radius: 13px;
+  justify-content: flex-start;
+  @media (max-width: 1000px) {
+    width: 100%;
+    padding: 5px;
+    font-size: 18px;
+  }
+`;
+export const TableSprintRow = styled.div`
+  font-size: 25px;
+  font-weight: 100;
+  display: flex;
+  width: 70%;
+  padding: 15px;
+  min-width: 300px;
+  border-radius: 13px;
+  justify-content: flex-start;
+  @media (max-width: 1000px) {
+    width: 100%;
+    padding: 5px;
+    font-size: 18px;
+  }
+`;
+export const TableTotalRow = styled.div`
+  font-size: 25px;
+  font-weight: 100;
+  display: flex;
+  width: 70%;
+  padding: 15px;
+  min-width: 300px;
+  border-radius: 13px;
+  justify-content: flex-start;
+  background: rgba(245, 255, 99, 0.5);
+  @media (max-width: 1000px) {
+    width: 100%;
+    padding: 5px;
+    font-size: 18px;
+  }
+`;
+export const Column1 = styled.div`
+  width: 25%;
+`;
+export const Column2 = styled.div`
+  width: 25%;
+`;
+export const Column3 = styled.div`
+  width: 25%;
+`;
+export const Column4 = styled.div`
+  width: 25%;
+`;
+export const ChartBlock = styled.div`
   width: 80%;
   border: none;
   border-collapse: collapse;
   margin: 100px auto;
+  @media (max-width: 500px) {
+    margin: 20px 0;
+  }
 `;
-export const TableStatisticTitle = styled.caption`
+
+export const ChartTitle = styled.h2`
   margin-bottom: 30px;
   font-size: 30px;
+  font-weight: 100;
+  @media (max-width: 500px) {
+    font-size: 20px;
+  }
 `;
-export const TableStatisticHead = styled.thead`
-  display: table-header-group;
-  vertical-align: middle;
-  border-color: inherit;
-`;
-export const TableStatisticHeadTr = styled.tr`
-  background-color: rgba(0, 0, 0, 0.04);
-  color: inherit;
-  display: table-row;
-  outline: 0;
-  vertical-align: middle;
-  border-spacing: 0;
-  border-collapse: collapse;
-`;
-export const TableStatisticHeadThStart = styled.th`
-  color: rgba(0, 0, 0, 0.87);
-  font-weight: 500;
-  line-height: 1.5rem;
-  padding: 6px 24px 6px 16px;
-  display: table-cell;
-  font-size: 0.875rem;
-  text-align: left;
-  font-family: 'Roboto', sans-serif;
-  border-radius: 8px 0 0 8px;
-  letter-spacing: 0.01071em;
-  vertical-align: inherit;
-`;
-export const TableStatisticHeadThEnd = styled.th`
-  color: rgba(0, 0, 0, 0.87);
-  font-weight: 500;
-  line-height: 1.5rem;
-  padding: 6px 24px 6px 16px;
-  display: table-cell;
-  font-size: 0.875rem;
-  text-align: center;
-  font-family: 'Roboto', sans-serif;
-  border-radius: 0 8px 8px 0;
-  letter-spacing: 0.01071em;
-  vertical-align: inherit;
-`;
-export const TableStatisticHeadTh = styled.th`
-  color: rgba(0, 0, 0, 0.87);
-  font-weight: 500;
-  line-height: 1.5rem;
-  padding: 6px 24px 6px 16px;
-  display: table-cell;
-  font-size: 0.875rem;
-  text-align: center;
-  font-family: 'Roboto', sans-serif;
-  letter-spacing: 0.01071em;
-  vertical-align: inherit;
-`;
-export const TableStatisticBody = styled.tbody`
-  display: table-row-group;
-`;
-export const TableStatisticBodyTr = styled.tr`
-  color: inherit;
-  display: table-row;
-  outline: 0;
-  vertical-align: middle;
-  border-spacing: 0;
-  border-collapse: collapse;
-`;
-export const TableStatisticBodyTrEnd = styled.tr`
-  background-color: rgba(109, 195, 255, 0.5);
-  color: inherit;
-  display: table-row;
-  outline: 0;
-  vertical-align: middle;
-  border-spacing: 0;
-  border-collapse: collapse;
-`;
-export const TableStatisticBodyTh = styled.td`
-  padding: 6px 24px 6px 16px;
-  color: rgba(0, 0, 0, 0.87);
-  display: table-cell;
-  font-size: 0.875rem;
-
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  line-height: 1.43;
-  letter-spacing: 0.01071em;
-  vertical-align: inherit;
-  text-align: center;
-`;
-export const TableStatisticBodyThName = styled.td`
-  border-radius: 8px 0 0 8px;
-  padding: 6px 24px 6px 16px;
-  color: rgba(0, 0, 0, 0.87);
-  display: table-cell;
-  font-size: 0.875rem;
-  text-align: left;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  line-height: 1.43;
-  letter-spacing: 0.01071em;
-  vertical-align: inherit;
+export const ChartContainer = styled.div`
+  width: 80%;
+  margin: 0 auto;
 `;

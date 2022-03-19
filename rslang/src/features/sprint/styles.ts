@@ -11,6 +11,10 @@ export const BlockInfo = styled.div`
   border-radius: 13px;
   padding: 40px 50px;
   background: ${baseTheme.colors.bg};
+  @media (max-width: 1000px) {
+    width: 90%;
+    margin: 10px auto;
+  }
 `;
 
 export const TitleGame = styled.h1`
@@ -21,17 +25,26 @@ export const TitleGame = styled.h1`
   width: 80%;
   text-align: center;
   padding-bottom: 20px;
+  @media (max-width: 1000px) {
+    font-size: 30px;
+  }
 `;
 
 export const GameDescription = styled.p`
   font-size: 22px;
   font-weight: 100;
+  @media (max-width: 1000px) {
+    font-size: 20px;
+  }
 `;
 
 export const GameDescriptionElement = styled.li`
   margin-left: 20px;
   font-size: 22px;
   margin-bottom: 10px;
+  @media (max-width: 1000px) {
+    font-size: 20px;
+  }
 `;
 
 export const BlockSelect = styled.div`
@@ -90,6 +103,9 @@ export const BlockGame = styled.div`
   border-radius: 13px;
   padding: 0 0 30px;
   background: ${baseTheme.colors.bg};
+  @media (max-width: 1000px) {
+    width: 90%;
+  }
 
   &.green {
     border: 1px solid ${baseTheme.colors.green};
@@ -115,6 +131,13 @@ export const GameTimer = styled.div`
   text-align: center;
   font-size: 60px;
   color: ${baseTheme.colors.blue};
+  @media (max-width: 1000px) {
+    right: Calc(12.5vw - 28px);
+    top: Calc(50vh - 435px);
+    width: 70px;
+    height: 70px;
+    font-size: 30px;
+  }
 `;
 
 export const GameHeader = styled.div`
@@ -192,16 +215,26 @@ export const Shelf = styled.div`
   margin-bottom: 30px;
   border: 2px solid ${baseTheme.colors.font};
   border-radius: 3px;
+  @media (max-width: 1000px) {
+    width: 300px;
+  }
 `;
 
 export const WordText = styled.div`
   font-size: 47px;
   margin-bottom: 40px;
+  @media (max-width: 1000px) {
+    margin-bottom: 20px;
+    font-size: 30px;
+  }
 `;
 
 export const Translation = styled.div`
   font-size: 30px;
   margin-bottom: 50px;
+  @media (max-width: 1000px) {
+    font-size: 22px;
+  }
 `;
 
 export const AnswersButtonsContainer = styled.div`
@@ -223,6 +256,10 @@ export const AnswerButton = styled.button`
   }
   &.right {
     background-color: ${baseTheme.colors.green};
+  }
+  @media (max-width: 1000px) {
+    width: 150px;
+    font-size: 20px;
   }
 `;
 

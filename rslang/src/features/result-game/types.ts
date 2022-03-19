@@ -38,3 +38,17 @@ export type Statistics = {
     };
   };
 };
+
+export type WordStat = {
+  difficulty: string;
+  optional: {
+    correct: number;
+    wrong: number;
+    series: number;
+  };
+};
+
+export type GettingWordStat = WordStat & {
+  id: string;
+  wordId: string;
+};

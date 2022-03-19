@@ -12,7 +12,10 @@ import {
   hex2rgba,
   StyledPagination,
   StyledGroupNumber,
-  StyledRemoveBtn
+  StyledRemoveBtn,
+  ButtonAudioGame,
+  ButtonSprintGame,
+  StyledWordStat
 } from './styles';
 import cardIconAudio from '../../assets/svg/card-icon-audio.svg';
 import cardPlusIcon from '../../assets/svg/card-plus-icon.svg';
@@ -36,9 +39,10 @@ import {
   statusSelector,
   wordsSelector
 } from './wordsPage.selectors';
-import { baseUrl } from './wordsPage.api';
+import { baseUrl, getUserWord } from './wordsPage.api';
 import { dropDownMenu } from './wordsPage.constants';
 import { UserWordsClass } from './types';
+import { wordsPageActions } from './wordsPage.slice';
 
 const {
   firstBookColor,
@@ -52,6 +56,8 @@ const {
 
 export const WordsPage: React.FC = () => {
   const dispatch = useAppDispatch();
+
+  const { setUserLevel, setUserPage, setIsUserGame } = wordsPageActions;
 
   //слова
   const words = useAppSelector(wordsSelector);
@@ -105,6 +111,8 @@ export const WordsPage: React.FC = () => {
   };
 
   useEffect(() => {
+    dispatch(setIsUserGame(false));
+
     if (localStorage.rslangUserId) {
       dispatch(getDifficultWordsAction());
       dispatch(getLearnedWordsAction({ group, page }));
@@ -229,6 +237,31 @@ export const WordsPage: React.FC = () => {
 
   if (isLoading) return <LoadingPage />;
 
+  // для запуска игр со страницы
+  const startUserGame = () => {
+    dispatch(setUserLevel(+group));
+    dispatch(setUserPage(+page));
+    dispatch(setIsUserGame(true));
+  };
+
+  // const checkCorrect = (word: any) => {
+  //   let correct;
+
+  //   if (word.userWord) {
+  //     correct = word.userWord.optional.correct;
+  //   }
+
+  //   return correct || 0;
+  // };
+
+  // {localStorage.rslangUserId ? (
+  //                 <StyledWordStat>
+  //                   <div>Верно: {checkCorrect(word)}</div>
+  //                   <div>Неверно: {checkCorrect(word)}</div>
+  //                   <div>Серия: {checkCorrect(word)}</div>
+  //                 </StyledWordStat>
+  //               ) : null}
+
   return (
     <StyledCardSection group={`${checkNumberOfGroup()}`}>
       <StyledWrapper>
@@ -306,6 +339,13 @@ export const WordsPage: React.FC = () => {
               </StyledCard>
             );
           })}
+        <Link to="/games/audio">
+          <ButtonAudioGame onClick={startUserGame} />
+        </Link>
+        <Link to="/games/sprint">
+          <ButtonSprintGame onClick={startUserGame} />
+        </Link>
+
         <StyledPagination>
           <div>
             <Link to={changePrevGroup()} title={group === '0' ? '' : 'следующий раздел'}>
