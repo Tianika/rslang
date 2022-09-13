@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import {
   AnswerButton,
@@ -9,7 +9,6 @@ import {
   EmptyCheckbox,
   GameHeader,
   GameScore,
-  GameTimer,
   Level,
   ScorePerAnswer,
   Shelf,
@@ -50,6 +49,7 @@ import { DataForFetch } from './types';
 import { getUserRandomNumber } from './utils';
 import { pageGameSelector, typeGameSelector } from '../wordsPage/wordsPage.selectors';
 import { wordsPageActions } from '../wordsPage/wordsPage.slice';
+import { Timer } from '../../components/timer';
 
 const {
   addSprintRightAnswers,
@@ -58,7 +58,23 @@ const {
   resetSprintWordsArray
 } = sprintGameActions;
 
-export const SprintGame = (props: { level: number }): React.ReactElement => {
+const createNumberArr = () => {
+  const numbers: Array<number> = [];
+
+  while (numbers.length < MAX_REQUESTS_COUNT) {
+    const number = getUserRandomNumber(MAX_PAGE_PER_GROUP - 1);
+
+    if (!numbers.includes(number)) {
+      numbers.push(number);
+    }
+  }
+
+  return numbers;
+};
+
+const urlQuery = 'https://learnwords-team17.herokuapp.com/';
+
+export const SprintGame = ({ level }: { level: number }): React.ReactElement => {
   const dispatch = useAppDispatch();
 
   const [totalScore, setTotalScore] = useState(0);
@@ -66,7 +82,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [levelAnswer, setLevelAnswer] = useState(1);
   const [checkboxesLevel, setCheckboxesLevel] = useState(0);
   const [isRight, setIsRight] = useState(true);
-  const [currentWordIndex, setCurrentWordIndex] = useState(-1);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [checkboxes, setCheckboxes] = useState([false, false, false]);
   const [currentWord, setCurrentWord] = useState('');
   const [currentTranslate, setCurrentTranslate] = useState('');
@@ -75,7 +91,8 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const [isDisableKeydown, setIsDisableKeydown] = useState(false);
   const [longestSeries, setLongestSeries] = useState(0);
   const [currentLongestSeries, setCurrentLongestSeries] = useState(0);
-  const [timer, setTimer] = useState(-1);
+  const [pagesNumbers, setPagesNumbers] = useState<number[]>([]);
+  const [isEndGame, setIsEndGame] = useState(false);
 
   //получаем слова
   const words = useAppSelector(sprintWordsSelector);
@@ -86,69 +103,37 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   const { setIsUserGame } = wordsPageActions;
 
-  const createNumberArr = () => {
-    const numbers: Array<number | undefined> = [];
-
-    while (numbers.length < MAX_REQUESTS_COUNT) {
-      const number = getUserRandomNumber(MAX_PAGE_PER_GROUP - 1);
-
-      if (!numbers.includes(number)) {
-        numbers.push(number);
-      }
-    }
-
-    return numbers;
+  const soundPlay = (wordAudio: string) => {
+    new Audio(`${urlQuery}${wordAudio}`).play();
+    return false;
   };
 
-  let pagesNumbers;
-
-  if (isUserGame) {
-    pagesNumbers = [userPage];
-  } else {
-    pagesNumbers = createNumberArr();
-  }
-
-  const dataForFetch: DataForFetch = { level: props.level, pages: pagesNumbers };
-
   //при включении игры
-  useEffect(() => {
-    dispatch(resetSprintAnswerArrays());
+  useLayoutEffect(() => {
+    setPagesNumbers(isUserGame ? [userPage] : createNumberArr());
 
-    dispatch(fetchSprintAction(dataForFetch));
-    dispatch(setIsUserGame(false));
-
-    setCurrentWordIndex(0);
-    setTimer(60);
+    return () => {
+      dispatch(setIsUserGame(false));
+      dispatch(resetSprintWordsArray());
+      dispatch(resetSprintAnswerArrays());
+    };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const dataForFetch: DataForFetch = { level, pages: pagesNumbers };
+
+    dispatch(fetchSprintAction(dataForFetch));
+  }, [pagesNumbers]);
+
+  useLayoutEffect(() => {
     const word = words[0];
 
     if (word) {
+      soundPlay(word.audio);
       setCurrentWord(word.word);
       setCurrentTranslate(word.wordTranslate);
     }
   }, [words]);
-
-  //откл кнопки при ответе
-  const disableButton = () => {
-    setIsDisableButton(true);
-  };
-
-  //откл отслеживание событий клавиатуры при ответе
-  const disableKeydown = () => {
-    setIsDisableKeydown(true);
-  };
-
-  //вкл кнопки
-  const enableButton = () => {
-    setIsDisableButton(false);
-  };
-
-  //откл отслеживание событий клавиатуры при ответе
-  const enableKeydown = () => {
-    setIsDisableKeydown(false);
-  };
 
   //увеличить общее кол-во очков
   const changeTotalScore = () => {
@@ -173,11 +158,6 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
         }
       }
     }
-  };
-
-  //изменить индекс
-  const upCurrentWordIndex = () => {
-    setCurrentWordIndex(currentWordIndex + 1);
   };
 
   //сброс уровня при неправильном ответе
@@ -220,6 +200,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
     if (word) {
       setCurrentWord(word.word);
+      soundPlay(word.audio);
     }
 
     setTimeout(() => {
@@ -231,15 +212,15 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
   const changeAnswer = () => {
     changeCurrentWord();
     getTranslate();
-    enableButton();
-    enableKeydown();
+    setIsDisableButton(false);
+    setIsDisableKeydown(false);
   };
 
   //логика игры при нажатии на правильный ответ
   const sprintGameRightAnswerHandler = () => {
     setBorderColor(BorderColors.Green);
-    disableButton();
-    disableKeydown();
+    setIsDisableButton(true);
+    setIsDisableKeydown(true);
 
     const word = words[currentWordIndex];
     dispatch(addSprintRightAnswers(word));
@@ -252,56 +233,36 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
       setLongestSeries(currentLongestSeries);
     }
 
-    upCurrentWordIndex();
+    setCurrentWordIndex(currentWordIndex + 1);
   };
 
   //логика игры при нажатии на неверный ответ
   const sprintGameErrorAnswerHandler = () => {
     setBorderColor(BorderColors.Red);
-    disableButton();
-    disableKeydown();
+    setIsDisableButton(true);
+    setIsDisableKeydown(true);
 
     const word = words[currentWordIndex];
     dispatch(addSprintErrorAnswers(word));
-
     resetSprintGameLevel();
 
     if (currentLongestSeries > longestSeries) {
       setLongestSeries(currentLongestSeries);
     }
-    setCurrentLongestSeries(0);
 
-    upCurrentWordIndex();
+    setCurrentLongestSeries(0);
+    setCurrentWordIndex(currentWordIndex + 1);
   };
 
   useEffect(() => {
     setTimeout(() => {
       changeAnswer();
     }, 500);
-  }, [currentWordIndex, words]);
 
-  //конец игры
-  const [isEndGame, setIsEndGame] = useState(false);
-  const enableIsEndGame = () => {
-    setIsEndGame(true);
-  };
-
-  //таймер
-  useEffect(() => {
-    if (timer === 0 || (currentWordIndex > 0 && currentWordIndex === words.length)) {
-      dispatch(resetSprintWordsArray());
-      enableIsEndGame();
-      return;
+    if (currentWordIndex > 0 && currentWordIndex === words.length) {
+      setIsEndGame(true);
     }
-
-    if (timer > 0) {
-      setTimeout(() => {
-        setTimer(timer - 1);
-      }, 1000);
-    } else {
-      return () => {};
-    }
-  }, [timer]);
+  }, [currentWordIndex]);
 
   const ANSWER_BUTTONS = [
     {
@@ -341,15 +302,11 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
 
   //отслеживаем статус загрузки
   const status = useAppSelector(sprintLoadingStatus);
-
   const [isLoading, setIsLoading] = useState(true);
-  const disableIsLoading = () => {
-    setIsLoading(false);
-  };
 
   useEffect(() => {
-    if (status === LoadingState.Success) {
-      disableIsLoading();
+    if (status === LoadingState.Success && currentTranslate && currentTranslate) {
+      setIsLoading(false);
     }
   }, [status]);
 
@@ -443,7 +400,7 @@ export const SprintGame = (props: { level: number }): React.ReactElement => {
           ))}
         </ArrowsContainer>
       </BlockGame>
-      <GameTimer>{timer}</GameTimer>
+      <Timer setIsEndGame={setIsEndGame} />
     </SprintGameContainer>
   );
 };
